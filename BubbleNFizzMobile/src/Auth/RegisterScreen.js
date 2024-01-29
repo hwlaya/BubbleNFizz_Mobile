@@ -18,7 +18,7 @@ const RegisterScreen = () => {
         </Text>
       </View>
       <View style={styles.container}>
-        <Text style={{ fontFamily: "Poppins-Light" }} variant="displaySmall">
+        <Text style={{ fontFamily: "Poppins-Light" }} variant="headlineLarge">
           {" "}
           CREATE ACCOUNT{" "}
         </Text>
