@@ -38,7 +38,7 @@ const PollFirstScreen = () => {
           To get the best Bath experience, tell us about yourself! Your response
           will be kept private.
         </Text>
-        <View style={{ alignSelf: "flex-end" }}>
+        <View style={{ alignSelf: "center" }}>
           <Button
             mode="elevated"
             buttonColor="#EDBF47"

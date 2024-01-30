@@ -21,7 +21,6 @@ const PollSecondScreen = () => {
           style={{
             fontFamily: "Poppins-SemiBold",
             fontSize: 34,
-            color: "#00000",
           }}
           variant="displaySmall"
         >

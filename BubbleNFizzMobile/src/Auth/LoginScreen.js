@@ -18,7 +18,7 @@ const LoginScreen = () => {
         </Text>
       </View>
       <View style={styles.container}>
-        <Text style={{ fontFamily: "Poppins-Light" }} variant="displaySmall">
+        <Text style={{ fontFamily: "Poppins-Light" }} variant="headlineMedium">
           {" "}
           LOG IN{" "}
         </Text>
@@ -52,7 +52,7 @@ const LoginScreen = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{ alignSelf: "flex-end" }}>
+        <View style={{ alignSelf: "center" }}>
           <Button
             mode="elevated"
             buttonColor="#EDBF47"

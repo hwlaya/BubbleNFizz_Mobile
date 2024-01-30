@@ -18,12 +18,15 @@ const RegisterScreen = () => {
         </Text>
       </View>
       <View style={styles.container}>
-        <Text style={{ fontFamily: "Poppins-Light" }} variant="headlineLarge">
+        <Text style={{ fontFamily: "Poppins-Light" }} variant="headlineMedium">
           {" "}
           CREATE ACCOUNT{" "}
         </Text>
         <View style={styles.bodyContainer}>
-          <Text style={styles.inputText}> NAME </Text>
+          <Text style={styles.inputText} variant="bodySmall">
+            {" "}
+            FIRST NAME{" "}
+          </Text>
           <TextInput
             style={styles.input}
             mode="flat"
@@ -31,7 +34,10 @@ const RegisterScreen = () => {
             onFocus={() => console.log("Focused")}
             onBlur={() => console.log("Blurred")}
           />
-          <Text style={styles.inputText}> FIRST NAME </Text>
+          <Text style={styles.inputText} variant="bodySmall">
+            {" "}
+            LAST NAME{" "}
+          </Text>
           <TextInput
             style={styles.input}
             mode="flat"
@@ -39,7 +45,10 @@ const RegisterScreen = () => {
             onFocus={() => console.log("Focused")}
             onBlur={() => console.log("Blurred")}
           />
-          <Text style={styles.inputText}> LAST NAME </Text>
+          <Text style={styles.inputText} variant="bodySmall">
+            {" "}
+            EMAIL ADDRESS{" "}
+          </Text>
           <TextInput
             style={styles.input}
             mode="flat"
@@ -47,15 +56,10 @@ const RegisterScreen = () => {
             onFocus={() => console.log("Focused")}
             onBlur={() => console.log("Blurred")}
           />
-          <Text style={styles.inputText}> EMAIL ADDRESS </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-          <Text style={styles.inputText}> PASSWORD </Text>
+          <Text style={styles.inputText} variant="bodySmall">
+            {" "}
+            PASSWORD{" "}
+          </Text>
           <TextInput
             style={styles.input}
             mode="flat"
@@ -65,7 +69,10 @@ const RegisterScreen = () => {
             onFocus={() => console.log("Focused")}
             onBlur={() => console.log("Blurred")}
           />
-          <Text style={styles.inputText}> CONFIRM PASSWORD </Text>
+          <Text style={styles.inputText} variant="bodySmall">
+            {" "}
+            CONFIRM PASSWORD{" "}
+          </Text>
           <TextInput
             style={styles.input}
             mode="flat"
@@ -76,7 +83,7 @@ const RegisterScreen = () => {
             onBlur={() => console.log("Blurred")}
           />
         </View>
-        <View style={{ alignSelf: "flex-end" }}>
+        <View style={{ alignSelf: "center" }}>
           <Button
             mode="elevated"
             buttonColor="#EDBF47"
@@ -129,6 +136,8 @@ const styles = StyleSheet.create({
       elevation: 7,
     },
   },
-  inputText: { fontFamily: "LexendExa-ExtraLight" },
+  inputText: {
+    fontFamily: "LexendExa-ExtraLight",
+  },
 });
 export default RegisterScreen;
