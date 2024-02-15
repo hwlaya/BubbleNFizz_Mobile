@@ -26,7 +26,7 @@ const PollScreen8 = () => {
               console.log("Previous Pressed");
               navigation.navigate("PollScreen7");
             }}
-            text="Previous"
+            text="Back"
             buttonColor="#EDBF47"
           />
         </View>

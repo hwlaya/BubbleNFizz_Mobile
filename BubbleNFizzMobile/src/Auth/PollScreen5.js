@@ -1,46 +1,95 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import React from "react";
+import { View, StyleSheet, Image } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
-import CustomCardLocation from "../components/CustomCardLocation";
 
 const PollScreen5 = () => {
   const navigation = useNavigation();
-  const windowWidth = useWindowDimensions().width;
-  const windowHeight = useWindowDimensions().height;
+
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
-      <View>
-        <Text>Page 5</Text>
+      <View style={styles.container}>
+        <Text style={styles.question}>What Texture Do You Prefer?</Text>
+        <View style={styles.cardContainer}>
+          <Card style={styles.card}>
+            <Image
+              source={require("../assets/images/bg_object2.png")}
+              resizeMode="cover"
+              style={styles.cardImage}
+            />
+            <Text numberOfLines={4} style={styles.cardLabel}>
+              Lightweight skin care product with a high concentration of active
+              ingredients.
+            </Text>
+          </Card>
+          <Card style={styles.card}>
+            <Image
+              source={require("../assets/images/bg_object2.png")}
+              resizeMode="cover"
+              style={styles.cardImage}
+            />
+            <Text numberOfLines={4} style={styles.cardLabel}>
+              A care that acts in depth despite its application on the surface.
+            </Text>
+          </Card>
+          <Card style={styles.card}>
+            <Image
+              source={require("../assets/images/bg_object2.png")}
+              resizeMode="cover"
+              style={styles.cardImage}
+            />
+            <Text numberOfLines={4} style={styles.cardLabel}>
+              The perfect consistency if you like layered products.
+            </Text>
+          </Card>
+          <Card style={styles.card}>
+            <Image
+              source={require("../assets/images/bg_object2.png")}
+              resizeMode="cover"
+              style={styles.cardImage}
+            />
+            <Text numberOfLines={4} style={styles.cardLabel}>
+              If you want a touch of nature.
+            </Text>
+          </Card>
+          <Card style={styles.card}>
+            <Image
+              source={require("../assets/images/bg_object2.png")}
+              resizeMode="cover"
+              style={styles.cardImage}
+            />
+            <Text numberOfLines={4} style={styles.cardLabel}>
+              A comfortable and milky creamy texture.
+            </Text>
+          </Card>
+        </View>
       </View>
 
       <View style={styles.buttonContainer}>
         {/* Previous Button */}
-        <View style={styles.previousButtonContainer}>
-          <NavigationButton
-            onPress={() => {
-              console.log("Previous Pressed");
-              navigation.navigate("PollScreen4");
-            }}
-            text="Previous"
-            buttonColor="#EDBF47"
-          />
-        </View>
+        <NavigationButton
+          onPress={() => {
+            console.log("Previous Pressed");
+            navigation.navigate("PollScreen4");
+          }}
+          text="Back"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
         {/* Next Button */}
-        <View style={styles.nextButtonContainer}>
-          <NavigationButton
-            onPress={() => {
-              console.log("Next Pressed");
-              navigation.navigate("PollScreen6");
-            }}
-            text="Next"
-            buttonColor="#EDBF47"
-          />
-        </View>
+        <NavigationButton
+          onPress={() => {
+            console.log("Next Pressed");
+            navigation.navigate("PollScreen6");
+          }}
+          text="Next"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
       </View>
     </Background>
   );
@@ -49,44 +98,45 @@ const PollScreen5 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bodyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: "10%",
-  },
-  title: {
-    fontFamily: "Poppins-SemiBold",
-    fontSize: 34,
-    color: "#EDBF47",
-    textAlign: "center",
-  },
-  textStyle: {
-    fontFamily: "LexendExa-ExtraLight",
-    textAlign: "center",
+    padding: 16,
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: "5%",
-    paddingHorizontal: "10%",
+    justifyContent: "space-around",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    width: "150%",
   },
-  previousButtonContainer: {
+  button: {
     flex: 1,
-    alignItems: "flex-start",
+    marginHorizontal: 10,
   },
-  nextButtonContainer: {
-    flex: 1,
-    alignItems: "flex-end",
+  question: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  cardContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+  },
+  card: {
+    width: "48%",
+    marginBottom: 16,
+    alignItems: "center",
+    padding: 10,
+  },
+  cardImage: {
+    //Manipulate this part if image not showing
+    height: 100,
+    width: 100,
+    marginBottom: 10,
+  },
+  cardLabel: {
+    fontSize: 14,
+    textAlign: "center",
   },
 });
 

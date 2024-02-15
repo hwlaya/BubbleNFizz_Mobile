@@ -1,11 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
-import CustomCardLocation from "../components/CustomCardLocation";
+import CustomCardIngredients from "../components/CustomCardIngredients";
 
 const PollScreen4 = () => {
   const navigation = useNavigation();
@@ -19,9 +18,9 @@ const PollScreen4 = () => {
         <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
           <View style={styles.bodyContainer}>
             <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
-              Screen 4444
+              What Ingredients do you prefer?
             </Text>
-            <CustomCardLocation />
+            <CustomCardIngredients />
           </View>
           <View style={styles.buttonContainer}>
             {/* Previous Button */}
