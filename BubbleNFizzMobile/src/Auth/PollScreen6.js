@@ -7,46 +7,39 @@ import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardLocation from "../components/CustomCardLocation";
 
-const PollThirdScreen = () => {
+const PollScreen6 = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
-
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
-      <View style={styles.container}>
-        <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
-          <View style={styles.bodyContainer}>
-            <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
-              Where do you live?
-            </Text>
-            <CustomCardLocation />
-          </View>
-          <View style={styles.buttonContainer}>
-            {/* Previous Button */}
-            <View style={styles.previousButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Previous Pressed");
-                  navigation.navigate("PollSecondScreen");
-                }}
-                text="Previous"
-                buttonColor="#EDBF47"
-              />
-            </View>
-            {/* Next Button */}
-            <View style={styles.nextButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Next Pressed");
-                  navigation.navigate("PollSeventhScreen");
-                }}
-                text="Next"
-                buttonColor="#EDBF47"
-              />
-            </View>
-          </View>
+      <View>
+        <Text>Page 6</Text>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        {/* Previous Button */}
+        <View style={styles.previousButtonContainer}>
+          <NavigationButton
+            onPress={() => {
+              console.log("Previous Pressed");
+              navigation.navigate("PollScreen5");
+            }}
+            text="Previous"
+            buttonColor="#EDBF47"
+          />
+        </View>
+        {/* Next Button */}
+        <View style={styles.nextButtonContainer}>
+          <NavigationButton
+            onPress={() => {
+              console.log("Next Pressed");
+              navigation.navigate("PollScreen7");
+            }}
+            text="Next"
+            buttonColor="#EDBF47"
+          />
         </View>
       </View>
     </Background>
@@ -58,6 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 10,
   },
   contentContainer: {
     flex: 1,
@@ -96,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PollThirdScreen;
+export default PollScreen6;

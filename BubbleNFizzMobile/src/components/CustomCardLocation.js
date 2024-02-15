@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, Image, useWindowDimensions } from "react-native";
 import { Card } from "react-native-paper";
 
-const CustomCardimage = () => {
+const CustomCardLocation = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
   return (
@@ -62,4 +62,4 @@ const CustomCardimage = () => {
   );
 };
 
-export default CustomCardimage;
+export default CustomCardLocation;

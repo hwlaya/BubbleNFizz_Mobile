@@ -7,7 +7,7 @@ import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardFragrance from "../components/CustomCardFragrance";
 
-const PollSecondScreen = () => {
+const PollScreen2 = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
@@ -38,7 +38,7 @@ const PollSecondScreen = () => {
               <NavigationButton
                 onPress={() => {
                   console.log("Previous Pressed");
-                  navigation.navigate("PollFirstScreen");
+                  navigation.navigate("PollScreen1");
                 }}
                 text="Previous"
                 buttonColor="#EDBF47"
@@ -49,7 +49,7 @@ const PollSecondScreen = () => {
               <NavigationButton
                 onPress={() => {
                   console.log("Next Pressed");
-                  navigation.navigate("PollThirdScreen");
+                  navigation.navigate("PollScreen3");
                 }}
                 text="Next"
                 buttonColor="#EDBF47"
@@ -105,4 +105,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PollSecondScreen;
+export default PollScreen2;

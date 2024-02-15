@@ -70,7 +70,7 @@ const LoginScreen = () => {
               buttonColor="#EDBF47"
               onPress={() => {
                 console.log("Login Pressed");
-                navigation.navigate("PollFirstScreen");
+                navigation.navigate("PollScreen1");
               }}
             >
               <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>

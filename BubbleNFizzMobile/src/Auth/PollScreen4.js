@@ -1,14 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
-import { Text } from "react-native-paper";
+import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
+import CustomCardLocation from "../components/CustomCardLocation";
 
-const PollFirstScreen = () => {
+const PollScreen4 = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -17,28 +19,33 @@ const PollFirstScreen = () => {
         <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
           <View style={styles.bodyContainer}>
             <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
-              Hi
+              Screen 4444
             </Text>
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              To get the best Bath
-            </Text>
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              experience, tell us about
-            </Text>
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              yourself! Your response will be kept private.
-            </Text>
+            <CustomCardLocation />
           </View>
           <View style={styles.buttonContainer}>
-            {/* ReusableButton for Next */}
-            <NavigationButton
-              onPress={() => {
-                console.log("Next Pressed");
-                navigation.navigate("PollSecondScreen");
-              }}
-              text="Next"
-              buttonColor="#EDBF47"
-            />
+            {/* Previous Button */}
+            <View style={styles.previousButtonContainer}>
+              <NavigationButton
+                onPress={() => {
+                  console.log("Previous Pressed");
+                  navigation.navigate("PollScreen3");
+                }}
+                text="Previous"
+                buttonColor="#EDBF47"
+              />
+            </View>
+            {/* Next Button */}
+            <View style={styles.nextButtonContainer}>
+              <NavigationButton
+                onPress={() => {
+                  console.log("Next Pressed");
+                  navigation.navigate("PollScreen5");
+                }}
+                text="Next"
+                buttonColor="#EDBF47"
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -51,6 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 10,
   },
   contentContainer: {
     flex: 1,
@@ -67,14 +75,26 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-SemiBold",
     fontSize: 34,
     color: "#EDBF47",
+    textAlign: "center",
   },
   textStyle: {
     fontFamily: "LexendExa-ExtraLight",
     textAlign: "center",
   },
   buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     marginBottom: "5%",
+    paddingHorizontal: "10%",
+  },
+  previousButtonContainer: {
+    flex: 1,
+    alignItems: "flex-start",
+  },
+  nextButtonContainer: {
+    flex: 1,
+    alignItems: "flex-end",
   },
 });
 
-export default PollFirstScreen;
+export default PollScreen4;
