@@ -1,16 +1,28 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import Background from "../components/Background";
-import { Card, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
-import CustomCardFragrance from "../components/CustomCardFragrance";
 
-const PollSecondScreen = () => {
+const PollScreenResponsive = () => {
   const navigation = useNavigation();
-  const windowWidth = useWindowDimensions().width;
-  const windowHeight = useWindowDimensions().height;
+  const [windowWidth, setWindowWidth] = useState(
+    Dimensions.get("window").width
+  );
+
+  useEffect(() => {
+    const updateLayout = () => {
+      setWindowWidth(Dimensions.get("window").width);
+    };
+
+    Dimensions.addEventListener("change", updateLayout);
+
+    return () => {
+      Dimensions.removeEventListener("change", updateLayout);
+    };
+  }, []);
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -19,9 +31,8 @@ const PollSecondScreen = () => {
         <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
           <View style={styles.bodyContainer}>
             <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
-              What is your fragrance type?
+              Hi
             </Text>
-            <CustomCardFragrance />
             <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
               To get the best Bath
             </Text>
@@ -33,28 +44,15 @@ const PollSecondScreen = () => {
             </Text>
           </View>
           <View style={styles.buttonContainer}>
-            {/* Previous Button */}
-            <View style={styles.previousButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Previous Pressed");
-                  navigation.navigate("PollFirstScreen");
-                }}
-                text="Previous"
-                buttonColor="#EDBF47"
-              />
-            </View>
-            {/* Next Button */}
-            <View style={styles.nextButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Next Pressed");
-                  navigation.navigate("PollThirdScreen");
-                }}
-                text="Next"
-                buttonColor="#EDBF47"
-              />
-            </View>
+            {/* ReusableButton for Next */}
+            <NavigationButton
+              onPress={() => {
+                console.log("Next Pressed");
+                navigation.navigate("PollThirdScreen");
+              }}
+              text="Next"
+              buttonColor="#EDBF47"
+            />
           </View>
         </View>
       </View>
@@ -83,26 +81,14 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-SemiBold",
     fontSize: 34,
     color: "#EDBF47",
-    textAlign: "center",
   },
   textStyle: {
     fontFamily: "LexendExa-ExtraLight",
     textAlign: "center",
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     marginBottom: "5%",
-    paddingHorizontal: "10%",
-  },
-  previousButtonContainer: {
-    flex: 1,
-    alignItems: "flex-start",
-  },
-  nextButtonContainer: {
-    flex: 1,
-    alignItems: "flex-end",
   },
 });
 
-export default PollSecondScreen;
+export default PollScreenResponsive;

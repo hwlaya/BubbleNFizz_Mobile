@@ -1,12 +1,20 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import Background from "../components/Background";
 import { Input } from "@ui-kitten/components";
 import { Text, TextInput, Button } from "react-native-paper";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+
+  const { width, height } = Dimensions.get("window");
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <View style={styles.headerContainer}>
@@ -18,51 +26,56 @@ const LoginScreen = () => {
         </Text>
       </View>
       <View style={styles.container}>
-        <Text style={{ fontFamily: "Poppins-Light" }} variant="headlineMedium">
-          {" "}
-          LOG IN{" "}
-        </Text>
-        <View style={styles.bodyContainer}>
-          <Text style={styles.inputText}> USERNAME OR EMAIL </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-          <Text style={styles.inputText}> PASSWORD </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            secureTextEntry
-            right={<TextInput.Icon icon="eye" />}
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("RegisterScreen");
-            }}
+        <View style={[styles.box, { width: width * 1, height: height * 0.5 }]}>
+          <Text
+            style={{ fontFamily: "Poppins-Light" }}
+            variant="headlineMedium"
           >
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.registerText}> New to Bubble N Fizz? </Text>
-              <Text style={styles.registerText2}>Sign up </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View style={{ alignSelf: "center" }}>
-          <Button
-            mode="elevated"
-            buttonColor="#EDBF47"
-            onPress={() => {
-              console.log("Login Pressed");
-              navigation.navigate("PollFirstScreen");
-            }}
-          >
-            <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
-          </Button>
+            {" "}
+            LOG IN{" "}
+          </Text>
+          <View style={styles.bodyContainer}>
+            <Text style={styles.inputText}> USERNAME OR EMAIL </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <Text style={styles.inputText}> PASSWORD </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              secureTextEntry
+              right={<TextInput.Icon icon="eye" />}
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("RegisterScreen");
+              }}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.registerText}> New to Bubble N Fizz? </Text>
+                <Text style={styles.registerText2}>Sign up </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={{ alignSelf: "center" }}>
+            <Button
+              mode="elevated"
+              buttonColor="#EDBF47"
+              onPress={() => {
+                console.log("Login Pressed");
+                navigation.navigate("PollFirstScreen");
+              }}
+            >
+              <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
+            </Button>
+          </View>
         </View>
       </View>
     </Background>
@@ -76,6 +89,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  box: {
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
   },

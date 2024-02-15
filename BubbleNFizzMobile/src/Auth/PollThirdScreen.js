@@ -5,9 +5,9 @@ import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
-import CustomCardFragrance from "../components/CustomCardFragrance";
+import CustomCardLocation from "../components/CustomCardLocation";
 
-const PollSecondScreen = () => {
+const PollThirdScreen = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
@@ -19,18 +19,9 @@ const PollSecondScreen = () => {
         <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
           <View style={styles.bodyContainer}>
             <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
-              What is your fragrance type?
+              Where do you live?
             </Text>
-            <CustomCardFragrance />
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              To get the best Bath
-            </Text>
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              experience, tell us about
-            </Text>
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              yourself! Your response will be kept private.
-            </Text>
+            <CustomCardLocation />
           </View>
           <View style={styles.buttonContainer}>
             {/* Previous Button */}
@@ -38,7 +29,7 @@ const PollSecondScreen = () => {
               <NavigationButton
                 onPress={() => {
                   console.log("Previous Pressed");
-                  navigation.navigate("PollFirstScreen");
+                  navigation.navigate("PollSecondScreen");
                 }}
                 text="Previous"
                 buttonColor="#EDBF47"
@@ -49,7 +40,7 @@ const PollSecondScreen = () => {
               <NavigationButton
                 onPress={() => {
                   console.log("Next Pressed");
-                  navigation.navigate("PollThirdScreen");
+                  navigation.navigate("PollSeventhScreen");
                 }}
                 text="Next"
                 buttonColor="#EDBF47"
@@ -105,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PollSecondScreen;
+export default PollThirdScreen;

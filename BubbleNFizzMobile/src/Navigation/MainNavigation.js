@@ -7,6 +7,8 @@ import LoginScreen from "../Auth/LoginScreen";
 import RegisterScreen from "../Auth/RegisterScreen";
 import PollFirstScreen from "../Auth/PollFirstScreen";
 import PollSecondScreen from "../Auth/PollSecondScreen";
+import PollThirdScreen from "../Auth/PollThirdScreen";
+import PollSeventhScreen from "../Auth/PollSeventhScreen";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -21,6 +23,11 @@ const AuthStackScreen = () => {
       <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
       <AuthStack.Screen name="PollFirstScreen" component={PollFirstScreen} />
       <AuthStack.Screen name="PollSecondScreen" component={PollSecondScreen} />
+      <AuthStack.Screen name="PollThirdScreen" component={PollThirdScreen} />
+      <AuthStack.Screen
+        name="PollSeventhScreen"
+        component={PollSeventhScreen}
+      />
     </AuthStack.Navigator>
   );
 };
@@ -49,6 +56,11 @@ export default function MainNavigation() {
         <AuthStack.Screen
           name="PollSecondScreen"
           component={PollSecondScreen}
+        />
+        <AuthStack.Screen name="PollThirdScreen" component={PollThirdScreen} />
+        <AuthStack.Screen
+          name="PollSeventhScreen"
+          component={PollSeventhScreen}
         />
         <AuthStack.Screen name="Home" component={HomeScreen} />
       </AuthStack.Navigator>

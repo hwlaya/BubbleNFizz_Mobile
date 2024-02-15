@@ -1,99 +1,107 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Image, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import Background from "../components/Background";
 import { Input } from "@ui-kitten/components";
 import { Text, TextInput, Button } from "react-native-paper";
+import PollHeader from "../components/PollHeader";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
+
+  const { width, height } = Dimensions.get("window");
+
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <View style={styles.headerContainer}>
-        <Text
-          style={{ fontFamily: "Poppins-ExtraBold" }}
-          variant="displayMedium"
-        >
-          Bubble N Fizz
-        </Text>
-      </View>
+      <PollHeader />
       <View style={styles.container}>
-        <Text style={{ fontFamily: "Poppins-Light" }} variant="headlineMedium">
-          {" "}
-          CREATE ACCOUNT{" "}
-        </Text>
-        <View style={styles.bodyContainer}>
-          <Text style={styles.inputText} variant="bodySmall">
-            {" "}
-            FIRST NAME{" "}
-          </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-          <Text style={styles.inputText} variant="bodySmall">
-            {" "}
-            LAST NAME{" "}
-          </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-          <Text style={styles.inputText} variant="bodySmall">
-            {" "}
-            EMAIL ADDRESS{" "}
-          </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-          <Text style={styles.inputText} variant="bodySmall">
-            {" "}
-            PASSWORD{" "}
-          </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            secureTextEntry
-            right={<TextInput.Icon icon="eye" />}
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-          <Text style={styles.inputText} variant="bodySmall">
-            {" "}
-            CONFIRM PASSWORD{" "}
-          </Text>
-          <TextInput
-            style={styles.input}
-            mode="flat"
-            outlineColor="white"
-            secureTextEntry
-            right={<TextInput.Icon icon="eye" />}
-            onFocus={() => console.log("Focused")}
-            onBlur={() => console.log("Blurred")}
-          />
-        </View>
-        <View style={{ alignSelf: "center" }}>
-          <Button
-            mode="elevated"
-            buttonColor="#EDBF47"
-            onPress={() => {
-              console.log("Login Pressed");
-              navigation.navigate("InitialLoginScreen");
-            }}
+        <View style={[styles.box, { width: width * 1, height: height * 0.5 }]}>
+          <Text
+            style={{ fontFamily: "Poppins-Light" }}
+            variant="headlineMedium"
           >
-            <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
-          </Button>
+            {" "}
+            CREATE ACCOUNT{" "}
+          </Text>
+          <View style={styles.bodyContainer}>
+            <Text style={styles.inputText} variant="bodySmall">
+              {" "}
+              FIRST NAME{" "}
+            </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <Text style={styles.inputText} variant="bodySmall">
+              {" "}
+              LAST NAME{" "}
+            </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <Text style={styles.inputText} variant="bodySmall">
+              {" "}
+              EMAIL ADDRESS{" "}
+            </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <Text style={styles.inputText} variant="bodySmall">
+              {" "}
+              PASSWORD{" "}
+            </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              secureTextEntry
+              right={<TextInput.Icon icon="eye" />}
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <Text style={styles.inputText} variant="bodySmall">
+              {" "}
+              CONFIRM PASSWORD{" "}
+            </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              secureTextEntry
+              right={<TextInput.Icon icon="eye" />}
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+          </View>
+          <View style={{ alignSelf: "center" }}>
+            <Button
+              mode="elevated"
+              buttonColor="#EDBF47"
+              onPress={() => {
+                console.log("Login Pressed");
+                navigation.navigate("InitialLoginScreen");
+              }}
+            >
+              <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
+            </Button>
+          </View>
         </View>
       </View>
     </Background>
@@ -107,6 +115,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  box: {
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
   },

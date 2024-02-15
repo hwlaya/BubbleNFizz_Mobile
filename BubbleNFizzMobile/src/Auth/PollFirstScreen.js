@@ -1,54 +1,45 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
-import { Text, Button } from "react-native-paper";
+import { Text } from "react-native-paper";
+import PollHeader from "../components/PollHeader";
+import NavigationButton from "../components/NavigationButton";
 
 const PollFirstScreen = () => {
   const navigation = useNavigation();
+  const windowWidth = useWindowDimensions().width;
+
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <View style={styles.headerContainer}>
-        <Text
-          style={{ fontFamily: "Poppins-ExtraBold" }}
-          variant="displayMedium"
-        >
-          Bubble N Fizz
-        </Text>
-      </View>
+      <PollHeader />
       <View style={styles.container}>
-        <Text
-          style={{
-            fontFamily: "Poppins-SemiBold",
-            fontSize: 34,
-            color: "#EDBF47",
-          }}
-          variant="displaySmall"
-        >
-          {" "}
-          Hi
-        </Text>
-        <Text
-          style={{
-            fontFamily: "LexendExa-ExtraLight",
-            fontSize: 24,
-            alignSelf: "center",
-          }}
-        >
-          To get the best Bath experience, tell us about yourself! Your response
-          will be kept private.
-        </Text>
-        <View style={{ alignSelf: "center" }}>
-          <Button
-            mode="elevated"
-            buttonColor="#EDBF47"
-            onPress={() => {
-              console.log("Next Pressed");
-              navigation.navigate("PollSecondScreen");
-            }}
-          >
-            <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>Next</Text>
-          </Button>
+        <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
+          <View style={styles.bodyContainer}>
+            <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+              Hi
+            </Text>
+            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
+              To get the best Bath
+            </Text>
+            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
+              experience, tell us about
+            </Text>
+            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
+              yourself! Your response will be kept private.
+            </Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            {/* ReusableButton for Next */}
+            <NavigationButton
+              onPress={() => {
+                console.log("Next Pressed");
+                navigation.navigate("PollSecondScreen");
+              }}
+              text="Next"
+              buttonColor="#EDBF47"
+            />
+          </View>
         </View>
       </View>
     </Background>
@@ -56,19 +47,33 @@ const PollFirstScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    padding: 10,
-    marginTop: 20,
-  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
-  bodyContainer: {
-    margin: 20,
+  contentContainer: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  bodyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: "10%",
+  },
+  title: {
+    fontFamily: "Poppins-SemiBold",
+    fontSize: 34,
+    color: "#EDBF47",
+  },
+  textStyle: {
+    fontFamily: "LexendExa-ExtraLight",
+    textAlign: "center",
+  },
+  buttonContainer: {
+    marginBottom: "5%",
   },
 });
 
