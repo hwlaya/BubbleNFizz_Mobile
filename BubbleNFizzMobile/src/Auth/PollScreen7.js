@@ -4,6 +4,7 @@ import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import Background from "../components/Background";
 import { Text, Button } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
+import NavigationButton from "../components/NavigationButton";
 
 const PollScreen7 = () => {
   const navigation = useNavigation();
@@ -56,6 +57,29 @@ const PollScreen7 = () => {
           </View>
         </View>
       </View>
+
+      <View style={styles.buttonContainer}>
+        {/* Previous Button */}
+        <NavigationButton
+          onPress={() => {
+            console.log("Previous Pressed");
+            navigation.navigate("PollScreen6");
+          }}
+          text="Back"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
+        {/* Next Button */}
+        <NavigationButton
+          onPress={() => {
+            console.log("Next Pressed");
+            navigation.navigate("PollScreen8");
+          }}
+          text="Next"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
+      </View>
     </Background>
   );
 };
@@ -69,6 +93,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    width: "150%",
+  },
+  button: {
+    flex: 1,
+    marginHorizontal: 10,
   },
   box: {
     backgroundColor: "white",

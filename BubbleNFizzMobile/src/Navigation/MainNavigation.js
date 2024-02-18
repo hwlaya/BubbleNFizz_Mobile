@@ -15,6 +15,7 @@ import PollScreen7 from "../Auth/PollScreen7";
 import PollScreen10 from "../Auth/PollScreen10";
 import PollScreen9 from "../Auth/PollScreen9";
 import PollScreen8 from "../Auth/PollScreen8";
+import PollProfileScreen from "../Auth/PollProfileScreen";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -36,7 +37,11 @@ const AuthStackScreen = () => {
       <AuthStack.Screen name="PollScreen7" component={PollScreen7} />
       <AuthStack.Screen name="PollScreen8" component={PollScreen9} />
       <AuthStack.Screen name="PollScreen9" component={PollScreen9} />
-      <AuthStack.Screen name="PollScreen10" component={PollScreen10} />
+      <AuthStack.Screen name="PollScreen9" component={PollScreen9} />
+      <AuthStack.Screen
+        name="PollProfileScreen"
+        component={PollProfileScreen}
+      />
     </AuthStack.Navigator>
   );
 };
@@ -70,6 +75,10 @@ export default function MainNavigation() {
         <AuthStack.Screen name="PollScreen7" component={PollScreen7} />
         <AuthStack.Screen name="PollScreen8" component={PollScreen8} />
         <AuthStack.Screen name="PollScreen9" component={PollScreen9} />
+        <AuthStack.Screen
+          name="PollProfileScreen"
+          component={PollProfileScreen}
+        />
         <AuthStack.Screen name="PollScreen10" component={PollScreen10} />
 
         <AuthStack.Screen name="Home" component={HomeScreen} />
