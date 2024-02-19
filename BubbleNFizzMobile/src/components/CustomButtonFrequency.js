@@ -1,39 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import { Button, Text } from "react-native-paper";
 
-const CustomButtonAgeBracket = () => {
+const CustomButtonFrequency = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
+  const [selectedDay, setSelectedDay] = useState(null);
+
+  const handleSelect = (day) => {
+    console.log("Selected Bath Day:", day);
+    setSelectedDay(day);
+  };
+
+  const renderButton = (label) => {
+    const isActive = selectedDay === label;
+    return (
+      <View style={{ padding: 10 }}>
+        <Button
+          mode="contained"
+          buttonColor="#EDBF47"
+          style={[
+            styles.buttonStyle,
+            { backgroundColor: isActive ? "#EDBF47" : "grey" },
+          ]}
+          onPress={() => handleSelect(label)}
+        >
+          <Text
+            style={[
+              styles.textStyle,
+              { color: isActive ? "white" : "#EDBF47" },
+            ]}
+          >
+            {label}
+          </Text>
+        </Button>
+      </View>
+    );
+  };
+
   return (
-    <View style={styles.buttonContainer}>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>1 Day</Text>
-        </Button>
-      </View>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>2 Days</Text>
-        </Button>
-      </View>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>3 Days</Text>
-        </Button>
-      </View>
+    <View style={[styles.buttonContainer, { width: windowWidth }]}>
+      {renderButton("1 Day")}
+      {renderButton("2 Day")}
+      {renderButton("3 Day")}
     </View>
   );
 };
@@ -60,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CustomButtonAgeBracket;
+export default CustomButtonFrequency;

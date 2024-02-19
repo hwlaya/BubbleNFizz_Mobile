@@ -50,7 +50,7 @@ const PollScreen5 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 12,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 34,
     color: "#EDBF47",
     textAlign: "center",
+    marginTop: -50, //NEGATIVE MARGINE BOTTOM
   },
   cardContainer: {
     flexDirection: "row",

@@ -1,61 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   Image,
   useWindowDimensions,
   StyleSheet,
+  TouchableOpacity,
 } from "react-native";
 import { Card } from "react-native-paper";
 
 const CustomCardDesign = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
+  const [selectedDesign, setSelectedDesign] = useState(null);
+
+  const handleSelect = (design) => {
+    console.log("Selected Design:", design);
+    setSelectedDesign(design);
+  };
+
+  const renderCard = (description) => {
+    const isActive = selectedDesign === description;
+    return (
+      <TouchableOpacity onPress={() => handleSelect(description)}>
+        <View>
+          <Card
+            style={[
+              styles.card,
+              { borderWidth: 2, borderColor: isActive ? "#EDBF47" : "white" },
+            ]}
+          >
+            <Image
+              source={require("../assets/images/bg_object2.png")}
+              resizeMode="cover"
+              style={styles.cardImage}
+            />
+            <Text numberOfLines={4} style={styles.cardLabel}>
+              {description}
+            </Text>
+          </Card>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <View style={styles.cardContainer}>
-      <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
-        <Text numberOfLines={4} style={styles.cardLabel}>
-          Vibrant colors are present in the product
-        </Text>
-      </Card>
-      <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
-        <Text numberOfLines={4} style={styles.cardLabel}>
-          Colors present in the product are nonchalant
-        </Text>
-      </Card>
-      <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
-        <Text numberOfLines={4} style={styles.cardLabel}>
-          Vivid and bold colors are present in the product
-        </Text>
-      </Card>
-      <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
-        <Text numberOfLines={4} style={styles.cardLabel}>
-          Product only has a single tone of color
-        </Text>
-      </Card>
+      {renderCard("Vibrant colors are present in the product")}
+      {renderCard("Colors present in the product are nonchalant")}
+      {renderCard("Vivid and bold colors are present in the product")}
+      {renderCard("Product only has a single tone of color")}
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   card: {
-    width: "48%",
+    width: 150,
     marginBottom: 16,
     alignItems: "center",
     padding: 10,
@@ -79,4 +78,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
 export default CustomCardDesign;

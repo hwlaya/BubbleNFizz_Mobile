@@ -1,66 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 const CustomButtonAgeBracket = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
+  const [selectedBracket, setSelectedBracket] = useState(null);
+
+  const handleSelect = (bracket) => {
+    console.log("Selected Age Bracket:", bracket);
+    setSelectedBracket(bracket);
+  };
+
+  const renderButton = (label) => {
+    const isActive = selectedBracket === label;
+    return (
+      <View style={{ padding: 10 }}>
+        <Button
+          mode="contained"
+          buttonColor="#EDBF47"
+          style={[
+            styles.buttonStyle,
+            { backgroundColor: isActive ? "#EDBF47" : "grey" },
+          ]}
+          onPress={() => handleSelect(label)}
+        >
+          <Text
+            style={[
+              styles.textStyle,
+              { color: isActive ? "white" : "#EDBF47" },
+            ]}
+          >
+            {label}
+          </Text>
+        </Button>
+      </View>
+    );
+  };
+
   return (
     <View style={[styles.buttonContainer, { width: windowWidth }]}>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>Under 18</Text>
-        </Button>
-      </View>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>18-24</Text>
-        </Button>
-      </View>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>25-34</Text>
-        </Button>
-      </View>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>35-44</Text>
-        </Button>
-      </View>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>45-55</Text>
-        </Button>
-      </View>
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={styles.buttonStyle}
-        >
-          <Text style={styles.textStyle}>56+</Text>
-        </Button>
-      </View>
+      {renderButton("Under 18")}
+      {renderButton("18-24")}
+      {renderButton("25-34")}
+      {renderButton("35-44")}
+      {renderButton("45-55")}
+      {renderButton("56+")}
     </View>
   );
 };

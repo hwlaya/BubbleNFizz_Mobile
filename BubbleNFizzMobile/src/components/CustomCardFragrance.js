@@ -18,92 +18,97 @@ const CustomCardFragrance = ({ onSelect }) => {
     setSelectedFragrance(fragrance);
     onSelect(fragrance);
   };
-  return (
-    <View style={styles.cardContainer}>
-      <TouchableOpacity onPress={() => handleSelect("Fresh")}>
+
+  const renderCard = (
+    title,
+    label,
+    backgroundColor,
+    description,
+    selectedFragrance
+  ) => {
+    const isActive = selectedFragrance === label;
+    return (
+      <TouchableOpacity onPress={() => handleSelect(title)}>
         <View>
           <Card
             style={[
               styles.card,
-              selectedFragrance === "Fresh" && styles.selectedCard,
+              { borderWidth: 2, borderColor: isActive ? "#EDBF47" : "white" },
             ]}
           >
             <Text numberOfLines={1} style={styles.cardTitle}>
-              Fresh
+              {label}
             </Text>
             <View style={styles.circleContainer}>
-              <View style={[styles.circle, { backgroundColor: "#DAF7A6" }]} />
+              <View
+                style={[styles.circle, { backgroundColor: backgroundColor }]}
+              />
             </View>
-            <Text numberOfLines={4} style={styles.cardLabel}>
-              Comprise of citrus, water and green notes.
+            <Text numberOfLines={6} style={styles.cardLabel}>
+              {description}
             </Text>
           </Card>
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleSelect("Floral")}>
-        <Card style={styles.card}>
-          <Text numberOfLines={1} style={styles.cardTitle}>
-            Floral
-          </Text>
-          <View style={styles.circleContainer}>
-            <View style={[styles.circle, { backgroundColor: "#FF5733" }]} />
-          </View>
-          <Text numberOfLines={4} style={styles.cardLabel}>
-            Sweet and flowery scent such as roses, jasmine, lilies and peonies.
-          </Text>
-        </Card>
-      </TouchableOpacity>
+    );
+  };
 
-      <TouchableOpacity onPress={() => handleSelect("Woody")}>
-        <Card style={styles.card}>
-          <Text numberOfLines={1} style={styles.cardTitle}>
-            Woody
-          </Text>
-          <View style={styles.circleContainer}>
-            <View style={[styles.circle, { backgroundColor: "#FFC300" }]} />
-          </View>
-          <Text numberOfLines={6} style={styles.cardLabel}>
-            Mysterious and captivating scent favoured like cedarwood,
-            sandalwood, vetiver and amber.
-          </Text>
-        </Card>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => handleSelect("Oriental")}>
-        <Card style={styles.card}>
-          <Text numberOfLines={1} style={styles.cardTitle}>
-            Oriental
-          </Text>
-          <View style={styles.circleContainer}>
-            <View style={[styles.circle, { backgroundColor: "#C70039" }]} />
-          </View>
-          <Text numberOfLines={5} style={styles.cardLabel}>
-            Luxurious fragrance family, oriental from floral oriental, soft
-            oriental and woody oriental.
-          </Text>
-        </Card>
-      </TouchableOpacity>
+  return (
+    <View style={styles.cardContainer}>
+      <View style={styles.cardRow}>
+        {renderCard(
+          "Fresh",
+          "Fresh",
+          "#DAF7A6",
+          "Comprise of citrus, water and green notes.",
+          selectedFragrance
+        )}
+        {renderCard(
+          "Floral",
+          "Floral",
+          "#FF5733",
+          "Sweet and flowery scent such as roses, jasmine, lilies and peonies.",
+          selectedFragrance
+        )}
+      </View>
+      <View style={styles.cardRow}>
+        {renderCard(
+          "Woody",
+          "Woody",
+          "#FFC300",
+          "Mysterious and captivating scent favoured like cedarwood, sandalwood, vetiver and amber.",
+          selectedFragrance
+        )}
+        {renderCard(
+          "Oriental",
+          "Oriental",
+          "#C70039",
+          "Luxurious fragrance family, oriental from floral oriental, soft oriental and woody oriental.",
+          selectedFragrance
+        )}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between", // Adjust as needed
-    // Adjust as needed
-    borderWidth: 1,
-    borderColor: "black",
-    width: 300,
-    height: 600,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  cardRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "90%",
+    marginBottom: 12,
+    alignItems: "center",
   },
   card: {
-    width: "53%",
-    marginBottom: 10,
+    width: 150,
     alignItems: "center",
     padding: 10,
-    borderWidth: 2,
-    borderColor: "white",
+    justifyContent: "center",
   },
   selectedCard: {
     borderColor: "#EDBF47",
@@ -125,6 +130,7 @@ const styles = StyleSheet.create({
   cardLabel: {
     fontSize: 14,
     textAlign: "center",
+    flexWrap: "wrap",
   },
 });
 
