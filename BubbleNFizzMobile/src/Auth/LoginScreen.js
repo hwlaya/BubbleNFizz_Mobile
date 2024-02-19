@@ -11,7 +11,8 @@ import Background from "../components/Background";
 import { Input } from "@ui-kitten/components";
 import { Text, TextInput, Button } from "react-native-paper";
 import { UserContext } from "../providers/UserProvider";
-
+import axios from "axios";
+import api from "../../config/api";
 const LoginScreen = () => {
   const navigation = useNavigation();
 
@@ -22,11 +23,21 @@ const LoginScreen = () => {
   const { width, height } = Dimensions.get("window");
 
   const onSubmitLogin = () => {
-    api.post("/login", {
-      email: email,
-      password: password,
-    });
-    console.log(email, password);
+    api
+      .post("/mobilelogin", {
+        email: email,
+        password: password,
+        device_name: "mobile",
+      })
+      .then((response) => {
+        user.user = response.data.user_profile;
+        user.userProfile = response.data.user_profile;
+        navigation.navigate("PollScreen1");
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -53,6 +64,8 @@ const LoginScreen = () => {
               style={styles.input}
               mode="flat"
               outlineColor="white"
+              value={email}
+              onChangeText={setEmail}
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
@@ -62,6 +75,8 @@ const LoginScreen = () => {
               mode="flat"
               outlineColor="white"
               secureTextEntry
+              value={password}
+              onChangeText={setPassword}
               right={<TextInput.Icon icon="eye" />}
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
@@ -81,10 +96,7 @@ const LoginScreen = () => {
             <Button
               mode="elevated"
               buttonColor="#EDBF47"
-              onPress={() => {
-                console.log("Login Pressed");
-                navigation.navigate("PollScreen1");
-              }}
+              onPress={onSubmitLogin}
             >
               <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
             </Button>
