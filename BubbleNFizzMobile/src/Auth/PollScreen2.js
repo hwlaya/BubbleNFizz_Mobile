@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
-import { Card, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardFragrance from "../components/CustomCardFragrance";
@@ -12,6 +12,13 @@ const PollScreen2 = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  const handleSelectOption = (fragrance) => {
+    console.log("Selected fragrance:", fragrance);
+    setSelectedOption(fragrance);
+  };
+
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
@@ -19,7 +26,7 @@ const PollScreen2 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           What is your fragrance type?
         </Text>
-        <CustomCardFragrance />
+        <CustomCardFragrance onSelect={handleSelectOption} />
       </View>
 
       <View style={styles.buttonContainer}>
