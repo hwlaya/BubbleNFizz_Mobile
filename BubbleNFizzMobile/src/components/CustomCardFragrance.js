@@ -21,30 +21,27 @@ const CustomCardFragrance = ({ onSelect }) => {
   return (
     <View style={styles.cardContainer}>
       <TouchableOpacity onPress={() => handleSelect("Fresh")}>
-        <Card
-          style={[
-            styles.card,
-            selectedFragrance === "Fresh" && styles.selectedCard,
-          ]}
-        >
-          <Text numberOfLines={1} style={styles.cardTitle}>
-            Fresh
-          </Text>
-          <View style={styles.circleContainer}>
-            <View style={[styles.circle, { backgroundColor: "#DAF7A6" }]} />
-          </View>
-          <Text numberOfLines={4} style={styles.cardLabel}>
-            Comprise of citrus, water and green notes.
-          </Text>
-        </Card>
+        <View>
+          <Card
+            style={[
+              styles.card,
+              selectedFragrance === "Fresh" && styles.selectedCard,
+            ]}
+          >
+            <Text numberOfLines={1} style={styles.cardTitle}>
+              Fresh
+            </Text>
+            <View style={styles.circleContainer}>
+              <View style={[styles.circle, { backgroundColor: "#DAF7A6" }]} />
+            </View>
+            <Text numberOfLines={4} style={styles.cardLabel}>
+              Comprise of citrus, water and green notes.
+            </Text>
+          </Card>
+        </View>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => handleSelect("Floral")}>
-        <Card
-          style={[
-            styles.card,
-            selectedFragrance === "Floral" && styles.selectedCard,
-          ]}
-        >
+        <Card style={styles.card}>
           <Text numberOfLines={1} style={styles.cardTitle}>
             Floral
           </Text>
@@ -56,13 +53,9 @@ const CustomCardFragrance = ({ onSelect }) => {
           </Text>
         </Card>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => handleSelect("Woody")}>
-        <Card
-          style={[
-            styles.card,
-            selectedFragrance === "Woody" && styles.selectedCard,
-          ]}
-        >
+        <Card style={styles.card}>
           <Text numberOfLines={1} style={styles.cardTitle}>
             Woody
           </Text>
@@ -75,15 +68,10 @@ const CustomCardFragrance = ({ onSelect }) => {
           </Text>
         </Card>
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => handleSelect("Oriental")}>
         <Card style={styles.card}>
-          <Text
-            numberOfLines={1}
-            style={[
-              styles.cardTitle,
-              selectedFragrance === "Oriental" && styles.selectedCard,
-            ]}
-          >
+          <Text numberOfLines={1} style={styles.cardTitle}>
             Oriental
           </Text>
           <View style={styles.circleContainer}>
@@ -101,15 +89,21 @@ const CustomCardFragrance = ({ onSelect }) => {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-around",
+    flexDirection: "column",
+    justifyContent: "space-between", // Adjust as needed
+    // Adjust as needed
+    borderWidth: 1,
+    borderColor: "black",
+    width: 300,
+    height: 600,
   },
   card: {
-    width: "48%",
-    marginBottom: 16,
+    width: "53%",
+    marginBottom: 10,
     alignItems: "center",
     padding: 10,
+    borderWidth: 2,
+    borderColor: "white",
   },
   selectedCard: {
     borderColor: "#EDBF47",
@@ -120,9 +114,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   circle: {
-    width: 100,
-    height: 100,
-    borderRadius: 50, // This makes the View circular
+    width: 80,
+    height: 80,
+    borderRadius: 50,
   },
   cardTitle: {
     fontFamily: "Poppins-SemiBold",
