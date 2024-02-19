@@ -5,11 +5,19 @@ import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardIngredients from "../components/CustomCardIngredients";
+import { useState } from "react";
 
 const PollScreen4 = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
+  const [selectedIngredient, setSelectedIngredient] = useState(null);
+
+  const handleSelectOption = (ingredient) => {
+    console.log("Selected ingredient:", ingredient);
+    setSelectedOption(ingredient);
+  };
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>

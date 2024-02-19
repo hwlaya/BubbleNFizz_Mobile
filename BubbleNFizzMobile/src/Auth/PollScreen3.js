@@ -12,6 +12,13 @@ const PollScreen3 = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const handleSelectOption = (location) => {
+    console.log("Selected location:", location);
+    setSelectedOption(location);
+  };
+
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
@@ -19,7 +26,7 @@ const PollScreen3 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           Where do you live?
         </Text>
-        <CustomCardLocation />
+        <CustomCardLocation onSelect={handleSelectOption} />
       </View>
 
       <View style={styles.buttonContainer}>
