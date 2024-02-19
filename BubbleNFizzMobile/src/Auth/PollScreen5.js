@@ -15,7 +15,7 @@ const PollScreen5 = () => {
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
       <View style={styles.container}>
-        <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+        <Text style={[styles.title, { fontSize: windowWidth * 0.07 }]}>
           What Texture do you prefer?
         </Text>
         <CustomCardTexture />

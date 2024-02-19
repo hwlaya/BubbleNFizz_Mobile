@@ -32,7 +32,7 @@ const CustomCardTexture = () => {
             ]}
           >
             <Image
-              source={require("../assets/images/bg_object2.png")}
+              source={require("../assets/images/login_screen.png")}
               resizeMode="cover"
               style={styles.cardImage}
             />
@@ -67,10 +67,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   card: {
-    width: 150,
+    width: 130,
     marginBottom: 16,
     alignItems: "center",
-    padding: 10,
+    padding: 5,
+    height: 200,
   },
   cardImage: {
     //Manipulate this part if image not showing
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   cardLabel: {
-    fontSize: 14,
+    fontSize: 12,
     textAlign: "center",
   },
 });

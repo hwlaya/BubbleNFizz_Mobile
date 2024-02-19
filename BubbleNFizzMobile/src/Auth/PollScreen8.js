@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 34,
     color: "#EDBF47",
     textAlign: "center",
+    paddingHorizontal: 16,
   },
   buttonContainer: {
     flexDirection: "row",
