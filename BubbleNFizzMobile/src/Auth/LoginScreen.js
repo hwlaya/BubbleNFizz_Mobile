@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -10,11 +10,24 @@ import {
 import Background from "../components/Background";
 import { Input } from "@ui-kitten/components";
 import { Text, TextInput, Button } from "react-native-paper";
+import { UserContext } from "../providers/UserProvider";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
 
+  const user = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const { width, height } = Dimensions.get("window");
+
+  const onSubmitLogin = () => {
+    api.post("/login", {
+      email: email,
+      password: password,
+    });
+    console.log(email, password);
+  };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <View style={styles.headerContainer}>

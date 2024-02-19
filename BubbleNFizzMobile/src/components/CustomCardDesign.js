@@ -3,12 +3,12 @@ import {
   View,
   Text,
   Image,
-  StyleSheet,
   useWindowDimensions,
+  StyleSheet,
 } from "react-native";
 import { Card } from "react-native-paper";
 
-const CustomCardIngredients = () => {
+const CustomCardDesign = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
   return (
@@ -20,7 +20,7 @@ const CustomCardIngredients = () => {
           style={styles.cardImage}
         />
         <Text numberOfLines={4} style={styles.cardLabel}>
-          Grown without the use of synthetic chemicals
+          Vibrant colors are present in the product
         </Text>
       </Card>
       <Card style={styles.card}>
@@ -30,7 +30,7 @@ const CustomCardIngredients = () => {
           style={styles.cardImage}
         />
         <Text numberOfLines={4} style={styles.cardLabel}>
-          Often produced using artificial chemicals
+          Colors present in the product are nonchalant
         </Text>
       </Card>
       <Card style={styles.card}>
@@ -40,7 +40,17 @@ const CustomCardIngredients = () => {
           style={styles.cardImage}
         />
         <Text numberOfLines={4} style={styles.cardLabel}>
-          composed of ingredients that are from nature and not artificial.
+          Vivid and bold colors are present in the product
+        </Text>
+      </Card>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          Product only has a single tone of color
         </Text>
       </Card>
     </View>
@@ -69,4 +79,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default CustomCardIngredients;
+export default CustomCardDesign;

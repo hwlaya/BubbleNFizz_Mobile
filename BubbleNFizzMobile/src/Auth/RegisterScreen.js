@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -14,8 +14,21 @@ import PollHeader from "../components/PollHeader";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
-
   const { width, height } = Dimensions.get("window");
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const onSubmitRegister = () => {
+    console.log(name, email, password);
+
+    api.post("/register", {
+      name: name,
+      email: email,
+      password: password,
+    });
+  };
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -32,18 +45,7 @@ const RegisterScreen = () => {
           <View style={styles.bodyContainer}>
             <Text style={styles.inputText} variant="bodySmall">
               {" "}
-              FIRST NAME{" "}
-            </Text>
-            <TextInput
-              style={styles.input}
-              mode="flat"
-              outlineColor="white"
-              onFocus={() => console.log("Focused")}
-              onBlur={() => console.log("Blurred")}
-            />
-            <Text style={styles.inputText} variant="bodySmall">
-              {" "}
-              LAST NAME{" "}
+              NAME{" "}
             </Text>
             <TextInput
               style={styles.input}

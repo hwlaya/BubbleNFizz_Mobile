@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Text } from "react-native-paper";
@@ -10,6 +10,20 @@ const PollScreen1 = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
 
+  const [gender, setGender] = useState("");
+  const handleUserPoll = () => {
+    api
+      .post("/addUserPoll", {
+        user_id: "1",
+        gender: "gender",
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />

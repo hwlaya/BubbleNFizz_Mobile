@@ -1,65 +1,93 @@
 import React from "react";
-import { View, Text, Image, useWindowDimensions } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  useWindowDimensions,
+  StyleSheet,
+} from "react-native";
 import { Card } from "react-native-paper";
 
 const CustomCardLocation = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-evenly",
-        flexWrap: "wrap",
-      }}
-    >
-      <Card
-        style={{
-          width: windowWidth * 0.4,
-          height: windowHeight * 0.15,
-          borderRadius: 10,
-        }}
-      >
-        <Text>Dry or desert climate</Text>
+    <View style={styles.cardContainer}>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          Dry or desert climate
+        </Text>
       </Card>
-      <Card
-        style={{
-          width: windowWidth * 0.4,
-          height: windowHeight * 0.15,
-          borderRadius: 10,
-        }}
-      >
-        <Text>Hot/humid in the summer, moderate to severely cold winters.</Text>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          Hot/humid in the summer, moderate to severely cold winters.
+        </Text>
       </Card>
-      <Card
-        style={{
-          width: windowWidth * 0.4,
-          height: windowHeight * 0.15,
-          borderRadius: 10,
-        }}
-      >
-        <Text>Mountain/high altitude environment.</Text>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          City/Urban Area
+        </Text>
       </Card>
-      <Card
-        style={{
-          width: windowWidth * 0.4,
-          height: windowHeight * 0.15,
-          borderRadius: 10,
-        }}
-      >
-        <Text>Oriental</Text>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          Mountain/high altitude environment.
+        </Text>
       </Card>
-      <Card
-        style={{
-          width: windowWidth * 0.4,
-          height: windowHeight * 0.15,
-          borderRadius: 10,
-        }}
-      >
-        <Text>Coastal/beach area</Text>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          Coastal/beach area
+        </Text>
       </Card>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  cardContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+  },
+  card: {
+    width: "48%",
+    marginBottom: 16,
+    alignItems: "center",
+    padding: 10,
+  },
+  cardImage: {
+    //Manipulate this part if image not showing
+    height: 100,
+    width: 100,
+    marginBottom: 10,
+  },
+  cardLabel: {
+    fontSize: 14,
+    textAlign: "center",
+  },
+});
 export default CustomCardLocation;

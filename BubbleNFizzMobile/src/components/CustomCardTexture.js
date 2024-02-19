@@ -3,12 +3,12 @@ import {
   View,
   Text,
   Image,
-  StyleSheet,
   useWindowDimensions,
+  StyleSheet,
 } from "react-native";
 import { Card } from "react-native-paper";
 
-const CustomCardIngredients = () => {
+const CustomCardTexture = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
   return (
@@ -20,7 +20,8 @@ const CustomCardIngredients = () => {
           style={styles.cardImage}
         />
         <Text numberOfLines={4} style={styles.cardLabel}>
-          Grown without the use of synthetic chemicals
+          Lightweight skin care product with a high concentration of active
+          ingredients
         </Text>
       </Card>
       <Card style={styles.card}>
@@ -30,7 +31,7 @@ const CustomCardIngredients = () => {
           style={styles.cardImage}
         />
         <Text numberOfLines={4} style={styles.cardLabel}>
-          Often produced using artificial chemicals
+          A care that acts in depth despite its application on the surface
         </Text>
       </Card>
       <Card style={styles.card}>
@@ -40,12 +41,33 @@ const CustomCardIngredients = () => {
           style={styles.cardImage}
         />
         <Text numberOfLines={4} style={styles.cardLabel}>
-          composed of ingredients that are from nature and not artificial.
+          The perfect consistency if you like layered products
+        </Text>
+      </Card>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          *INSERT DESCRIPTION HERE*
+        </Text>
+      </Card>
+      <Card style={styles.card}>
+        <Image
+          source={require("../assets/images/bg_object2.png")}
+          resizeMode="cover"
+          style={styles.cardImage}
+        />
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          *INSERT DESCRIPTION HERE*
         </Text>
       </Card>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
@@ -69,4 +91,4 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-export default CustomCardIngredients;
+export default CustomCardTexture;

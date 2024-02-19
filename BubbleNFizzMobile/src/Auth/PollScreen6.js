@@ -5,42 +5,44 @@ import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
-import CustomCardLocation from "../components/CustomCardLocation";
+import CustomCardDesign from "../components/CustomCardDesign";
 
 const PollScreen6 = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
-      <View>
-        <Text>Page 6</Text>
+      <View style={styles.container}>
+        <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+          What design do you prefer?
+        </Text>
+        <CustomCardDesign />
       </View>
 
       <View style={styles.buttonContainer}>
         {/* Previous Button */}
-        <View style={styles.previousButtonContainer}>
-          <NavigationButton
-            onPress={() => {
-              console.log("Previous Pressed");
-              navigation.navigate("PollScreen5");
-            }}
-            text="Previous"
-            buttonColor="#EDBF47"
-          />
-        </View>
+        <NavigationButton
+          onPress={() => {
+            console.log("Previous Pressed");
+            navigation.navigate("PollScreen5");
+          }}
+          text="Back"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
         {/* Next Button */}
-        <View style={styles.nextButtonContainer}>
-          <NavigationButton
-            onPress={() => {
-              console.log("Next Pressed");
-              navigation.navigate("PollScreen7");
-            }}
-            text="Next"
-            buttonColor="#EDBF47"
-          />
-        </View>
+        <NavigationButton
+          onPress={() => {
+            console.log("Next Pressed");
+            navigation.navigate("PollScreen7");
+          }}
+          text="Next"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
       </View>
     </Background>
   );
@@ -53,40 +55,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bodyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: "10%",
-  },
   title: {
     fontFamily: "Poppins-SemiBold",
     fontSize: 34,
     color: "#EDBF47",
     textAlign: "center",
   },
-  textStyle: {
-    fontFamily: "LexendExa-ExtraLight",
-    textAlign: "center",
-  },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: "5%",
-    paddingHorizontal: "10%",
+    justifyContent: "space-around",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    width: "150%",
   },
-  previousButtonContainer: {
+  button: {
     flex: 1,
-    alignItems: "flex-start",
-  },
-  nextButtonContainer: {
-    flex: 1,
-    alignItems: "flex-end",
+    marginHorizontal: 10,
   },
 });
 

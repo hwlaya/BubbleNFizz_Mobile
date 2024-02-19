@@ -16,47 +16,33 @@ const PollScreen2 = () => {
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
       <View style={styles.container}>
-        <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
-          <View style={styles.bodyContainer}>
-            <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
-              What is your fragrance type?
-            </Text>
-            <CustomCardFragrance />
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              To get the best Bath
-            </Text>
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              experience, tell us about
-            </Text>
-            <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
-              yourself! Your response will be kept private.
-            </Text>
-          </View>
-          <View style={styles.buttonContainer}>
-            {/* Previous Button */}
-            <View style={styles.previousButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Previous Pressed");
-                  navigation.navigate("PollScreen1");
-                }}
-                text="Previous"
-                buttonColor="#EDBF47"
-              />
-            </View>
-            {/* Next Button */}
-            <View style={styles.nextButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Next Pressed");
-                  navigation.navigate("PollScreen3");
-                }}
-                text="Next"
-                buttonColor="#EDBF47"
-              />
-            </View>
-          </View>
-        </View>
+        <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+          What is your fragrance type?
+        </Text>
+        <CustomCardFragrance />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        {/* Previous Button */}
+        <NavigationButton
+          onPress={() => {
+            console.log("Previous Pressed");
+            navigation.navigate("PollScreen1");
+          }}
+          text="Back"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
+        {/* Next Button */}
+        <NavigationButton
+          onPress={() => {
+            console.log("Next Pressed");
+            navigation.navigate("PollScreen3");
+          }}
+          text="Next"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
       </View>
     </Background>
   );
@@ -67,17 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bodyContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: "10%",
+    padding: 10,
   },
   title: {
     fontFamily: "Poppins-SemiBold",
@@ -85,23 +61,16 @@ const styles = StyleSheet.create({
     color: "#EDBF47",
     textAlign: "center",
   },
-  textStyle: {
-    fontFamily: "LexendExa-ExtraLight",
-    textAlign: "center",
-  },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: "5%",
-    paddingHorizontal: "10%",
+    justifyContent: "space-around",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    width: "150%",
   },
-  previousButtonContainer: {
+  button: {
     flex: 1,
-    alignItems: "flex-start",
-  },
-  nextButtonContainer: {
-    flex: 1,
-    alignItems: "flex-end",
+    marginHorizontal: 10,
   },
 });
 

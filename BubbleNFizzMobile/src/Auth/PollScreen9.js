@@ -35,7 +35,7 @@ const PollScreen9 = () => {
           <NavigationButton
             onPress={() => {
               console.log("Next Pressed");
-              navigation.navigate("PollProfileScreen");
+              navigation.navigate("PollScreen10");
             }}
             text="Next"
             buttonColor="#EDBF47"

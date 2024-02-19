@@ -60,6 +60,19 @@ const PollScreen = () => {
               yourself! Your response will be kept private.
             </Text>
           </View>
+          <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+            What is your fragrance type?
+          </Text>
+          <CustomCardFragrance />
+          <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
+            To get the best Bath
+          </Text>
+          <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
+            experience, tell us about
+          </Text>
+          <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
+            yourself! Your response will be kept private.
+          </Text>
           <View style={{ alignSelf: "flex-end", paddingBottom: "20%" }}>
             <Button
               mode="elevated"
