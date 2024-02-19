@@ -5,7 +5,7 @@ import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
-import CustomCardLocation from "../components/CustomCardLocation";
+import CustomCardBathType from "../components/CustomCardBathType";
 
 const PollScreen9 = () => {
   const navigation = useNavigation();
@@ -14,8 +14,11 @@ const PollScreen9 = () => {
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
-      <View>
-        <Text>Page 9</Text>
+      <View style={styles.container}>
+        <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+          What type of bath do you prefer?
+        </Text>
+        <CustomCardBathType />
       </View>
 
       <View style={styles.buttonContainer}>

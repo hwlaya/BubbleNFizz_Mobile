@@ -10,7 +10,7 @@ import Background from "../components/Background";
 import { Text, Button } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
-import CustomButtonAgeBracket from "../components/CustomButtonAgeBracket";
+import CustomButtonFrequency from "../components/CustomButtonFrequency";
 
 const PollScreen8 = () => {
   const navigation = useNavigation();

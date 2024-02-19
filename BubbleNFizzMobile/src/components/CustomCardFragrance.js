@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  useWindowDimensions,
-  StyleSheet,
-} from "react-native";
+import { View, Text, useWindowDimensions, StyleSheet } from "react-native";
 import { Card } from "react-native-paper";
 
 const CustomCard = () => {
@@ -14,48 +8,55 @@ const CustomCard = () => {
   return (
     <View style={styles.cardContainer}>
       <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
-        <Text numberOfLines={4} style={styles.cardLabel}>
+        <Text numberOfLines={1} style={styles.cardTitle}>
           Fresh
         </Text>
+        <View style={styles.circleContainer}>
+          <View style={[styles.circle, { backgroundColor: "#DAF7A6" }]} />
+        </View>
+        <Text numberOfLines={4} style={styles.cardLabel}>
+          Comprise of citrus, water and green notes.
+        </Text>
       </Card>
       <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
-        <Text numberOfLines={4} style={styles.cardLabel}>
+        <Text numberOfLines={1} style={styles.cardTitle}>
           Floral
         </Text>
-      </Card>
-      <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
+        <View style={styles.circleContainer}>
+          <View style={[styles.circle, { backgroundColor: "#FF5733" }]} />
+        </View>
         <Text numberOfLines={4} style={styles.cardLabel}>
-          Woody
+          Sweet and flowery scent such as roses, jasmine, lilies and peonies.
         </Text>
       </Card>
       <Card style={styles.card}>
-        <Image
-          source={require("../assets/images/bg_object2.png")}
-          resizeMode="cover"
-          style={styles.cardImage}
-        />
-        <Text numberOfLines={4} style={styles.cardLabel}>
+        <Text numberOfLines={1} style={styles.cardTitle}>
+          Woody
+        </Text>
+        <View style={styles.circleContainer}>
+          <View style={[styles.circle, { backgroundColor: "#FFC300" }]} />
+        </View>
+        <Text numberOfLines={6} style={styles.cardLabel}>
+          Mysterious and captivating scent favoured like cedarwood, sandalwood,
+          vetiver and amber.
+        </Text>
+      </Card>
+      <Card style={styles.card}>
+        <Text numberOfLines={1} style={styles.cardTitle}>
           Oriental
+        </Text>
+        <View style={styles.circleContainer}>
+          <View style={[styles.circle, { backgroundColor: "#C70039" }]} />
+        </View>
+        <Text numberOfLines={5} style={styles.cardLabel}>
+          Luxurious fragrance family, oriental from floral oriental, soft
+          oriental and woody oriental.
         </Text>
       </Card>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   cardContainer: {
     flexDirection: "row",
@@ -68,15 +69,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-  cardImage: {
-    //Manipulate this part if image not showing
-    height: 100,
-    width: 100,
+  circleContainer: {
+    justifyContent: "center",
+    alignItems: "center",
     marginBottom: 10,
+  },
+  circle: {
+    width: 100,
+    height: 100,
+    borderRadius: 50, // This makes the View circular
+  },
+  cardTitle: {
+    fontFamily: "Poppins-SemiBold",
+    textAlign: "center",
   },
   cardLabel: {
     fontSize: 14,
     textAlign: "center",
   },
 });
+
 export default CustomCard;
