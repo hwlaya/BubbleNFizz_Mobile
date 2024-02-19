@@ -6,7 +6,7 @@ const CustomButtonAgeBracket = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
   return (
-    <View style={styles.buttonContainer}>
+    <View style={[styles.buttonContainer, { width: windowWidth }]}>
       <View style={{ padding: 10 }}>
         <Button
           mode="contained"
@@ -67,11 +67,11 @@ const CustomButtonAgeBracket = () => {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flex: 1,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 10, // Adjust margin top if necessary
   },
   buttonStyle: {
     height: 50,
