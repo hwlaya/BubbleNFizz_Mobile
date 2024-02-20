@@ -109,6 +109,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     justifyContent: "center",
+    height: 250,
   },
   selectedCard: {
     borderColor: "#EDBF47",
