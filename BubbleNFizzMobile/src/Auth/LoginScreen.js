@@ -27,7 +27,6 @@ const LoginScreen = () => {
       .post("/mobilelogin", {
         email: email,
         password: password,
-        device_name: "mobile",
       })
       .then((response) => {
         user.user = response.data.user_profile;
@@ -96,7 +95,10 @@ const LoginScreen = () => {
             <Button
               mode="elevated"
               buttonColor="#EDBF47"
-              onPress={onSubmitLogin}
+              // onPress={onSubmitLogin}
+              onPress={() => {
+                navigation.navigate("PollScreen1");
+              }}
             >
               <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
             </Button>
