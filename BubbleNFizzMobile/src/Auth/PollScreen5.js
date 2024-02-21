@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
     fontSize: 34,
     color: "#EDBF47",
     textAlign: "center",
-    marginTop: -50, //NEGATIVE MARGINE BOTTOM
   },
   cardContainer: {
     flexDirection: "row",

@@ -26,6 +26,13 @@ const fetchFonts = () => {
     "Poppins-Light": require("./src/assets/fonts/Poppins-Light.ttf"),
     "Poppins-SemiBold": require("./src/assets/fonts/Poppins-SemiBold.ttf"),
     "LexendExa-ExtraLight": require("./src/assets/fonts/LexendExa-ExtraLight.ttf"),
+    "PaytoneOne-Regular": require("./src/assets/fonts/PaytoneOne-Regular.ttf"),
+    "Rubik-Regular": require("./src/assets/fonts/Rubik-Regular.ttf"),
+    "Inconsolata-Light": require("./src/assets/fonts/Inconsolata-Light.ttf"),
+    "Inconsolata-Regular": require("./src/assets/fonts/Inconsolata-Regular.ttf"),
+    "Inconsolata-SemiBold": require("./src/assets/fonts/Inconsolata-SemiBold.ttf"),
+    "Inconsolata-Bold": require("./src/assets/fonts/Inconsolata-Bold.ttf"),
+    "LilitaOne-Regular": require("./src/assets/fonts/LilitaOne-Regular.ttf"),
   });
 };
 

@@ -24,37 +24,34 @@ const PollScreen4 = () => {
       <PollHeader />
       <View style={styles.container}>
         <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
-          <View style={styles.bodyContainer}>
-            <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
-              What Ingredients do you prefer?
-            </Text>
-            <CustomCardIngredients />
-          </View>
-          <View style={styles.buttonContainer}>
-            {/* Previous Button */}
-            <View style={styles.previousButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Previous Pressed");
-                  navigation.navigate("PollScreen3");
-                }}
-                text="Previous"
-                buttonColor="#EDBF47"
-              />
-            </View>
-            {/* Next Button */}
-            <View style={styles.nextButtonContainer}>
-              <NavigationButton
-                onPress={() => {
-                  console.log("Next Pressed");
-                  navigation.navigate("PollScreen5");
-                }}
-                text="Next"
-                buttonColor="#EDBF47"
-              />
-            </View>
-          </View>
+          <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+            What Ingredients do you prefer?
+          </Text>
+          <CustomCardIngredients />
         </View>
+      </View>
+
+      <View style={styles.buttonContainer}>
+        {/* Previous Button */}
+        <NavigationButton
+          onPress={() => {
+            console.log("Previous Pressed");
+            navigation.navigate("PollScreen3");
+          }}
+          text="Back"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
+        {/* Next Button */}
+        <NavigationButton
+          onPress={() => {
+            console.log("Next Pressed");
+            navigation.navigate("PollScreen5");
+          }}
+          text="Next"
+          buttonColor="#EDBF47"
+          style={styles.button}
+        />
       </View>
     </Background>
   );
@@ -63,20 +60,18 @@ const PollScreen4 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
+    padding: 12,
   },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    width: "150%",
   },
-  bodyContainer: {
+  button: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: "10%",
+    marginHorizontal: 10,
   },
   title: {
     fontFamily: "Poppins-SemiBold",
@@ -84,23 +79,26 @@ const styles = StyleSheet.create({
     color: "#EDBF47",
     textAlign: "center",
   },
-  textStyle: {
-    fontFamily: "LexendExa-ExtraLight",
-    textAlign: "center",
-  },
-  buttonContainer: {
+  cardContainer: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: "5%",
-    paddingHorizontal: "10%",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
   },
-  previousButtonContainer: {
-    flex: 1,
-    alignItems: "flex-start",
+  card: {
+    width: "48%",
+    marginBottom: 16,
+    alignItems: "center",
+    padding: 10,
   },
-  nextButtonContainer: {
-    flex: 1,
-    alignItems: "flex-end",
+  cardImage: {
+    //Manipulate this part if image not showing
+    height: 100,
+    width: 100,
+    marginBottom: 10,
+  },
+  cardLabel: {
+    fontSize: 14,
+    textAlign: "center",
   },
 });
 

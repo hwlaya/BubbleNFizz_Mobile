@@ -61,7 +61,7 @@ const InitialLoginScreen = () => {
                 style={[styles.button, styles.loginButton]}
                 onPress={() => {
                   console.log("Login Pressed");
-                  navigation.navigate("LoginScreen");
+                  navigation.navigate("IndexScreen");
                 }}
               >
                 <Text style={styles.textStyle4}>Login</Text>
