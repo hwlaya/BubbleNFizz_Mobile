@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
@@ -9,14 +9,22 @@ import CustomCardFragrance from "../components/CustomCardFragrance";
 
 const PollScreen2 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedFragrance, setSelectedFragrance] = useState(null);
 
-  const handleSelectOption = (fragrance) => {
-    console.log("Selected fragrance:", fragrance);
-    setSelectedOption(fragrance);
+  const { gender } = route.params;
+
+  const handleSelectFragrance = (fragrance) => {
+    console.log("Selected gender:", gender, "Selected fragrance:", fragrance);
+    setSelectedFragrance(fragrance);
+    navigation.navigate("PollScreen3", {
+      gender: gender,
+      fragrance: selectedFragrance,
+    });
   };
 
   return (
@@ -26,7 +34,7 @@ const PollScreen2 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           What is your fragrance type?
         </Text>
-        <CustomCardFragrance onSelect={handleSelectOption} />
+        <CustomCardFragrance onSelect={handleSelectFragrance} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -42,10 +50,7 @@ const PollScreen2 = () => {
         />
         {/* Next Button */}
         <NavigationButton
-          onPress={() => {
-            console.log("Next Pressed");
-            navigation.navigate("PollScreen3");
-          }}
+          onPress={handleSelectFragrance}
           text="Next"
           buttonColor="#EDBF47"
           style={styles.button}

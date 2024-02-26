@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
@@ -9,14 +9,30 @@ import CustomCardLocation from "../components/CustomCardLocation";
 
 const PollScreen3 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
-  const [selectedOption, setSelectedOption] = useState(null);
+  const { gender } = route.params;
+  const { fragrance } = route.params;
 
-  const handleSelectOption = (location) => {
-    console.log("Selected location:", location);
-    setSelectedOption(location);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+
+  const handleSelectLocation = (location) => {
+    console.log(
+      "Selected gender:",
+      gender,
+      "Selected fragrance:",
+      fragrance,
+      "Selected location:",
+      location
+    );
+    setSelectedLocation(location);
+    navigation.navigate("PollScreen3", {
+      gender: gender,
+      fragrance: selectedFragrance,
+    });
   };
 
   return (
@@ -26,7 +42,7 @@ const PollScreen3 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           Where do you live?
         </Text>
-        <CustomCardLocation onSelect={handleSelectOption} />
+        <CustomCardLocation onSelect={handleSelectLocation} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -42,10 +58,7 @@ const PollScreen3 = () => {
         />
         {/* Next Button */}
         <NavigationButton
-          onPress={() => {
-            console.log("Next Pressed");
-            navigation.navigate("PollScreen4");
-          }}
+          onPress={handleSelectLocation}
           text="Next"
           buttonColor="#EDBF47"
           style={styles.button}

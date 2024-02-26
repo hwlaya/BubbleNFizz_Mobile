@@ -15,7 +15,7 @@ const CustomCardTexture = () => {
 
   const [selectedTexture, setSelectedTexture] = useState(null);
 
-  const handleSelect = (texture) => {
+  const handleSelectTexture = (texture) => {
     console.log("Selected Texture:", texture);
     setSelectedTexture(texture);
   };
@@ -23,7 +23,7 @@ const CustomCardTexture = () => {
   const renderCard = (description) => {
     const isActive = selectedTexture === description;
     return (
-      <TouchableOpacity onPress={() => handleSelect(description)}>
+      <TouchableOpacity onPress={() => handleSelectTexture(description)}>
         <View>
           <Card
             style={[

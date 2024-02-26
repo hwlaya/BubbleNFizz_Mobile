@@ -11,6 +11,7 @@ import Background from "../components/Background";
 import { Input } from "@ui-kitten/components";
 import { Text, TextInput, Button } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
+import api from "../../config/api";
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -19,15 +20,23 @@ const RegisterScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cPassword, setCPassword] = useState("");
 
   const onSubmitRegister = () => {
-    console.log(name, email, password);
-
-    api.post("/register", {
-      name: name,
-      email: email,
-      password: password,
-    });
+    api
+      .post("register", {
+        name: name,
+        email: email,
+        password: password,
+        password_confirmation: cPassword,
+      })
+      .then((response) => {
+        console.log(response.data);
+        navigation.navigate("PollScreen1");
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
   };
 
   return (
@@ -51,6 +60,8 @@ const RegisterScreen = () => {
               style={styles.input}
               mode="flat"
               outlineColor="white"
+              value={name}
+              onChangeText={(text) => setName(text)}
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
@@ -62,6 +73,8 @@ const RegisterScreen = () => {
               style={styles.input}
               mode="flat"
               outlineColor="white"
+              value={email}
+              onChangeText={(text) => setEmail(text)}
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
@@ -73,6 +86,8 @@ const RegisterScreen = () => {
               style={styles.input}
               mode="flat"
               outlineColor="white"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
               secureTextEntry
               right={<TextInput.Icon icon="eye" />}
               onFocus={() => console.log("Focused")}
@@ -86,6 +101,8 @@ const RegisterScreen = () => {
               style={styles.input}
               mode="flat"
               outlineColor="white"
+              value={cPassword}
+              onChangeText={(text) => setCPassword(text)}
               secureTextEntry
               right={<TextInput.Icon icon="eye" />}
               onFocus={() => console.log("Focused")}
@@ -96,10 +113,7 @@ const RegisterScreen = () => {
             <Button
               mode="elevated"
               buttonColor="#EDBF47"
-              onPress={() => {
-                console.log("Login Pressed");
-                navigation.navigate("InitialLoginScreen");
-              }}
+              onPress={onSubmitRegister}
             >
               <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
             </Button>

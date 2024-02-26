@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
@@ -6,11 +6,38 @@ import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardBathType from "../components/CustomCardBathType";
+import { api } from "../../config/api";
 
 const PollScreen9 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
+  const { gender } = route.params;
+
+  const handleUserPoll = () => {
+    api
+      .post("/addUserPoll", {
+        user_id: "1",
+        gender: gender,
+        fragrance: fragrance,
+        location: location,
+        ingredients: ingredients,
+        texture: texture,
+        design: design,
+        age_bracket: bracket,
+        frequency: frequency,
+        bath_type: bath,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />

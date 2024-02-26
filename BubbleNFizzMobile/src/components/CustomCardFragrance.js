@@ -14,9 +14,8 @@ const CustomCardFragrance = ({ onSelect }) => {
 
   const [selectedFragrance, setSelectedFragrance] = useState(null);
 
-  const handleSelect = (fragrance) => {
+  const handleSelectFragrance = (fragrance) => {
     setSelectedFragrance(fragrance);
-    onSelect(fragrance);
   };
 
   const renderCard = (
@@ -28,7 +27,7 @@ const CustomCardFragrance = ({ onSelect }) => {
   ) => {
     const isActive = selectedFragrance === label;
     return (
-      <TouchableOpacity onPress={() => handleSelect(title)}>
+      <TouchableOpacity onPress={() => handleSelectFragrance(title)}>
         <View>
           <Card
             style={[

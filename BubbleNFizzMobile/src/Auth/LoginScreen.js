@@ -17,26 +17,31 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
   const user = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("tylerC@gmail");
+  const [password, setPassword] = useState("password");
 
   const { width, height } = Dimensions.get("window");
 
   const onSubmitLogin = () => {
-    api
-      .post("/mobilelogin", {
-        email: email,
-        password: password,
-      })
-      .then((response) => {
-        user.user = response.data.user_profile;
-        user.userProfile = response.data.user_profile;
-        navigation.navigate("PollScreen1");
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    if (email === "" || password === "") {
+      Alert.alert("Please enter email and password");
+      setLoading(false);
+    } else {
+      api
+        .post("/mobilelogin", {
+          email: "email",
+          password: "password",
+        })
+        .then((response) => {
+          user.user = response.data.user_profile;
+          user.userProfile = response.data.user_profile;
+          navigation.navigate("PollScreen1");
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
   };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -82,7 +87,7 @@ const LoginScreen = () => {
             />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("RegisterScreen");
+                navigation.navigate("IndexScreen");
               }}
             >
               <View style={{ flexDirection: "row" }}>

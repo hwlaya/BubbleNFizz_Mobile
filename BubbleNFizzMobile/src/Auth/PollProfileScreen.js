@@ -40,7 +40,7 @@ const PollProfileScreen = () => {
               "Results are in!",
               "Thank you!! Your account is all set. You may now get the best deals our shop has to offer."
             );
-            // navigation.navigate("IndexScreen");
+            navigation.navigate("LoginScreen");
           }}
           text="Next"
           buttonColor="#EDBF47"

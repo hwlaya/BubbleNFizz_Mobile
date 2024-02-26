@@ -1,6 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, StyleSheet, useWindowDimensions } from "react-native";
+import React, { useState, onPress } from "react";
+import {
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+} from "react-native";
 import Background from "../components/Background";
 import { Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
@@ -11,18 +16,11 @@ const PollScreen1 = () => {
   const windowWidth = useWindowDimensions().width;
 
   const [gender, setGender] = useState("");
-  const handleUserPoll = () => {
-    api
-      .post("/addUserPoll", {
-        user_id: "1",
-        gender: "gender",
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+  const handleSelectGender = () => {
+    console.log("Selected gender:", gender);
+    setGender(gender);
+    navigation.navigate("PollScreen2", { gender: gender });
   };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -42,14 +40,36 @@ const PollScreen1 = () => {
             <Text style={[styles.textStyle, { fontSize: windowWidth * 0.05 }]}>
               yourself! Your response will be kept private.
             </Text>
+
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                width: "100%",
+                marginTop: 10,
+              }}
+            >
+              <TouchableOpacity onPress={() => setGender("He")}>
+                <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+                  He
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setGender("She")}>
+                <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+                  She
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setGender("They")}>
+                <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
+                  They
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.buttonContainer}>
             {/* ReusableButton for Next */}
             <NavigationButton
-              onPress={() => {
-                console.log("Next Pressed");
-                navigation.navigate("PollScreen2");
-              }}
+              onPress={handleSelectGender}
               text="Next"
               buttonColor="#EDBF47"
             />
