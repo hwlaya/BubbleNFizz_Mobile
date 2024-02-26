@@ -17,13 +17,6 @@ const PollScreen9 = () => {
   const windowHeight = useWindowDimensions().height;
   const [bath, setBath] = useState(null);
 
-<<<<<<< Updated upstream
-=======
-  const { gender } = route.params;
-  const { fragrance } = route.params;
-  const { location } = route.params;
->>>>>>> Stashed changes
-
   const handleUserPoll = () => {
     api
       .post("/addUserPoll", {
