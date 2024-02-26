@@ -1,10 +1,12 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, useWindowDimensions } from "react-native";
 import { IconButton, Title } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
   const navigation = useNavigation();
+
+  const windowWidth = useWindowDimensions().width;
   return (
     <View
       style={{
@@ -12,8 +14,7 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: "white",
-        marginTop: 20,
-        padding: 10,
+        marginTop: 30,
       }}
     >
       {showMenuIcon && (
@@ -27,6 +28,11 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
       <Title
         onPress={() => {
           console.log(`${title} title pressed`);
+        }}
+        style={{
+          padding: 10,
+          fontFamily: "Poppins-ExtraBold",
+          fontSize: windowWidth * 0.08,
         }}
       >
         {title}

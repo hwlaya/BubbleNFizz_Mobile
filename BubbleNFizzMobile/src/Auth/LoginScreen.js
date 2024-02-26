@@ -13,12 +13,12 @@ import { Text, TextInput, Button } from "react-native-paper";
 import { UserContext } from "../providers/UserProvider";
 import axios from "axios";
 import api from "../../config/api";
+
 const LoginScreen = () => {
   const navigation = useNavigation();
-
   const user = useContext(UserContext);
-  const [email, setEmail] = useState("tylerC@gmail");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("admin@bubblenfizz.com");
+  const [password, setPassword] = useState("admin");
 
   const { width, height } = Dimensions.get("window");
 
@@ -29,14 +29,37 @@ const LoginScreen = () => {
     } else {
       api
         .post("/mobilelogin", {
-          email: "email",
-          password: "password",
+          email: email,
+          password: password,
         })
         .then((response) => {
-          user.user = response.data.user_profile;
-          user.userProfile = response.data.user_profile;
-          navigation.navigate("PollScreen1");
+          // const userRole = response.data.user_profile.role;
           console.log(response.data);
+          // user.user = response.data.user;
+          const userRole = response.data.user.user_role;
+
+          console.log(userRole);
+          if (userRole != 3) {
+            navigation.navigate("AdminDashboardScreen");
+          } else {
+            navigation.navigate("PollScreen1");
+          }
+
+          // if (userRole === 1 || userRole === 2 || userRole === 3) {
+          //   user.user = response.data.user_profile;
+          //   user.userProfile = response.data.user_profile;
+          //   console.log(response.data);
+
+          //   if (userRole === 1) {
+          //     navigation.navigate("AdminDashboardScreen");
+          //   } else if (userRole === 2) {
+          //     navigation.navigate("StaffDashboardScreen");
+          //   } else if (user === 3) {
+          //     navigation.navigate("PollScreen1");
+          //   }
+          // } else {
+          //   Alert.alert("Invalid user");
+          // }
         })
         .catch((err) => {
           console.log(err.response);
@@ -100,10 +123,10 @@ const LoginScreen = () => {
             <Button
               mode="elevated"
               buttonColor="#EDBF47"
-              // onPress={onSubmitLogin}
-              onPress={() => {
-                navigation.navigate("PollScreen1");
-              }}
+              onPress={onSubmitLogin}
+              // onPress={() => {
+              //   navigation.navigate("PollScreen1");
+              // }}
             >
               <Text style={{ fontFamily: "LexendExa-ExtraLight" }}>SUBMIT</Text>
             </Button>
