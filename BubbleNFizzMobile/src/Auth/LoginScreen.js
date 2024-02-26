@@ -114,7 +114,7 @@ const LoginScreen = () => {
             />
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("IndexScreen");
+                navigation.navigate("RegisterScreen");
               }}
             >
               <View style={{ flexDirection: "row" }}>
