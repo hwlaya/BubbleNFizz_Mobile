@@ -8,12 +8,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Card } from "react-native-paper";
+import CustomInput from "./CustomInput";
 
-const CustomCardBathType = () => {
+const CustomCardBathType = ({setBath}) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
   const [selectedShower, setSelectedShower] = useState(null);
+
+  const handleSelectShower = (shower) => {
+    setSelectedShower(shower);
+    setBath(shower)
+  };
 
   const renderCard = (label, description) => {
     const isActive = selectedShower === label;
@@ -21,7 +27,7 @@ const CustomCardBathType = () => {
       <TouchableOpacity
         onPress={() => {
           console.log("Selected shower:", label);
-          setSelectedShower(label);
+          handleSelectShower(label);
         }}
       >
         <Card

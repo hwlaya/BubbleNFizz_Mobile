@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,9 +14,11 @@ import CustomButtonAgeBracket from "../components/CustomButtonAgeBracket";
 
 const PollScreen7 = () => {
   const navigation = useNavigation();
-
+  const route = useRoute();
+  const { gender, fragrance, location, ingredients, texture, design } = route.params;
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+  const [ageBracket, setAgeBracket] = useState(null)
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -25,14 +27,14 @@ const PollScreen7 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           How old are you?
         </Text>
-        <CustomButtonAgeBracket />
+        <CustomButtonAgeBracket setAgeBracket={setAgeBracket} />
       </View>
 
       <View style={styles.buttonContainer}>
         {/* Previous Button */}
         <NavigationButton
           onPress={() => {
-            console.log("Previous Pressed");
+            // console.log("Previous Pressed");
             navigation.navigate("PollScreen6");
           }}
           text="Back"
@@ -42,8 +44,16 @@ const PollScreen7 = () => {
         {/* Next Button */}
         <NavigationButton
           onPress={() => {
-            console.log("Next Pressed");
-            navigation.navigate("PollScreen8");
+            // console.log("Next Pressed");
+            navigation.navigate("PollScreen8", {
+              gender: gender,
+              fragrance: fragrance,
+              location: location,
+              ingredients: ingredients,
+              texture: texture,
+              design: design,
+              ageBracket: ageBracket
+            });
           }}
           text="Next"
           buttonColor="#EDBF47"

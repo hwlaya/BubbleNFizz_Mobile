@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import { Button, Text } from "react-native-paper";
 
-const CustomButtonAgeBracket = () => {
+const CustomButtonAgeBracket = ({setAgeBracket}) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
   const [selectedBracket, setSelectedBracket] = useState(null);
 
-  const handleSelect = (bracket) => {
-    console.log("Selected Age Bracket:", bracket);
-    setSelectedBracket(bracket);
+  const handleAge = (ageBracket) => {
+    console.log("Selected Age Bracket:", ageBracket);
+    setSelectedBracket(ageBracket);
+    setAgeBracket(ageBracket)
   };
 
   const renderButton = (label) => {
@@ -24,7 +25,7 @@ const CustomButtonAgeBracket = () => {
             styles.buttonStyle,
             { backgroundColor: isActive ? "#EDBF47" : "grey" },
           ]}
-          onPress={() => handleSelect(label)}
+          onPress={() => handleAge(label)}
         >
           <Text
             style={[

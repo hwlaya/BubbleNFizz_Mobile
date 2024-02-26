@@ -18,6 +18,7 @@ const CustomCardIngredients = ({ onSelect }) => {
   const handleSelect = (ingredient) => {
     console.log("Selected Ingredient:", ingredient);
     setSelectedIngredient(ingredient);
+    onSelect(ingredient)
   };
 
   const renderCard = (label, description) => {

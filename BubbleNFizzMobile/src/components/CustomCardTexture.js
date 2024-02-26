@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Card } from "react-native-paper";
 
-const CustomCardTexture = () => {
+const CustomCardTexture = ({setTexture}) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
@@ -18,6 +18,7 @@ const CustomCardTexture = () => {
   const handleSelectTexture = (texture) => {
     console.log("Selected Texture:", texture);
     setSelectedTexture(texture);
+    setTexture(texture)
   };
 
   const renderCard = (description) => {

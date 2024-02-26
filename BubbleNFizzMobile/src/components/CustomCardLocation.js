@@ -9,12 +9,13 @@ import {
 } from "react-native";
 import { Card } from "react-native-paper";
 
-const CustomCardLocation = () => {
+const CustomCardLocation = ({onSelect}) => {
   const [activeCard, setActiveCard] = useState(null);
 
   const handleSelect = (location) => {
     console.log("Selected location:", location);
     setActiveCard(location);
+    onSelect(location);
   };
 
   const renderCard = (label) => {

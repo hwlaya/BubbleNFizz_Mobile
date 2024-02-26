@@ -11,11 +11,12 @@ import { api } from "../../config/api";
 const PollScreen9 = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const { gender, fragrance, location, ingredients, texture, design, ageBracket, frequency } = route.params;
 
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+  const [bath, setBath] = useState(null);
 
-  const { gender } = route.params;
 
   const handleUserPoll = () => {
     api
@@ -27,7 +28,7 @@ const PollScreen9 = () => {
         ingredients: ingredients,
         texture: texture,
         design: design,
-        age_bracket: bracket,
+        age_bracket: ageBracket,
         frequency: frequency,
         bath_type: bath,
       })
@@ -45,7 +46,7 @@ const PollScreen9 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           What type of bath do you prefer?
         </Text>
-        <CustomCardBathType />
+        <CustomCardBathType setBath={setBath} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -64,8 +65,18 @@ const PollScreen9 = () => {
         <View style={styles.nextButtonContainer}>
           <NavigationButton
             onPress={() => {
-              console.log("Next Pressed");
-              navigation.navigate("PollScreen10");
+              // console.log("Next Pressed");
+              navigation.navigate("PollProfileScreen", {
+                gender: gender,
+                fragrance: fragrance,
+                location: location,
+                ingredients: ingredients,
+                texture: texture,
+                design: design,
+                ageBracket: ageBracket,
+                frequency: frequency,
+                bath_type: bath,
+              })
             }}
             text="Next"
             buttonColor="#EDBF47"

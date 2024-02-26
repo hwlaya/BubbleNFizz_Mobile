@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Card } from "react-native-paper";
 
-const CustomCardDesign = () => {
+const CustomCardDesign = ({setDesign}) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
@@ -18,6 +18,7 @@ const CustomCardDesign = () => {
   const handleSelect = (design) => {
     console.log("Selected Design:", design);
     setSelectedDesign(design);
+    setDesign(design);
   };
 
   const renderCard = (description) => {

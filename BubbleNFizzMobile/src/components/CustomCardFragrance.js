@@ -16,6 +16,7 @@ const CustomCardFragrance = ({ onSelect }) => {
 
   const handleSelectFragrance = (fragrance) => {
     setSelectedFragrance(fragrance);
+    onSelect(fragrance)
   };
 
   const renderCard = (

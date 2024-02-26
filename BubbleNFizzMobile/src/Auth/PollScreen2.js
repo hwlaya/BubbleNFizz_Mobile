@@ -21,10 +21,6 @@ const PollScreen2 = () => {
   const handleSelectFragrance = (fragrance) => {
     console.log("Selected gender:", gender, "Selected fragrance:", fragrance);
     setSelectedFragrance(fragrance);
-    navigation.navigate("PollScreen3", {
-      gender: gender,
-      fragrance: selectedFragrance,
-    });
   };
 
   return (
@@ -50,7 +46,7 @@ const PollScreen2 = () => {
         />
         {/* Next Button */}
         <NavigationButton
-          onPress={handleSelectFragrance}
+          onPress={() => navigation.navigate("PollScreen3", {gender: gender, fragrance: selectedFragrance})}
           text="Next"
           buttonColor="#EDBF47"
           style={styles.button}

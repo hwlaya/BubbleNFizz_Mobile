@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -14,9 +14,12 @@ import CustomButtonFrequency from "../components/CustomButtonFrequency";
 
 const PollScreen8 = () => {
   const navigation = useNavigation();
+  const route = useRoute()
+  const { gender, fragrance, location, ingredients, texture, design, ageBracket } = route.params;
 
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+  const[frequency, setFrequency] = useState(null)
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -25,7 +28,7 @@ const PollScreen8 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           How often do you take a bath?
         </Text>
-        <CustomButtonFrequency />
+        <CustomButtonFrequency setDay={setFrequency} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -42,8 +45,17 @@ const PollScreen8 = () => {
         {/* Next Button */}
         <NavigationButton
           onPress={() => {
-            console.log("Next Pressed");
-            navigation.navigate("PollScreen9");
+            // console.log("Next Pressed");
+            navigation.navigate("PollScreen9", {
+              gender: gender,
+              fragrance: fragrance,
+              location: location,
+              ingredients: ingredients,
+              texture: texture,
+              design: design,
+              ageBracket: ageBracket,
+              frequency: frequency              
+            });
           }}
           text="Next"
           buttonColor="#EDBF47"

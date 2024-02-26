@@ -32,7 +32,7 @@ const RegisterScreen = () => {
       })
       .then((response) => {
         console.log(response.data);
-        navigation.navigate("PollScreen1");
+        navigation.navigate("LoginScreen");
       })
       .catch((err) => {
         console.log(err.response);

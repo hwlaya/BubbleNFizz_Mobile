@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useState } from "react";
 import { View, StyleSheet, Image, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
@@ -9,8 +9,11 @@ import CustomCardTexture from "../components/CustomCardTexture";
 
 const PollScreen5 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+  const [selectedTexture, setSelectedTexture] = useState(null);
+  const { gender, fragrance, location, ingredients } = route.params;
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
@@ -18,7 +21,7 @@ const PollScreen5 = () => {
         <Text style={[styles.title, { fontSize: windowWidth * 0.07 }]}>
           What Texture do you prefer?
         </Text>
-        <CustomCardTexture />
+        <CustomCardTexture setTexture={setSelectedTexture} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -35,8 +38,20 @@ const PollScreen5 = () => {
         {/* Next Button */}
         <NavigationButton
           onPress={() => {
-            console.log("Next Pressed");
-            navigation.navigate("PollScreen6");
+            console.log(
+              gender,
+              fragrance,
+              location,
+              ingredients,
+              selectedTexture
+            );
+            navigation.navigate("PollScreen6", {
+              gender: gender,
+              fragrance: fragrance,
+              location: location,
+              ingredients: ingredients,
+              texture: selectedTexture,
+            });
           }}
           text="Next"
           buttonColor="#EDBF47"

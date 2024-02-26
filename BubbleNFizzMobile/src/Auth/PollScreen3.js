@@ -14,10 +14,9 @@ const PollScreen3 = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
-  const { gender } = route.params;
-  const { fragrance } = route.params;
+  const { gender, fragrance } = route.params;
 
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   const handleSelectLocation = (location) => {
     console.log(
@@ -29,10 +28,6 @@ const PollScreen3 = () => {
       location
     );
     setSelectedLocation(location);
-    navigation.navigate("PollScreen3", {
-      gender: gender,
-      fragrance: selectedFragrance,
-    });
   };
 
   return (
@@ -58,7 +53,7 @@ const PollScreen3 = () => {
         />
         {/* Next Button */}
         <NavigationButton
-          onPress={handleSelectLocation}
+          onPress={() => navigation.navigate('PollScreen4', {gender: gender, fragrance: fragrance, location: selectedLocation})}
           text="Next"
           buttonColor="#EDBF47"
           style={styles.button}

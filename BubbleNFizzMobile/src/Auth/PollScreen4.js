@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
@@ -9,14 +9,22 @@ import { useState } from "react";
 
 const PollScreen4 = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const { gender, fragrance, location } = route.params;
 
-  const handleSelectOption = (ingredient) => {
-    console.log("Selected ingredient:", ingredient);
-    setSelectedOption(ingredient);
+  const [selectedIngredient, setSelectedIngredient] = useState("");
+
+  const handleSelectIngredients = (ingredient, gender, fragrance, location) => {
+    console.log(
+      "Selected ingredient:", ingredient,
+      "Selected gender:", gender,
+      "Selected fragrance:", fragrance,
+      "Selected location:", location
+    );
+    setSelectedIngredient(ingredient);
   };
 
   return (
@@ -27,7 +35,7 @@ const PollScreen4 = () => {
           <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
             What Ingredients do you prefer?
           </Text>
-          <CustomCardIngredients />
+          <CustomCardIngredients onSelect={handleSelectIngredients} />
         </View>
       </View>
 
@@ -45,8 +53,8 @@ const PollScreen4 = () => {
         {/* Next Button */}
         <NavigationButton
           onPress={() => {
-            console.log("Next Pressed");
-            navigation.navigate("PollScreen5");
+            console.log(gender, fragrance, location, selectedIngredient);
+            navigation.navigate("PollScreen5", {gender: gender, fragrance: fragrance, location: location, ingredients: selectedIngredient});
           }}
           text="Next"
           buttonColor="#EDBF47"
