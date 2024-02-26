@@ -9,8 +9,10 @@ import {
 import { Text } from "react-native-paper";
 import HomeHeader from "../components/HomeHeader";
 import CustomAdminButtons from "../components/CustomAdminButtons";
+import { useNavigation } from "@react-navigation/native";
 
 const AdminDashboardScreen = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView>
       <HomeHeader
@@ -30,7 +32,7 @@ const AdminDashboardScreen = () => {
           Admin
         </Text>
 
-        <CustomAdminButtons />
+        <CustomAdminButtons navigation={navigation} />
       </View>
     </ScrollView>
   );

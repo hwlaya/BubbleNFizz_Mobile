@@ -3,7 +3,7 @@ import { Input } from "@ui-kitten/components";
 import { View, StyleSheet } from "react-native";
 import { Text, TextInput } from "react-native-paper";
 
-const CustomInput = ({ label }) => {
+const CustomInput = ({ label, value, onChangeText }) => {
   return (
     <View>
       <Text style={styles.inputText} variant="bodySmall">
@@ -16,6 +16,8 @@ const CustomInput = ({ label }) => {
         outlineColor="white"
         onFocus={() => console.log("Focused")}
         onBlur={() => console.log("Blurred")}
+        value={value}
+        onChangeText={onChangeText}
       />
     </View>
   );

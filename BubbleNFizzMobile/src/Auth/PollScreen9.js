@@ -1,16 +1,18 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardBathType from "../components/CustomCardBathType";
-import { api } from "../../config/api";
+import  api  from "../../config/api";
+import { UserContext } from "../providers/UserProvider";
 
 const PollScreen9 = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const user = useContext(UserContext);
   const { gender, fragrance, location, ingredients, texture, design, ageBracket, frequency } = route.params;
 
   const windowWidth = useWindowDimensions().width;
@@ -64,7 +66,24 @@ const PollScreen9 = () => {
         <View style={styles.nextButtonContainer}>
           <NavigationButton
             onPress={() => {
-              // console.log("Next Pressed");
+              // console.log(gender, fragrance, location, ingredients, texture, design, ageBracket, frequency, bath);
+              api.post("usermanagement/adduserpoll", {
+              user_id: user.user.id,
+              gender: gender,
+              scent: fragrance,
+              location: location,
+              ingredients: ingredients,
+              texture: texture,
+              design: design,
+              age_bracket: ageBracket,
+              frequency: frequency,
+              bath_type: bath,  
+              }).then((response) => {
+                console.log(response.data)
+              }).catch((error) => {
+                console.log(error.response)
+
+              })
               navigation.navigate("PollProfileScreen", {
                 gender: gender,
                 fragrance: fragrance,

@@ -34,15 +34,19 @@ const LoginScreen = () => {
         })
         .then((response) => {
           // const userRole = response.data.user_profile.role;
-          console.log(response.data);
-          // user.user = response.data.user;
+          console.log(response.data.user);
+          user.user = response.data.user;
           const userRole = response.data.user.user_role;
 
           console.log(userRole);
           if (userRole != 3) {
             navigation.navigate("AdminDashboardScreen");
           } else {
-            navigation.navigate("PollScreen1");
+            if (response.data.user.profile === null) {
+              navigation.navigate("PollScreen1");
+            } else {
+              navigation.navigate("IndexScreen");
+            }
           }
 
           // if (userRole === 1 || userRole === 2 || userRole === 3) {

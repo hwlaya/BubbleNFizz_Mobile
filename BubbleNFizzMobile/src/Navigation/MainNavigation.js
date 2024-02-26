@@ -20,6 +20,7 @@ import IndexScreen from "../screens/IndexScreen";
 import CartScreen from "../screens/CartScreen";
 import ProductScreen from "../screens/ProductScreen";
 import AdminDashboardScreen from "../admin/AdminDashboardScreen";
+import AdminAddProductScreen from "../admin/AdminAddProductScreen";
 const AuthStack = createNativeStackNavigator();
 
 const AuthStackScreen = () => {
@@ -50,6 +51,7 @@ const AuthStackScreen = () => {
         name="AdminDashboardScreen"
         component={AdminDashboardScreen}
       />
+      <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
     </AuthStack.Navigator>
   );
 };
@@ -96,6 +98,7 @@ export default function MainNavigation() {
           name="AdminDashboardScreen"
           component={AdminDashboardScreen}
         />
+           <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

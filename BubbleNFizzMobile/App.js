@@ -9,6 +9,7 @@ import * as Font from "expo-font";
 import MainNavigation from "./src/Navigation/MainNavigation";
 import * as SplashScreen from "expo-splash-screen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { UserProvider } from "./src/providers/UserProvider";
 
 // function HomeScreen() {
 //   return (
@@ -61,7 +62,9 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <ApplicationProvider {...eva} theme={eva.light}>
+        <UserProvider>
         <MainNavigation />
+        </UserProvider>
       </ApplicationProvider>
     </SafeAreaProvider>
   );
