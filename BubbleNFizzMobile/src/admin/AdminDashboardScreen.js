@@ -18,7 +18,7 @@ const AdminDashboardScreen = () => {
       <HomeHeader
         title="Bubble N' Fizz"
         showMenuIcon={true}
-        showShoppingIcon={true}
+        showShoppingIcon={false}
       />
       <View style={styles.container}>
         <Text
@@ -26,7 +26,6 @@ const AdminDashboardScreen = () => {
           style={{
             padding: 10,
             fontFamily: "LexendExa-ExtraLight",
-            textAlign: "flex-start",
           }}
         >
           Admin

@@ -21,6 +21,9 @@ import CartScreen from "../screens/CartScreen";
 import ProductScreen from "../screens/ProductScreen";
 import AdminDashboardScreen from "../admin/AdminDashboardScreen";
 import AdminAddProductScreen from "../admin/AdminAddProductScreen";
+import AdminEditProductScreen from "../admin/AdminEditProductScreen";
+import AdminDeleteProductScreen from "../admin/AdminDeleteProductScreen";
+
 const AuthStack = createNativeStackNavigator();
 
 const AuthStackScreen = () => {
@@ -52,6 +55,11 @@ const AuthStackScreen = () => {
         component={AdminDashboardScreen}
       />
       <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
+      <AuthStack.Screen name="EditScreen" component={AdminEditProductScreen} />
+      <AuthStack.Screen
+        name="DeleteScreen"
+        component={AdminDeleteProductScreen}
+      />
     </AuthStack.Navigator>
   );
 };
@@ -98,7 +106,15 @@ export default function MainNavigation() {
           name="AdminDashboardScreen"
           component={AdminDashboardScreen}
         />
-           <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
+        <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
+        <AuthStack.Screen
+          name="EditScreen"
+          component={AdminEditProductScreen}
+        />
+        <AuthStack.Screen
+          name="DeleteScreen"
+          component={AdminDeleteProductScreen}
+        />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

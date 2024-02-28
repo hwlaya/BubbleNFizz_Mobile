@@ -30,9 +30,10 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
           console.log(`${title} title pressed`);
         }}
         style={{
-          padding: 10,
+          padding: 8,
           fontFamily: "Poppins-ExtraBold",
           fontSize: windowWidth * 0.08,
+          marginTop: 20,
         }}
       >
         {title}

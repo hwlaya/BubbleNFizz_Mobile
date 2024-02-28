@@ -32,12 +32,6 @@ const IndexScreen = () => {
       {/* Products- Recommended */}
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>RECOMMENDED—</Text>
-        <TouchableOpacity onPress={() => console.log("Chatbot button pressed")}>
-          <Image
-            source={require("../assets/images/chatbot.png")}
-            style={{ width: 50, height: 50 }}
-          />
-        </TouchableOpacity>
       </View>
 
       <ScrollView horizontal={true} style={styles.cardContainer}>

@@ -2,7 +2,7 @@ import React from "react";
 import { View, ScrollView } from "react-native";
 import { DataTable, Button } from "react-native-paper";
 
-const AdminEditProductScreen = () => {
+const AdminDeleteProductScreen = () => {
   // Dummy product data for demonstration
   const products = [
     { id: 1, name: "Product 1", price: "$10" },
@@ -18,8 +18,8 @@ const AdminEditProductScreen = () => {
             <DataTable.Title>ID</DataTable.Title>
             <DataTable.Title>Name</DataTable.Title>
             <DataTable.Title>Price</DataTable.Title>
-            <DataTable.Title>Edit</DataTable.Title>
-            {/* New column for Edit button */}
+            <DataTable.Title>Delete</DataTable.Title>
+            {/* New column for delete button */}
           </DataTable.Header>
           {products.map((product) => (
             <DataTable.Row key={product.id}>
@@ -30,10 +30,10 @@ const AdminEditProductScreen = () => {
                 <Button
                   mode="contained"
                   onPress={() => {
-                    // Handle Edit button action
+                    // Handle delete button action
                   }}
                 >
-                  Edit
+                  Delete
                 </Button>
               </DataTable.Cell>
             </DataTable.Row>
@@ -44,4 +44,4 @@ const AdminEditProductScreen = () => {
   );
 };
 
-export default AdminEditProductScreen;
+export default AdminDeleteProductScreen;
