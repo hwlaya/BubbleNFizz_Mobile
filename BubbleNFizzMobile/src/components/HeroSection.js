@@ -1,8 +1,16 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, StyleSheet, View } from "react-native";
 import { Button, Text } from "react-native-paper";
 
 const HeroSection = () => {
+  const navigation = useNavigation();
+
+  const handleNavigateToAllProducts = () => {
+    navigation.navigate("AllProductsPage");
+    console.log("Button pressed");
+  };
+
   return (
     <View style={styles.heroSection}>
       <Image
@@ -17,7 +25,7 @@ const HeroSection = () => {
           style={[{ marginVertical: 10, borderRadius: 6 }]}
           mode="contained"
           buttonColor="#E79E4F"
-          onPress={() => console.log("Bath Now button pressed")}
+          onPress={handleNavigateToAllProducts}
         >
           Bath Now!
         </Button>

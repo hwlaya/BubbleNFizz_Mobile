@@ -113,13 +113,6 @@ const IndexScreen = () => {
 
       {/* Section - Rating Certified */}
       <Section />
-
-      <View style={[{ padding: 100 }]}>
-        <Text>Carousel</Text>
-      </View>
-      <View style={[{ padding: 100 }]}>
-        <Text>Footer</Text>
-      </View>
     </ScrollView>
   );
 };
