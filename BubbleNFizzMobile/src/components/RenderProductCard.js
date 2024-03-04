@@ -9,14 +9,19 @@ import {
   Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { Rating, AirbnbRating } from "react-native-ratings";
 
 const windowWidth = Dimensions.get("window").width;
 
-const RenderProductsCard = ({
+const RenderProductCard = ({
   productName,
   productPrice,
   productImage,
   productCategory,
+  productDescription,
+  productRating,
+  productScentName,
+  productStock,
 }) => {
   const navigation = useNavigation();
 
@@ -26,11 +31,24 @@ const RenderProductsCard = ({
       productPrice,
       productImage,
       productCategory,
+      productDescription,
+      productRating,
+      productScentName,
+      productStock,
     });
   };
 
   const data = [
-    { productName, productPrice, productImage, productCategory },
+    {
+      productName,
+      productPrice,
+      productImage,
+      productCategory,
+      productDescription,
+      productRating,
+      productScentName,
+      productStock,
+    },
     // Add more data objects if needed
   ];
 
@@ -44,9 +62,16 @@ const RenderProductsCard = ({
             style={styles.productImage}
           />
           <Text style={styles.productName}>{item.productName}</Text>
-          {/* <Text style={styles.productCategory}>{item.productCategory}</Text> */}
-          <Text style={styles.productCategory}>Category</Text>
+          <Text style={styles.productCategory}>{item.productCategory}</Text>
+          <Text>{item.productScentName}</Text>
           <Text style={styles.productPrice}>${item.productPrice}</Text>
+          <Rating
+            type="star"
+            startingValue={item.productRating}
+            imageSize={20}
+            readonly
+            precision={0.1}
+          />
         </View>
       </TouchableOpacity>
     );
@@ -103,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RenderProductsCard;
+export default RenderProductCard;

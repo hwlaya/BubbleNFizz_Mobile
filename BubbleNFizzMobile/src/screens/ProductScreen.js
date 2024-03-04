@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -10,10 +10,22 @@ import {
 import { Button } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Rating } from "react-native-ratings";
 
 const ProductScreen = ({ route }) => {
-  const { productName, productPrice, productImage } = route.params;
+  const {
+    productName,
+    productPrice,
+    productImage,
+    productDescription,
+    productCategory,
+    productScentName,
+    productStock,
+    productRating,
+  } = route.params;
   const navigation = useNavigation();
+  const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(productPrice);
   const handleAddToCart = () => {
     // Perform add to cart logic here
     console.log("Product added to cart:", productName);
@@ -28,27 +40,52 @@ const ProductScreen = ({ route }) => {
         >
           <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
         </TouchableOpacity>
-        <Image source={productImage} style={styles.productImage} />
+        <Image
+          source={require("../assets/images/product1.jpg")}
+          style={styles.productImage}
+        />
 
         <View style={styles.productInfoContainer}>
           <Text style={styles.productPrice}>₱{productPrice}</Text>
           <Text style={styles.productName}>{productName}</Text>
+          <Text>{productCategory}</Text>
+          <Text>{productScentName}</Text>
+          <Text>{productStock}</Text>
+          <View
+            style={{
+              width: "100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              onPress={() => {
+                setQuantity(quantity - 1);
+                setTotalPrice(totalPrice - productPrice);
+              }}
+            >
+              Minus
+            </Button>
+            <Text>{quantity}</Text>
+            <Text>P{totalPrice}</Text>
+            <Button
+              onPress={() => {
+                setQuantity(quantity + 1);
+                setTotalPrice(Number(totalPrice) + Number(productPrice));
+              }}
+            >
+              Add
+            </Button>
+          </View>
+          <Rating
+            type="star"
+            startingValue={productRating}
+            imageSize={20}
+            readonly
+            precision={0.1}
+          />
           <View style={styles.divider} />
-          <Text style={styles.productDescription}>
-            Handcrafted artisan soaps are a departure from mass-produced
-            commercial soaps. Each bar is carefully made in small batches,
-            allowing for individual attention to detail and the incorporation of
-            unique ingredients and designs. From the selection of nourishing
-            oils and butters to the infusion of botanical extracts and essential
-            oils, these soaps are a celebration of nature's bounty. By choosing
-            handcrafted artisan soaps, you not only elevate your self-care
-            routine but also support local artisans and small businesses. Each
-            bar represents hours of dedication, expertise, and a commitment to
-            creating a product that brings joy and indulgence to your everyday
-            life. So why settle for the ordinary when you can experience the
-            extraordinary? Explore the world of handcrafted artisan soaps and
-            unlock a whole new level of bathing luxury and self-care bliss.
-          </Text>
+          <Text style={styles.productDescription}>{productDescription}</Text>
           <Button mode="contained" onPress={handleAddToCart}>
             Add to Cart
           </Button>

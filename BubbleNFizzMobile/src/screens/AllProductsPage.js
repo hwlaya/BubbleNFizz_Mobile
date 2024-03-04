@@ -44,10 +44,14 @@ const AllProductsPage = () => {
           data={products}
           renderItem={({ item }) => (
             <RenderProductsCard
-              productName={item.product_name}
-              productPrice={item.product_price}
-              productImage={item.product_image}
               productCategory={item.product_category}
+              productName={item.product_name}
+              productDescription={item.product_description}
+              productImage={item.product_image}
+              productPrice={item.product_price}
+              productStock={item.product_stock}
+              productRating={item.product_rating}
+              productScentName={item.product_scent_name}
             />
           )}
           keyExtractor={(item) => item.id}

@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import api from "../../config/api";
+import { Rating } from "react-native-ratings";
 
-const RenderCard = ({
-  productName,
-  productPrice,
-  productImage,
-  productCategory,
-}) => {
+const RenderCard = ({ item }) => {
   const navigation = useNavigation();
 
   const handleCardPress = () => {
     navigation.navigate("ProductScreen", {
-      productName,
-      productPrice,
-      productImage,
-      productCategory,
+      // productName,
+      // productPrice,
+      // productImage,
+      // productScentName,
+      // productRating,
+      productName: item.product_name,
+      productPrice: item.product_price,
+      productScent: item.product_scent_name,
+      productRating: item.product_rating,
+      productDescription: item.product_description,
     });
   };
 
@@ -23,7 +26,10 @@ const RenderCard = ({
     <TouchableOpacity onPress={handleCardPress}>
       <View style={styles.card}>
         {/* Product Image */}
-        <Image source={productImage} style={styles.productImage} />
+        <Image
+          source={require("../assets/images/product1.jpg")}
+          style={styles.productImage}
+        />
         <View style={styles.textContainer}>
           {/* Product Name */}
           <Text
@@ -31,20 +37,27 @@ const RenderCard = ({
             ellipsizeMode="tail"
             style={styles.productName}
           >
-            {productName}
+            {item.product_name}
           </Text>
 
-          {/* Product Category */}
+          {/* Product ScentName */}
           <Text
             numberOfLines={2}
             ellipsizeMode="tail"
-            style={styles.productCategory}
+            style={styles.productScentName}
           >
-            {productCategory}
+            {item.product_scent_name}
           </Text>
 
           {/* Product Price */}
-          <Text style={styles.productPrice}>₱{productPrice}</Text>
+          <Text style={styles.productPrice}>₱{item.product_price}</Text>
+          <Rating
+            type="star"
+            startingValue={item.product_rating}
+            imageSize={20}
+            readonly
+            precision={0.1}
+          />
         </View>
       </View>
     </TouchableOpacity>

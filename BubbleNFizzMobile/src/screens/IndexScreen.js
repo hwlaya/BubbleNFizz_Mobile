@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,8 +14,21 @@ import Slider from "../components/Slider";
 import Section from "../components/Section";
 import HeroSection from "../components/HeroSection";
 import { Divider } from "react-native-paper";
+import api from "../../config/api";
 
 const IndexScreen = () => {
+  const [threeProducts, setThreeProducts] = useState([]);
+  useEffect(() => {
+    api
+      .get("shopping/getthreeproducts")
+      .then((response) => {
+        console.log(response.data);
+        setThreeProducts(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, []);
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -36,36 +49,17 @@ const IndexScreen = () => {
 
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
-          <RenderCard
-            productName="BNF Handcrafted Toasted Marshmallow Body Bar 120g"
-            productCategory="Nourishing oils and butters"
-            productPrice="100"
+          {/* <RenderCard
+            productName={item.product_name}
+            // productImage={item.product_image}
+            productPrice={item.product_price}
+            productRating={item.product_rating}
+            productScentName={item.product_scent_name}
             productImage={require("../assets/images/product1.jpg")}
-          />
-          <RenderCard
-            productName="BNF Handcrafted Activated Charcoal Body Bar 120g"
-            productCategory="Handcrafted artisan soaps"
-            productPrice="95"
-            productImage={require("../assets/images/product2.jpg")}
-          />
-          <RenderCard
-            productName="BNF Handcrafted Oh Papaya! Body Bar 120g"
-            productCategory="Nourishing oils and butters"
-            productPrice="105"
-            productImage={require("../assets/images/product3.jpg")}
-          />
-          <RenderCard
-            productName="BNF Handcrafted Rosewood Soap 120g"
-            productCategory="Celebration of nature's bounty"
-            productPrice="100"
-            productImage={require("../assets/images/product1.jpg")}
-          />
-          <RenderCard
-            productName="BNF Handcrafted Rosewood Soap 120g"
-            productCategory="Nourishing oils and butters"
-            productPrice="100"
-            productImage={require("../assets/images/product2.jpg")}
-          />
+          /> */}
+          {threeProducts.map((item, index) => (
+            <RenderCard item={item} key={index} />
+          ))}
         </View>
       </ScrollView>
 
@@ -90,7 +84,7 @@ const IndexScreen = () => {
 
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
-          <RenderCard
+          {/* <RenderCard
             productName="Bubble N Fizz Coffee Bath Bomb 200g"
             productCategory="Indulgent Coffee Bath Bombs"
             productPrice="179"
@@ -107,7 +101,10 @@ const IndexScreen = () => {
             productCategory="Spectacular Rainbow Bath Bomb"
             productPrice="199"
             productImage={require("../assets/images/bestseller3.jpg")}
-          />
+          /> */}
+          {threeProducts.map((item, index) => (
+            <RenderCard item={item} key={index} />
+          ))}
         </View>
       </ScrollView>
 
