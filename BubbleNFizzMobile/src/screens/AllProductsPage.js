@@ -44,6 +44,7 @@ const AllProductsPage = () => {
           data={products}
           renderItem={({ item }) => (
             <RenderProductsCard
+              productId={item.id}
               productCategory={item.product_category}
               productName={item.product_name}
               productDescription={item.product_description}

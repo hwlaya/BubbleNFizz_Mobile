@@ -19,6 +19,8 @@ const RenderCard = ({ item }) => {
       productScent: item.product_scent_name,
       productRating: item.product_rating,
       productDescription: item.product_description,
+      productStock: item.product_stock,
+      productId: item.id,
     });
   };
 
