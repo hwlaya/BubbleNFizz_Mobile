@@ -3,7 +3,6 @@ import {
   View,
   Text,
   Image,
-  Button,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
@@ -11,12 +10,14 @@ import {
 import HomeHeader from "../components/HomeHeader";
 import RenderCard from "../components/RenderCard";
 import Slider from "../components/Slider";
+import { useNavigation } from "@react-navigation/native";
 import Section from "../components/Section";
 import HeroSection from "../components/HeroSection";
-import { Divider } from "react-native-paper";
+import { Button, Divider } from "react-native-paper";
 import api from "../../config/api";
 
 const IndexScreen = () => {
+  const navigation = useNavigation();
   const [threeProducts, setThreeProducts] = useState([]);
   useEffect(() => {
     api
@@ -41,12 +42,10 @@ const IndexScreen = () => {
       <View>
         <HeroSection />
       </View>
-
       {/* Products- Recommended */}
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>RECOMMENDED—</Text>
       </View>
-
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
           {/* <RenderCard
@@ -62,9 +61,7 @@ const IndexScreen = () => {
           ))}
         </View>
       </ScrollView>
-
       <Divider style={styles.divider} />
-
       <View style={styles.sliderContainer}>
         <Slider
           images={[
@@ -76,12 +73,10 @@ const IndexScreen = () => {
         />
       </View>
       <Divider style={styles.divider} />
-
       {/* Products- Best Sellers */}
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>BEST SELLERS—</Text>
       </View>
-
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
           {/* <RenderCard
@@ -107,9 +102,21 @@ const IndexScreen = () => {
           ))}
         </View>
       </ScrollView>
-
       {/* Section - Rating Certified */}
       <Section />
+      <View style={[{ padding: 100 }]}>
+        <Button
+          mode="contained"
+          buttonColor="#E79E4F"
+          onPress={() => navigation.navigate("ProfileScreen")}
+        >
+          Profile Screen
+        </Button>
+      </View>
+
+      <View style={[{ padding: 100 }]}>
+        <Text>Footer</Text>
+      </View>
     </ScrollView>
   );
 };

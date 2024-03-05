@@ -19,10 +19,12 @@ import PollProfileScreen from "../Auth/PollProfileScreen";
 import IndexScreen from "../screens/IndexScreen";
 import CartScreen from "../screens/CartScreen";
 import ProductScreen from "../screens/ProductScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import AdminDashboardScreen from "../admin/AdminDashboardScreen";
 import AdminAddProductScreen from "../admin/AdminAddProductScreen";
 import AdminEditProductScreen from "../admin/AdminEditProductScreen";
 import AdminDeleteProductScreen from "../admin/AdminDeleteProductScreen";
+import StaffDashboardScreen from "../admin/StaffDashboardScreen";
 import AllProductsPage from "../screens/AllProductsPage";
 
 const AuthStack = createNativeStackNavigator();
@@ -104,10 +106,6 @@ export default function MainNavigation() {
         <AuthStack.Screen name="IndexScreen" component={IndexScreen} />
         <AuthStack.Screen name="CartScreen" component={CartScreen} />
         <AuthStack.Screen name="ProductScreen" component={ProductScreen} />
-        <AuthStack.Screen
-          name="AdminDashboardScreen"
-          component={AdminDashboardScreen}
-        />
         <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
         <AuthStack.Screen
           name="EditScreen"
@@ -117,6 +115,15 @@ export default function MainNavigation() {
           name="DeleteScreen"
           component={AdminDeleteProductScreen}
         />
+        <AuthStack.Screen
+          name="AdminDashboardScreen"
+          component={AdminDashboardScreen}
+        />
+        <AuthStack.Screen
+          name="StaffDashboardScreen"
+          component={StaffDashboardScreen}
+        />
+        <AuthStack.Screen name="ProfileScreen" component={ProfileScreen} />
         <AuthStack.Screen name="AllProductsPage" component={AllProductsPage} />
       </AuthStack.Navigator>
     </NavigationContainer>

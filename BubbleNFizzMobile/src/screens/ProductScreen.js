@@ -56,27 +56,31 @@ const ProductScreen = ({ route }) => {
               width: "100%",
               justifyContent: "center",
               alignItems: "center",
+              flexDirection: "row",
+              alignItems: "center",
             }}
           >
-            <Button
+            <TouchableOpacity
               onPress={() => {
-                setQuantity(quantity - 1);
-                setTotalPrice(totalPrice - productPrice);
+                if (quantity > 1) {
+                  setQuantity(quantity - 1);
+                  setTotalPrice(totalPrice - productPrice);
+                }
               }}
             >
-              Minus
-            </Button>
+              <Ionicons name="remove-circle" size={40} color="black" />
+            </TouchableOpacity>
             <Text>{quantity}</Text>
-            <Text>P{totalPrice}</Text>
-            <Button
+            <TouchableOpacity
               onPress={() => {
                 setQuantity(quantity + 1);
                 setTotalPrice(Number(totalPrice) + Number(productPrice));
               }}
             >
-              Add
-            </Button>
+              <Ionicons name="add-circle" size={40} color="black" />
+            </TouchableOpacity>
           </View>
+          <Text>P{totalPrice}</Text>
           <Rating
             type="star"
             startingValue={productRating}
