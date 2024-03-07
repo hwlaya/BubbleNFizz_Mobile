@@ -21,6 +21,7 @@ const RenderCard = ({ item }) => {
       productDescription: item.product_description,
       productStock: item.product_stock,
       productId: item.id,
+      productCategory: item.product_category,
     });
   };
 
@@ -40,6 +41,15 @@ const RenderCard = ({ item }) => {
             style={styles.productName}
           >
             {item.product_name}
+          </Text>
+
+          {/* Product Category */}
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={styles.productCategory}
+          >
+            {item.product_category}
           </Text>
 
           {/* Product ScentName */}

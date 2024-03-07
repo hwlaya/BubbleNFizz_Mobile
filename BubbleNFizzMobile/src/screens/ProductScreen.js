@@ -9,7 +9,7 @@ import {
   Toast,
   Alert,
 } from "react-native";
-import { Button, Divider } from "react-native-paper";
+import { Button, Divider, IconButton } from "react-native-paper";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { Rating } from "react-native-ratings";
@@ -69,6 +69,14 @@ const ProductScreen = ({ route }) => {
         >
           <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
         </TouchableOpacity>
+        <IconButton
+          style={styles.cartButton}
+          icon="shopping"
+          onPress={() => {
+            console.log("Shopping icon pressed");
+            navigation.navigate("CartScreen");
+          }}
+        />
         <Image
           source={require("../assets/images/product1.jpg")}
           style={styles.productImage}
@@ -78,10 +86,11 @@ const ProductScreen = ({ route }) => {
         <View style={styles.productInfoContainer}>
           <Text style={styles.productPrice}>₱{productPrice}</Text>
           <Text style={styles.productName}>{productName}</Text>
-          <Text>{productCategory}</Text>
+          <Text>Category: {productCategory}</Text>
           <Text
             style={[{ fontFamily: "LexendExa-ExtraLight", textAlign: "right" }]}
           >
+            Scent:
             {productScent}
           </Text>
         </View>
@@ -187,6 +196,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 40,
     left: 10,
+    zIndex: 1,
+  },
+  cartButton: {
+    position: "absolute",
+    top: 35,
+    right: 10,
     zIndex: 1,
   },
   productInfoContainer: {

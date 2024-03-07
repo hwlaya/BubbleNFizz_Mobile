@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Rating, AirbnbRating } from "react-native-ratings";
+import { Rating } from "react-native-ratings";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -65,7 +65,9 @@ const RenderProductCard = ({
             style={styles.productImage}
           />
           <Text style={styles.productName}>{item.productName}</Text>
-          <Text style={styles.productCategory}>{item.productCategory}</Text>
+          <Text style={styles.productCategory}>
+            Category:{item.productCategory}
+          </Text>
           <Text>{item.productScentName}</Text>
           <Text style={styles.productPrice}>${item.productPrice}</Text>
           <Rating

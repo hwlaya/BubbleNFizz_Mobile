@@ -1,7 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, Image, Button } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  Button,
+  Alert,
+  TouchableOpacity,
+} from "react-native";
 import api from "../../config/api";
-
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 const CartCard = ({
   cart,
   setSubTotal,
@@ -58,26 +65,79 @@ const CartCard = ({
 
   return (
     <View
-      style={{ backgroundColor: "#D3D3D3", padding: 10, marginVertical: 6 }}
+      style={{ backgroundColor: "#EBEBEB", padding: 10, marginVertical: 6 }}
     >
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
         <Image
           source={{ uri: `https://picsum.photos/100/100` }}
           style={{ height: 100, width: 100 }}
         />
         <View style={{ flex: 1, marginLeft: 10 }}>
-          <Text style={{ fontSize: 16 }}>{cart.product.product_name}</Text>
-          <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+          <Text style={{ fontSize: 14, fontFamily: "Inconsolata-Regular" }}>
+            {cart.product.product_name}
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "LilitaOne-Regular",
+              marginTop: 15,
+            }}
+          >
             ₱{cart.product.product_price}
           </Text>
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Button title="-" onPress={subQuantity} />
-          <Text style={{ fontSize: 16, marginHorizontal: 10 }}>{quantity}</Text>
-          <Button title="+" onPress={addQuantity} />
+          <TouchableOpacity onPress={subQuantity}>
+            <AntDesign name="minuscircle" size={20} color="black" />
+          </TouchableOpacity>
+
+          <Text
+            style={{
+              padding: 5,
+              marginHorizontal: 5,
+            }}
+          >
+            {quantity}
+          </Text>
+
+          <TouchableOpacity onPress={addQuantity}>
+            <AntDesign name="pluscircle" size={20} color="black" />
+          </TouchableOpacity>
         </View>
-        <Text style={{ fontSize: 16, fontWeight: "bold" }}>₱{totalPrice}</Text>
       </View>
+      <View
+        style={{
+          borderBottomColor: "black",
+          borderBottomWidth: 0.5,
+          marginVertical: 4,
+        }}
+      />
+      <Text
+        style={{
+          fontSize: 12,
+          fontFamily: "LilitaOne-Regular",
+          textAlign: "right",
+        }}
+      >
+        ₱{totalPrice}
+      </Text>
+      <TouchableOpacity>
+        <Text
+          style={{
+            fontSize: 12,
+            fontFamily: "LilitaOne-Regular",
+            textAlign: "right",
+            color: "gray",
+          }}
+        >
+          Remove
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
