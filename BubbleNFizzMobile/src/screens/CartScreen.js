@@ -8,12 +8,37 @@ import { Button } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const Cart = () => {
+const CartScreen = () => {
   const user = useContext(UserContext);
   const [carts, setCarts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigation = useNavigation();
+
+  const updateTotalQuantity = (newQuantity) => {
+    setTotalQuantity(newQuantity);
+  };
+
+  //Update Number of Items
+  useEffect(() => {
+    let tempQuantity = 0;
+    carts.forEach((item) => {
+      tempQuantity += Number(item.cart_quantity);
+    });
+    updateTotalQuantity(tempQuantity);
+  }, [carts]);
+
+  //Update Subtotal
+  useEffect(() => {
+    let tempSubTotal = 0;
+    carts.forEach((item) => {
+      tempSubTotal += Number(item.cart_price) * Number(item.cart_quantity);
+    });
+    setSubTotal(tempSubTotal);
+  }, [carts]);
+
+  //API Call
   useEffect(() => {
     api
       .get(`shopping/getusercart?user_id=${user.user.id}`)
@@ -54,15 +79,16 @@ const Cart = () => {
         </TouchableOpacity>
         <Text style={styles.cartTitle}>My Cart</Text>
         {carts.map((item, index) => {
-          console.log("ito yung items mo", item);
+          // console.log("ito yung items mo", item);
           return (
             <CartCard
               cart={item}
               key={index}
+              subTotal={subTotal}
               setSubTotal={setSubTotal}
               setTotalQuantity={setTotalQuantity}
               totalQuantity={totalQuantity}
-              subTotal={subTotal}
+              setTotalPrice={setTotalPrice}
             />
           );
         })}
@@ -76,14 +102,6 @@ const Cart = () => {
             <View style={styles.containerCheckout}>
               <Text style={styles.label}>Sub Total:</Text>
               <Text style={styles.value}>Php {subTotal}.00</Text>
-            </View>
-            <View style={styles.containerCheckout}>
-              <Text style={styles.label}>Discount:</Text>
-              <Text style={styles.value}>Free Shipping</Text>
-            </View>
-            <View style={styles.containerCheckout}>
-              <Text style={styles.label}>Total:</Text>
-              <Text style={styles.value}>₱{subTotal}</Text>
             </View>
             <View style={styles.divider} />
           </View>
@@ -122,11 +140,9 @@ const styles = StyleSheet.create({
     fontFamily: "LilitaOne-Regular",
     fontSize: 30,
     textAlign: "center",
-    // Add styles for "My Cart" text here
   },
   orderSummaryTitle: {
     fontFamily: "LilitaOne-Regular",
-    // Add styles for "Order Summary" text here
   },
   orderSummary: {
     padding: 16,
@@ -144,4 +160,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Cart;
+export default CartScreen;

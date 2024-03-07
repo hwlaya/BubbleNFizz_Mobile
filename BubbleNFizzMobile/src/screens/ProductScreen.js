@@ -23,7 +23,7 @@ const ProductScreen = ({ route }) => {
     productImage,
     productDescription,
     productCategory,
-    productScent,
+    productScentName,
     productStock,
     productRating,
     productId,
@@ -37,6 +37,10 @@ const ProductScreen = ({ route }) => {
   // to get all user data = user.user
   // to get user profile = user.user.profile
   const user = useContext(UserContext);
+
+  useEffect(() => {
+    console.log("Product Scentttttt: ", productScentName);
+  });
 
   const addToCart = () => {
     console.log("product_id", productId);
@@ -91,7 +95,7 @@ const ProductScreen = ({ route }) => {
             style={[{ fontFamily: "LexendExa-ExtraLight", textAlign: "right" }]}
           >
             Scent:
-            {productScent}
+            {productScentName}
           </Text>
         </View>
 

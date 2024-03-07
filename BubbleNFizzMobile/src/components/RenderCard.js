@@ -16,7 +16,7 @@ const RenderCard = ({ item }) => {
       // productRating,
       productName: item.product_name,
       productPrice: item.product_price,
-      productScent: item.product_scent_name,
+      productScentName: item.product_scent_name,
       productRating: item.product_rating,
       productDescription: item.product_description,
       productStock: item.product_stock,
