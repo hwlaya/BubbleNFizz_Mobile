@@ -12,6 +12,11 @@ import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 const CartScreen = () => {
+  const navigation = useNavigation();
+
+  const handleCheckout = () => {
+    navigation.navigate("CheckoutScreen");
+  };
   // Static item data
   const cartItems = [
     {
@@ -36,7 +41,6 @@ const CartScreen = () => {
       image: require("../assets/images/product3.jpg"),
     },
   ];
-  const navigation = useNavigation();
   const renderItem = ({ item }) => (
     <View style={styles.itemContainer}>
       <Image source={item.image} style={styles.itemImage} />
@@ -84,7 +88,9 @@ const CartScreen = () => {
           <Text style={styles.subtotalText}>$60</Text>
         </View>
         <TouchableOpacity style={styles.checkoutButton}>
-          <Button labelStyle={{ color: "white" }}>Checkout</Button>
+          <Button labelStyle={{ color: "white" }} onPress={handleCheckout}>
+            Checkout
+          </Button>
         </TouchableOpacity>
       </View>
     </View>
