@@ -109,7 +109,12 @@ const CartScreen = () => {
             style={{ marginVertical: 16, borderRadius: 6 }}
             mode="contained"
             buttonColor="#E79E4F"
-            onPress={() => console.log("Pressed")}
+            onPress={() =>
+              navigation.navigate("CheckoutScreen", {
+                carts: carts,
+                subTotal: subTotal,
+              })
+            } //console.log("Pressed")}
           >
             Checkout
           </Button>
