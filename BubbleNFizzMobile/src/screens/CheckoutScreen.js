@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
@@ -6,12 +6,19 @@ import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { UserContext } from "../providers/UserProvider";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import api from "../../config/api";
 
 const CheckoutScreen = () => {
   const navigation = useNavigation();
-  const user = useContext(UserContext);
-  const [name, setName] = useState(user.user.name);
-  const [email, setEmail] = useState(user.user.email);
+
+  const { carts, subTotal } = route.params;
+
+  const { user } = useContext(UserContext);
+
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [address, setAddress] = useState(user.profile.address);
+  const [contact, setPhone] = useState(user.profile.contact_no);
 
   const [selectedShippingOption, setShippingSelectedOption] = useState(null);
   const [selectedPaymentOption, setPaymentSelectedOption] = useState(null);
@@ -23,6 +30,17 @@ const CheckoutScreen = () => {
   const handlePaymentOptionSelect = (option) => {
     setPaymentSelectedOption(option);
   };
+
+  // useEffect(() => {
+  //   api
+  //     .get(`usermanagement/getprofile/${user.id}`, {})
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response);
+  //     });
+  // }, []);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -41,7 +59,7 @@ const CheckoutScreen = () => {
           }}
           // outlineStyle={{ borderRadius: 10 }}
           label="Email"
-          value={email}
+          value={user.email}
           editable={false}
           mode="outlined"
           focused={true}
@@ -54,7 +72,7 @@ const CheckoutScreen = () => {
           }}
           // outlineStyle={{ borderRadius: 10 }}
           label="Name"
-          value={name}
+          value={user.name}
           editable={false}
           mode="outlined"
           focused={true}
@@ -66,8 +84,7 @@ const CheckoutScreen = () => {
           }}
           // outlineStyle={{ borderRadius: 10 }}
           label="Address"
-          // value={fname}
-          // onChangeText={(value) => setFname(value)}
+          value={user.profile.address}
           mode="outlined"
           focused={true}
         />
@@ -78,7 +95,7 @@ const CheckoutScreen = () => {
           }}
           // outlineStyle={{ borderRadius: 10 }}
           label="Phone Number"
-          // value={fname}
+          value={contact}
           // onChangeText={(value) => setFname(value)}
           mode="outlined"
           focused={true}
@@ -179,19 +196,20 @@ const CheckoutScreen = () => {
               style={{
                 borderRadius: 10,
                 borderColor: "#E79E4F",
-                borderWidth: 2,
+                borderWidth: 1,
                 backgroundColor: "#E79E4F",
                 width: 125,
                 height: 50,
-                padding: -20,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <Icon name="cloud-upload" size={30} color="#FFFF" />
               <Text
                 style={{
                   color: "white",
-
-                  alignSelf: "center",
+                  textAlign: "center",
                 }}
               >
                 UPLOAD FILE
