@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
+import { UserContext } from "../providers/UserProvider";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const CheckoutScreen = () => {
   const navigation = useNavigation();
+  const user = useContext(UserContext);
+  const [name, setName] = useState(user.user.name);
+  const [email, setEmail] = useState(user.user.email);
 
   const [selectedShippingOption, setShippingSelectedOption] = useState(null);
   const [selectedPaymentOption, setPaymentSelectedOption] = useState(null);
@@ -37,8 +41,8 @@ const CheckoutScreen = () => {
           }}
           // outlineStyle={{ borderRadius: 10 }}
           label="Email"
-          // value={fname}
-          // onChangeText={(value) => setFname(value)}
+          value={email}
+          editable={false}
           mode="outlined"
           focused={true}
         />
@@ -50,8 +54,8 @@ const CheckoutScreen = () => {
           }}
           // outlineStyle={{ borderRadius: 10 }}
           label="Name"
-          // value={fname}
-          // onChangeText={(value) => setFname(value)}
+          value={name}
+          editable={false}
           mode="outlined"
           focused={true}
         />
@@ -174,9 +178,9 @@ const CheckoutScreen = () => {
             <Button
               style={{
                 borderRadius: 10,
-                borderColor: "#EDBF47",
+                borderColor: "#E79E4F",
                 borderWidth: 2,
-                backgroundColor: "#EDBF47",
+                backgroundColor: "#E79E4F",
                 width: 125,
                 height: 50,
                 padding: -20,
@@ -196,33 +200,44 @@ const CheckoutScreen = () => {
           </View>
         </View>
         <View
-          style={{
-            justifyContent: "center",
-            alignItems: "flex-end",
-            margin: 10,
-          }}
+          style={
+            {
+              // justifyContent: "center",
+              // alignItems: "center",
+              // margin: 10,
+            }
+          }
         >
-          <Button
-            style={{
-              borderRadius: 10,
-              borderColor: "#EDBF47",
-              borderWidth: 2,
-              backgroundColor: "#EDBF47",
-              width: 125,
-              height: 50,
-              padding: -20,
-            }}
-          >
-            <Text
-              style={{
-                color: "white",
+          <View style={styles.orderSummary}>
+            <Text style={styles.orderSummaryTitle}>Order Summary</Text>
+            <View>
+              <View style={styles.containerCheckout}>
+                <Text style={styles.label}>Items:</Text>
+                <Text style={styles.value}></Text>
+              </View>
+              <View style={styles.containerCheckout}>
+                <Text style={styles.label}>Sub Total:</Text>
+                <Text style={styles.value}>Php .00</Text>
+              </View>
+              <View style={styles.divider} />
+            </View>
 
-                alignSelf: "center",
-              }}
+            <Button
+              style={{ marginVertical: 16, borderRadius: 6 }}
+              mode="contained"
+              buttonColor="#E79E4F"
             >
-              PAY NOW
-            </Text>
-          </Button>
+              <Text
+                style={{
+                  color: "white",
+
+                  alignSelf: "center",
+                }}
+              >
+                PAY NOW
+              </Text>
+            </Button>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -252,6 +267,28 @@ const styles = StyleSheet.create({
     fontFamily: "Rubik-Regular",
     fontSize: 20,
     fontWeight: "bold",
+  },
+  containerCheckout: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginVertical: 5,
+  },
+  divider: {
+    borderBottomColor: "black",
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+  label: {},
+  value: {},
+  scrollView: {
+    flexGrow: 1,
+  },
+  orderSummaryTitle: {
+    fontFamily: "LilitaOne-Regular",
+  },
+  orderSummary: {
+    padding: 16,
   },
 });
 export default CheckoutScreen;
