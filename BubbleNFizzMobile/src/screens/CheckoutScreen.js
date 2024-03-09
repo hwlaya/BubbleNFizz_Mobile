@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { UserContext } from "../providers/UserProvider";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import api from "../../config/api";
+import CartCard from "../components/CartCard";
 
 const CheckoutScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   const { carts, subTotal } = route.params;
 
@@ -19,6 +21,9 @@ const CheckoutScreen = () => {
   const [email, setEmail] = useState(user.email);
   const [address, setAddress] = useState(user.profile.address);
   const [contact, setPhone] = useState(user.profile.contact_no);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
 
   const [selectedShippingOption, setShippingSelectedOption] = useState(null);
   const [selectedPaymentOption, setPaymentSelectedOption] = useState(null);
@@ -177,6 +182,19 @@ const CheckoutScreen = () => {
         >
           <Text>Cash on Delivery</Text>
         </TouchableOpacity>
+
+        {/* CartCards */}
+        <Text style={styles.orderSummaryTitle}>Order Summary</Text>
+        {carts.map((item, index) => (
+          <CartCard
+            cart={item}
+            key={index}
+            subTotal={subTotal}
+            totalQuantity={totalQuantity}
+            showQuantityControls={false} //prop for removing button
+          />
+        ))}
+
         <View>
           <Text style={styles.textStyle}>Payment Details</Text>
 
