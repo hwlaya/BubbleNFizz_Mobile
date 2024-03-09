@@ -8,8 +8,8 @@ import {
   FlatList,
   Dimensions,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Rating, AirbnbRating } from "react-native-ratings";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { Rating } from "react-native-ratings";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -22,6 +22,7 @@ const RenderProductCard = ({
   productRating,
   productScentName,
   productStock,
+  productId,
 }) => {
   const navigation = useNavigation();
 
@@ -35,6 +36,7 @@ const RenderProductCard = ({
       productRating,
       productScentName,
       productStock,
+      productId,
     });
   };
 
@@ -48,6 +50,7 @@ const RenderProductCard = ({
       productRating,
       productScentName,
       productStock,
+      productId,
     },
     // Add more data objects if needed
   ];
@@ -62,7 +65,9 @@ const RenderProductCard = ({
             style={styles.productImage}
           />
           <Text style={styles.productName}>{item.productName}</Text>
-          <Text style={styles.productCategory}>{item.productCategory}</Text>
+          <Text style={styles.productCategory}>
+            Category:{item.productCategory}
+          </Text>
           <Text>{item.productScentName}</Text>
           <Text style={styles.productPrice}>${item.productPrice}</Text>
           <Rating
