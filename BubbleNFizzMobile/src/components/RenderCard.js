@@ -43,14 +43,14 @@ const RenderCard = ({ item }) => {
             {item.product_name}
           </Text>
 
-          {/* Product Category */}
+          {/* Product Category *
           <Text
             numberOfLines={1}
             ellipsizeMode="tail"
             style={styles.productCategory}
           >
             {item.product_category}
-          </Text>
+          </Text> */}
 
           {/* Product ScentName */}
           <Text
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     fontFamily: "Inconsolata-SemiBold",
     textAlign: "center",
   },
-  productCategory: {
+  productScentName: {
     marginBottom: 8, // Add vertical space
     fontFamily: "Inconsolata-Light",
   },

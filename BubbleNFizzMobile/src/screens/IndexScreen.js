@@ -19,12 +19,25 @@ import api from "../../config/api";
 const IndexScreen = () => {
   const navigation = useNavigation();
   const [threeProducts, setThreeProducts] = useState([]);
+  const [bestSellers, setBestSellers] = useState([]);
   useEffect(() => {
     api
       .get("shopping/getthreeproducts")
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         setThreeProducts(response.data);
+      })
+      .catch((err) => {
+        // console.log(err.response);
+      });
+  }, []);
+
+  useEffect(() => {
+    api
+      .get("shopping/getbestsellers")
+      .then((response) => {
+        console.log(response.data);
+        setBestSellers(response.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -57,6 +70,7 @@ const IndexScreen = () => {
             productImage={require("../assets/images/product1.jpg")}
           /> */}
           {threeProducts.map((item, index) => (
+            //console.log("Item at index", index, ":", item),
             <RenderCard item={item} key={index} />
           ))}
         </View>
@@ -79,27 +93,26 @@ const IndexScreen = () => {
       </View>
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
-          {/* <RenderCard
-            productName="Bubble N Fizz Coffee Bath Bomb 200g"
-            productCategory="Indulgent Coffee Bath Bombs"
-            productPrice="179"
-            productImage={require("../assets/images/bestseller1.jpg")}
-          />
-          <RenderCard
-            productName="Bubble N Fizz Sunkissed Bath Bomb 200g"
-            productCategory="Enchanting Sunkissed Bath Bomb"
-            productPrice="179"
-            productImage={require("../assets/images/bestseller2.jpg")}
-          />
-          <RenderCard
-            productName="Bubble N Fizz Rainbow Bath Bomb 200g"
-            productCategory="Spectacular Rainbow Bath Bomb"
-            productPrice="199"
-            productImage={require("../assets/images/bestseller3.jpg")}
-          /> */}
-          {threeProducts.map((item, index) => (
-            <RenderCard item={item} key={index} />
-          ))}
+          {bestSellers.map((item, index) => {
+            const {
+              product_name,
+              product_price,
+              product_scent_name,
+              product_rating,
+              product_description,
+            } = item;
+            return (
+              <RenderCard
+                item={item}
+                key={index}
+                productName={product_name}
+                productPrice={product_price}
+                productScentName={product_scent_name}
+                productRating={product_rating}
+                productDescription={product_description}
+              />
+            );
+          })}
         </View>
       </ScrollView>
       {/* Section - Rating Certified */}

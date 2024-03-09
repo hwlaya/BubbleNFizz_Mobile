@@ -18,7 +18,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
   const user = useContext(UserContext);
   const [email, setEmail] = useState("Email1@gmail.com");
-  const [password, setPassword] = useState("password");
+  const [password, setPassword] = useState("Password");
 
   const { width, height } = Dimensions.get("window");
 
