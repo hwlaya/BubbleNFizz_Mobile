@@ -12,8 +12,8 @@ const CartScreen = () => {
   const user = useContext(UserContext);
   const [carts, setCarts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
   const navigation = useNavigation();
 
   const updateTotalQuantity = (newQuantity) => {
@@ -49,23 +49,6 @@ const CartScreen = () => {
       .catch((err) => {
         console.log(err.response);
       });
-    // fetch(`shopping/getusercart?user_id=${user.user.id}`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     const cartItems = data;
-    //     let tempTotal = 0;
-    //     let tempQuantity = 0;
-    //     cartItems.forEach((item) => {
-    //       tempTotal += Number(item.cart_price);
-    //       tempQuantity += Number(item.cart_quantity);
-    //     });
-    //     setSubTotal(tempTotal);
-    //     setTotalQuantity(tempQuantity);
-    //     setCarts(cartItems);
-    //   })
-    //   .catch((error) => {
-    //     console.error(error.response);
-    //   });
   }, []);
 
   return (
@@ -89,6 +72,7 @@ const CartScreen = () => {
               setTotalQuantity={setTotalQuantity}
               totalQuantity={totalQuantity}
               setTotalPrice={setTotalPrice}
+              showQuantityControls={true} //prop for removing button
             />
           );
         })}

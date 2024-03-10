@@ -25,6 +25,7 @@ import AdminAddProductScreen from "../admin/AdminAddProductScreen";
 import AdminEditProductScreen from "../admin/AdminEditProductScreen";
 import AdminDeleteProductScreen from "../admin/AdminDeleteProductScreen";
 import AllProductsPage from "../screens/AllProductsPage";
+import EditProfile from "../profile/EditProfile";
 
 const AuthStack = createNativeStackNavigator();
 
@@ -120,6 +121,7 @@ export default function MainNavigation() {
           component={AdminDeleteProductScreen}
         />
         <AuthStack.Screen name="AllProductsPage" component={AllProductsPage} />
+        <AuthStack.Screen name="EditProfile" component={EditProfile} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );
