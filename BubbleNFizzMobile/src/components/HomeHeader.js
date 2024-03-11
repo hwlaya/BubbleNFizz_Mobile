@@ -1,12 +1,15 @@
 import React from "react";
 import { View, Text, useWindowDimensions } from "react-native";
 import { IconButton, Title } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, DrawerActions } from "@react-navigation/native";
 
 const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
   const navigation = useNavigation();
-
   const windowWidth = useWindowDimensions().width;
+
+  const openDrawer = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
   return (
     <View
       style={{
@@ -21,6 +24,7 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
         <IconButton
           icon="menu"
           onPress={() => {
+            openDrawer();
             console.log("Menu icon pressed");
           }}
         />

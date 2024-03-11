@@ -45,8 +45,9 @@ const LoginScreen = () => {
             if (response.data.user.profile === null) {
               navigation.navigate("PollScreen1");
             } else {
-              navigation.navigate("IndexScreen");
+              navigation.navigate("DrawerStack");
             }
+            W;
           }
 
           // if (userRole === 1 || userRole === 2 || userRole === 3) {
