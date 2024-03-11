@@ -11,7 +11,6 @@ import CartCard from "../components/CartCard";
 
 const CheckoutScreen = ({ route }) => {
   const navigation = useNavigation();
-  const route = useRoute();
 
   const { carts, subTotal } = route.params;
 

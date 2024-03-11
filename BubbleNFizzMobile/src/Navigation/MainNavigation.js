@@ -1,7 +1,10 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { View, Text } from "react-native";
+import { Divider, Drawer } from "react-native-paper";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import InitialLoginScreen from "../Auth/InitialLoginScreen";
 import LoginScreen from "../Auth/LoginScreen";
 import RegisterScreen from "../Auth/RegisterScreen";
@@ -26,59 +29,105 @@ import AdminEditProductScreen from "../admin/AdminEditProductScreen";
 import AdminDeleteProductScreen from "../admin/AdminDeleteProductScreen";
 import AllProductsPage from "../screens/AllProductsPage";
 import EditProfile from "../profile/EditProfile";
+import HomeHeader from "../components/HomeHeader";
 
 const AuthStack = createNativeStackNavigator();
+const DrawerStackNav = createDrawerNavigator();
 
-const AuthStackScreen = () => {
+const CustomDrawerContent = (props) => {
+  const [active, setActive] = React.useState("");
+  const navigation = useNavigation();
   return (
-    <AuthStack.Navigator>
-      <AuthStack.Screen
-        name="InitialLoginScreen"
-        component={InitialLoginScreen}
+    <View>
+      <Drawer.Section style={{ paddingTop: 20 }}>
+        <Divider style={{ marginTop: 20 }} />
+        <Drawer.Item
+          label="Home"
+          active={active === "Home"}
+          icon={() => <Icon name="home" size={30} color={"#E79E4F"} />}
+          onPress={() => {
+            navigation.navigate("IndexScreen");
+          }}
+        />
+        <Drawer.Item
+          label="Profile"
+          active={active === "Profile"}
+          icon={() => <Icon name="account" size={30} color={"#E79E4F"} />}
+          onPress={() => {
+            navigation.navigate("EditProfile");
+          }}
+        />
+        <Drawer.Item
+          label="Orders"
+          active={active === "Orders"}
+          icon={() => <Icon name="basket" size={30} color={"#E79E4F"} />}
+          // onPress={() => {
+          //   navigation.navigate("OrderScreen");
+          // }}
+        />
+        <Drawer.Item
+          label="Products"
+          active={active === "Products"}
+          icon={() => <Icon name="store" size={30} color={"#E79E4F"} />}
+          onPress={() => {
+            navigation.navigate("AllProductsPage");
+          }}
+        />
+      </Drawer.Section>
+      <Drawer.Item
+        label="Logout"
+        icon={() => <Icon name="logout" size={30} color={"#E79E4F"} />}
+        onPress={() => {
+          navigation.navigate("LoginScreen");
+        }}
       />
-      <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
-      <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
-      <AuthStack.Screen name="PollScreen1" component={PollScreen1} />
-      <AuthStack.Screen name="PollScreen2" component={PollScreen2} />
-      <AuthStack.Screen name="PollScreen3" component={PollScreen3} />
-      <AuthStack.Screen name="PollScreen4" component={PollScreen4} />
-      <AuthStack.Screen name="PollScreen5" component={PollScreen5} />
-      <AuthStack.Screen name="PollScreen6" component={PollScreen6} />
-      <AuthStack.Screen name="PollScreen7" component={PollScreen7} />
-      <AuthStack.Screen name="PollScreen8" component={PollScreen9} />
-      <AuthStack.Screen name="PollScreen9" component={PollScreen9} />
-      <AuthStack.Screen name="PollScreen9" component={PollScreen9} />
-      <AuthStack.Screen
-        name="PollProfileScreen"
-        component={PollProfileScreen}
-      />
-      <AuthStack.Screen name="IndexScreen" component={IndexScreen} />
-      <AuthStack.Screen
-        name="AdminDashboardScreen"
-        component={AdminDashboardScreen}
-      />
-      <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
-      <AuthStack.Screen name="EditScreen" component={AdminEditProductScreen} />
-      <AuthStack.Screen
-        name="DeleteScreen"
-        component={AdminDeleteProductScreen}
-      />
-      <AuthStack.Screen name="AllProductsPage" component={AllProductsPage} />
-    </AuthStack.Navigator>
+    </View>
   );
 };
 
-function HomeScreen() {
+const Drawerstack = () => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-    </View>
+    <DrawerStackNav.Navigator
+      screenOptions={{ headerShown: false }}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerStyle={{ backgroundColor: "white" }}
+    >
+      <DrawerStackNav.Screen
+        name="IndexScreen"
+        component={IndexScreen}
+        options={{
+          header: () => <HomeHeader />,
+        }}
+      />
+      <DrawerStackNav.Screen name="CartScreen" component={CartScreen} />
+      <DrawerStackNav.Screen name="CheckoutScreen" component={CheckoutScreen} />
+      <DrawerStackNav.Screen name="ProductScreen" component={ProductScreen} />
+      <DrawerStackNav.Screen
+        name="AdminDashboardScreen"
+        component={AdminDashboardScreen}
+      />
+      <DrawerStackNav.Screen
+        name="AddScreen"
+        component={AdminAddProductScreen}
+      />
+      <DrawerStackNav.Screen
+        name="EditScreen"
+        component={AdminEditProductScreen}
+      />
+      <DrawerStackNav.Screen
+        name="DeleteScreen"
+        component={AdminDeleteProductScreen}
+      />
+      <DrawerStackNav.Screen
+        name="AllProductsPage"
+        component={AllProductsPage}
+      />
+      <DrawerStackNav.Screen name="EditProfile" component={EditProfile} />
+    </DrawerStackNav.Navigator>
   );
-}
+};
 
-const Stack = createNativeStackNavigator();
-
-export default function MainNavigation() {
+function MainNavigation() {
   return (
     <NavigationContainer>
       <AuthStack.Navigator screenOptions={{ headerShown: false }}>
@@ -102,27 +151,10 @@ export default function MainNavigation() {
           component={PollProfileScreen}
         />
         <AuthStack.Screen name="PollScreen10" component={PollScreen10} />
-        <AuthStack.Screen name="Home" component={HomeScreen} />
-        <AuthStack.Screen name="IndexScreen" component={IndexScreen} />
-        <AuthStack.Screen name="CartScreen" component={CartScreen} />
-        <AuthStack.Screen name="CheckoutScreen" component={CheckoutScreen} />
-        <AuthStack.Screen name="ProductScreen" component={ProductScreen} />
-        <AuthStack.Screen
-          name="AdminDashboardScreen"
-          component={AdminDashboardScreen}
-        />
-        <AuthStack.Screen name="AddScreen" component={AdminAddProductScreen} />
-        <AuthStack.Screen
-          name="EditScreen"
-          component={AdminEditProductScreen}
-        />
-        <AuthStack.Screen
-          name="DeleteScreen"
-          component={AdminDeleteProductScreen}
-        />
-        <AuthStack.Screen name="AllProductsPage" component={AllProductsPage} />
-        <AuthStack.Screen name="EditProfile" component={EditProfile} />
+        <AuthStack.Screen name="DrawerStack" component={Drawerstack} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );
 }
+
+export default MainNavigation;
