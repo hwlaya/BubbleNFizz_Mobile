@@ -8,10 +8,8 @@ import {
   Dimensions,
 } from "react-native";
 import Background from "../components/Background";
-import { Input } from "@ui-kitten/components";
 import { Text, TextInput, Button } from "react-native-paper";
 import { UserContext } from "../providers/UserProvider";
-import axios from "axios";
 import api from "../../config/api";
 
 const LoginScreen = () => {
@@ -19,6 +17,8 @@ const LoginScreen = () => {
   const user = useContext(UserContext);
   const [email, setEmail] = useState("Email1@gmail.com");
   const [password, setPassword] = useState("Password");
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const { width, height } = Dimensions.get("window");
 
@@ -101,15 +101,21 @@ const LoginScreen = () => {
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
-            <Text style={styles.inputText}> PASSWORD </Text>
+            <Text> PASSWORD </Text>
             <TextInput
               style={styles.input}
               mode="flat"
               outlineColor="white"
-              secureTextEntry
+              secureTextEntry={!passwordVisible}
               value={password}
               onChangeText={setPassword}
-              right={<TextInput.Icon icon="eye" />}
+              right={
+                <TextInput.Icon
+                  icon={passwordVisible ? "eye-off" : "eye"}
+                  iconColor={"black"}
+                  onPress={() => setPasswordVisible(!passwordVisible)}
+                />
+              }
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
