@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import Background from "../components/Background";
 import { Text, TextInput, Button } from "react-native-paper";
@@ -47,7 +48,6 @@ const LoginScreen = () => {
             } else {
               navigation.navigate("DrawerStack");
             }
-            W;
           }
 
           // if (userRole === 1 || userRole === 2 || userRole === 3) {
@@ -68,6 +68,7 @@ const LoginScreen = () => {
         })
         .catch((err) => {
           console.log(err.response);
+          Alert.alert("Error!", "Invalid credentials. Please try again.");
         });
     }
   };
