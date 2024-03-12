@@ -154,7 +154,7 @@ const Drawerstack = () => {
         name="AllProductsPage"
         component={AllProductsPage}
       />
-      <DrawerStackNav.Screen name="EditProfile" component={EditProfile} />
+      <DrawerStackNav.Screen name="ProfileIndex" component={ProfileIndex} />
     </DrawerStackNav.Navigator>
   );
 };
