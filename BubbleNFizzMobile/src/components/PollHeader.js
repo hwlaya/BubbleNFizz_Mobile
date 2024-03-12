@@ -5,12 +5,17 @@ import { Text } from "react-native-paper";
 const PollHeader = () => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
+
+  const headerContainerStyles = {
+    paddingVertical: windowHeight * 0.02, // Adjust vertical padding
+    paddingHorizontal: windowWidth * 0.04, // Adjust horizontal padding
+    marginTop: windowHeight * 0.01, // Adjust top margin
+  };
   return (
-    <View style={styles.headerContainer}>
+    <View style={[styles.headerContainer, headerContainerStyles]}>
       <Text
         style={{
           fontFamily: "Poppins-ExtraBold",
-          fontSize: windowWidth * 0.08,
         }}
         variant="displayMedium"
       >

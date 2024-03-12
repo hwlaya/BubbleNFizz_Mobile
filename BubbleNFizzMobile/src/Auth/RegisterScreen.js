@@ -150,8 +150,9 @@ const RegisterScreen = () => {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    padding: 10,
+    padding: 1,
     marginTop: 20,
+    margintop: 20,
   },
   container: {
     flex: 1,

@@ -1,9 +1,9 @@
 import React from "react";
-import { View, useWindowDimensions } from "react-native";
+import { View, useWindowDimensions, StyleSheet } from "react-native";
 import { IconButton, Title } from "react-native-paper";
 import { useNavigation, DrawerActions } from "@react-navigation/native";
 
-const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
+const AdminHomeHeader = ({ title, showMenuIcon }) => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width;
 
@@ -11,15 +11,7 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
     navigation.dispatch(DrawerActions.openDrawer());
   };
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: "white",
-        marginTop: 30,
-      }}
-    >
+    <View style={styles.container}>
       {showMenuIcon && (
         <IconButton
           icon="menu"
@@ -34,6 +26,8 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
           console.log(`${title} title pressed`);
         }}
         style={{
+          flex: 1,
+          textAlign: "center",
           paddingVertical: windowWidth * 0,
           paddingHorizontal: windowWidth * 0.03,
           fontFamily: "Poppins-ExtraBold",
@@ -44,17 +38,17 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
       >
         {title}
       </Title>
-      {showShoppingIcon && (
-        <IconButton
-          icon="shopping"
-          onPress={() => {
-            console.log("Shopping icon pressed");
-            navigation.navigate("CartScreen");
-          }}
-        />
-      )}
     </View>
   );
 };
 
-export default HomeHeader;
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "white",
+    marginTop: 30,
+  },
+});
+export default AdminHomeHeader;

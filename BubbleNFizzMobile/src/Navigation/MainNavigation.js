@@ -27,11 +27,14 @@ import AdminDashboardScreen from "../admin/AdminDashboardScreen";
 import AdminAddProductScreen from "../admin/AdminAddProductScreen";
 import AdminEditProductScreen from "../admin/AdminEditProductScreen";
 import AdminDeleteProductScreen from "../admin/AdminDeleteProductScreen";
+import AdminStoreCatalogScreen from "../admin/AdminStoreCatalogScreen";
 import AllProductsPage from "../screens/AllProductsPage";
 import EditProfile from "../profile/EditProfile";
 import HomeHeader from "../components/HomeHeader";
+import AdminHomeHeader from "../components/AdminHomeHeader";
 
 const AuthStack = createNativeStackNavigator();
+const AdminStackNav = createDrawerNavigator();
 const DrawerStackNav = createDrawerNavigator();
 
 const CustomDrawerContent = (props) => {
@@ -84,6 +87,50 @@ const CustomDrawerContent = (props) => {
     </View>
   );
 };
+const CustomAdminDrawerContent = (props) => {
+  const [active, setActive] = React.useState("");
+  const navigation = useNavigation();
+  return (
+    <View>
+      <Drawer.Section style={{ paddingTop: 20 }}>
+        <Divider style={{ marginTop: 20 }} />
+        <Drawer.Item
+          label="Home"
+          active={active === "Dashboard"}
+          icon={() => (
+            <Icon name="view-dashboard" size={30} color={"#E79E4F"} />
+          )}
+          onPress={() => {
+            navigation.navigate("AdminDashboardScreen");
+          }}
+        />
+        <Drawer.Item
+          label="Store Catalog Management"
+          active={active === "Store Catalog Management"}
+          icon={() => <Icon name="store-cog" size={30} color={"#E79E4F"} />}
+          onPress={() => {
+            navigation.navigate("AdminStoreCatalogScreen");
+          }}
+        />
+        <Drawer.Item
+          label="POS"
+          active={active === "POS"}
+          icon={() => <Icon name="cash-register" size={30} color={"#E79E4F"} />}
+          // onPress={() => {
+          //   navigation.navigate("OrderScreen");
+          // }}
+        />
+      </Drawer.Section>
+      <Drawer.Item
+        label="Logout"
+        icon={() => <Icon name="logout" size={30} color={"#E79E4F"} />}
+        onPress={() => {
+          navigation.navigate("LoginScreen");
+        }}
+      />
+    </View>
+  );
+};
 
 const Drawerstack = () => {
   return (
@@ -103,27 +150,57 @@ const Drawerstack = () => {
       <DrawerStackNav.Screen name="CheckoutScreen" component={CheckoutScreen} />
       <DrawerStackNav.Screen name="ProductScreen" component={ProductScreen} />
       <DrawerStackNav.Screen
-        name="AdminDashboardScreen"
-        component={AdminDashboardScreen}
-      />
-      <DrawerStackNav.Screen
-        name="AddScreen"
-        component={AdminAddProductScreen}
-      />
-      <DrawerStackNav.Screen
-        name="EditScreen"
-        component={AdminEditProductScreen}
-      />
-      <DrawerStackNav.Screen
-        name="DeleteScreen"
-        component={AdminDeleteProductScreen}
-      />
-      <DrawerStackNav.Screen
         name="AllProductsPage"
         component={AllProductsPage}
       />
       <DrawerStackNav.Screen name="EditProfile" component={EditProfile} />
     </DrawerStackNav.Navigator>
+  );
+};
+
+const AdminStack = () => {
+  return (
+    <AdminStackNav.Navigator
+      screenOptions={{ headerShown: false }}
+      drawerContent={(props) => <CustomAdminDrawerContent {...props} />}
+      drawerStyle={{ backgroundColor: "white" }}
+    >
+      <AdminStackNav.Screen
+        name="AdminDashboardScreen"
+        component={AdminDashboardScreen}
+        options={{
+          header: () => <AdminHomeHeader />,
+        }}
+      />
+      <AdminStackNav.Screen
+        name="AddScreen"
+        component={AdminAddProductScreen}
+        options={{
+          header: () => <AdminHomeHeader />,
+        }}
+      />
+      <AdminStackNav.Screen
+        name="EditScreen"
+        component={AdminEditProductScreen}
+        options={{
+          header: () => <AdminHomeHeader />,
+        }}
+      />
+      <AdminStackNav.Screen
+        name="DeleteScreen"
+        component={AdminDeleteProductScreen}
+        options={{
+          header: () => <AdminHomeHeader />,
+        }}
+      />
+      <AdminStackNav.Screen
+        name="AdminStoreCatalogScreen"
+        component={AdminStoreCatalogScreen}
+        options={{
+          header: () => <AdminHomeHeader />,
+        }}
+      />
+    </AdminStackNav.Navigator>
   );
 };
 
@@ -152,6 +229,7 @@ function MainNavigation() {
         />
         <AuthStack.Screen name="PollScreen10" component={PollScreen10} />
         <AuthStack.Screen name="DrawerStack" component={Drawerstack} />
+        <AuthStack.Screen name="AdminStack" component={AdminStack} />
       </AuthStack.Navigator>
     </NavigationContainer>
   );

@@ -1,8 +1,12 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
-import { DataTable, Button } from "react-native-paper";
+import { View, ScrollView, TouchableOpacity, StyleSheet } from "react-native";
+import { DataTable, Button, Text } from "react-native-paper";
+import AdminHomeHeader from "../components/AdminHomeHeader";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 
 const AdminDeleteProductScreen = () => {
+  const navigation = useNavigation();
   // Dummy product data for demonstration
   const products = [
     { id: 1, name: "Product 1", price: "$10" },
@@ -11,37 +15,81 @@ const AdminDeleteProductScreen = () => {
   ];
 
   return (
-    <View style={{ flex: 1, marginTop: 30 }}>
+    <View style={styles.container}>
       <ScrollView>
-        <DataTable>
-          <DataTable.Header>
-            <DataTable.Title>ID</DataTable.Title>
-            <DataTable.Title>Name</DataTable.Title>
-            <DataTable.Title>Price</DataTable.Title>
-            <DataTable.Title>Delete</DataTable.Title>
-            {/* New column for delete button */}
-          </DataTable.Header>
-          {products.map((product) => (
-            <DataTable.Row key={product.id}>
-              <DataTable.Cell>{product.id}</DataTable.Cell>
-              <DataTable.Cell>{product.name}</DataTable.Cell>
-              <DataTable.Cell>{product.price}</DataTable.Cell>
-              <DataTable.Cell>
-                <Button
-                  mode="contained"
-                  onPress={() => {
-                    // Handle delete button action
-                  }}
-                >
-                  Delete
-                </Button>
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
-        </DataTable>
+        <AdminHomeHeader
+          title="Bubble N' Fizz"
+          showMenuIcon={true}
+          showShoppingIcon={true}
+        />
+        <View style={styles.bodyContainer}>
+          <View style={styles.title}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("AdminStoreCatalogScreen")}
+            >
+              <Ionicons
+                name="arrow-back-circle-sharp"
+                size={40}
+                color="black"
+              />
+            </TouchableOpacity>
+            <Text
+              variant="displayMedium"
+              style={{
+                padding: 10,
+                fontFamily: "LexendExa-ExtraLight",
+              }}
+            >
+              Delete Product
+            </Text>
+          </View>
+          <DataTable>
+            <DataTable.Header>
+              <DataTable.Title>ID</DataTable.Title>
+              <DataTable.Title>Name</DataTable.Title>
+              <DataTable.Title>Price</DataTable.Title>
+              <DataTable.Title>Delete</DataTable.Title>
+              {/* New column for delete button */}
+            </DataTable.Header>
+            {products.map((product) => (
+              <DataTable.Row key={product.id}>
+                <DataTable.Cell>{product.id}</DataTable.Cell>
+                <DataTable.Cell>{product.name}</DataTable.Cell>
+                <DataTable.Cell>{product.price}</DataTable.Cell>
+                <DataTable.Cell>
+                  <Button
+                    mode="contained"
+                    onPress={() => {
+                      // Handle delete button action
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </DataTable.Cell>
+              </DataTable.Row>
+            ))}
+          </DataTable>
+        </View>
       </ScrollView>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  bodyContainer: {
+    padding: 10,
+    margin: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  title: {
+    flexDirection: "row",
+    fontSize: 24,
+    alignSelf: "flex-start",
+    marginLeft: -10,
+  },
+});
 export default AdminDeleteProductScreen;

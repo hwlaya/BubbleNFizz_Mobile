@@ -11,6 +11,7 @@ import {
 import Background from "../components/Background";
 import { Text, TextInput, Button } from "react-native-paper";
 import { UserContext } from "../providers/UserProvider";
+import PollHeader from "../components/PollHeader";
 import api from "../../config/api";
 
 const LoginScreen = () => {
@@ -41,7 +42,7 @@ const LoginScreen = () => {
 
           console.log(userRole);
           if (userRole != 3) {
-            navigation.navigate("AdminDashboardScreen");
+            navigation.navigate("AdminStack");
           } else {
             if (response.data.user.profile === null) {
               navigation.navigate("PollScreen1");
@@ -74,14 +75,7 @@ const LoginScreen = () => {
   };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <View style={styles.headerContainer}>
-        <Text
-          style={{ fontFamily: "Poppins-ExtraBold" }}
-          variant="displayMedium"
-        >
-          Bubble N Fizz
-        </Text>
-      </View>
+      <PollHeader />
       <View style={styles.container}>
         <View style={[styles.box, { width: width * 1, height: height * 0.5 }]}>
           <Text
@@ -151,6 +145,7 @@ const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   headerContainer: {
+    flex: 1,
     padding: 10,
     marginTop: 20,
   },
