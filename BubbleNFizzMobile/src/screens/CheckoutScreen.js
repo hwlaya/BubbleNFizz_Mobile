@@ -8,7 +8,6 @@ import { UserContext } from "../providers/UserProvider";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import api from "../../config/api";
 
-const CheckoutScreen = () => {
   const navigation = useNavigation();
 
   const { carts, subTotal } = route.params;
