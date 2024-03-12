@@ -62,8 +62,8 @@ const CustomDrawerContent = (props) => {
           }}
         />
         <Drawer.Item
-          label="Orders"
-          active={active === "Orders"}
+          label="My Orders"
+          active={active === "My Orders"}
           icon={() => <Icon name="basket" size={30} color={"#E79E4F"} />}
           // onPress={() => {
           //   navigation.navigate("OrderScreen");
