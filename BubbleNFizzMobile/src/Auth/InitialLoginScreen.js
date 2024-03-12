@@ -20,52 +20,56 @@ const InitialLoginScreen = () => {
         source={require("../assets/images/Initial_landing_screen.png")}
         style={styles.imageBackground}
       >
-        <View style={[styles.box, { width: width * 1, height: height * 0.5 }]}>
+        <View
+          style={[styles.box, { width: width * 1, height: height * 0.001 }]}
+        >
           {/* Black Circle */}
           <View style={styles.circle} />
           {/* Texts */}
-          <View style={styles.textContainer}>
-            <Text style={styles.textStyle1}>Welcome to</Text>
-            <Text style={styles.textStyle2}>Bubble N Fizz</Text>
-          </View>
+          <View style={styles.bodyContainer}>
+            <View style={styles.textContainer}>
+              <Text style={styles.textStyle1}>Welcome to</Text>
+              <Text style={styles.textStyle2}>Bubble N Fizz</Text>
+            </View>
 
-          {/* Buttons */}
-          <View style={styles.buttonContainer}>
-            <View style={{ alignItems: "center" }}>
-              <View style={{ zIndex: 2 }}>
+            {/* Buttons */}
+            <View style={styles.buttonContainer}>
+              <View style={{ alignItems: "center" }}>
+                <View style={{ zIndex: 2 }}>
+                  <Button
+                    mode="contained-tonal"
+                    buttonColor="#E79E4F"
+                    style={{
+                      borderRadius: 40,
+                      width: 170,
+                      height: 80,
+                      justifyContent: "center",
+                      marginRight: -70,
+                      // alignItems: "flex-start",
+                      // marginRight: -90,
+                    }}
+                    onPress={() => {
+                      console.log("Sign-Up Pressed");
+                      navigation.navigate("RegisterScreen");
+                    }}
+                  >
+                    <Text style={styles.textStyle3}>Sign-Up</Text>
+                  </Button>
+                </View>
+              </View>
+              <View>
                 <Button
                   mode="contained-tonal"
-                  buttonColor="#E79E4F"
-                  style={{
-                    borderRadius: 40,
-                    width: 170,
-                    height: 80,
-                    justifyContent: "center",
-                    marginRight: -70,
-                    // alignItems: "flex-start",
-                    // marginRight: -90,
-                  }}
+                  buttonColor="white"
+                  style={[styles.button, styles.loginButton]}
                   onPress={() => {
-                    console.log("Sign-Up Pressed");
-                    navigation.navigate("RegisterScreen");
+                    console.log("Login Pressed");
+                    navigation.navigate("LoginScreen");
                   }}
                 >
-                  <Text style={styles.textStyle3}>Sign-Up</Text>
+                  <Text style={styles.textStyle4}>Login</Text>
                 </Button>
               </View>
-            </View>
-            <View>
-              <Button
-                mode="contained-tonal"
-                buttonColor="white"
-                style={[styles.button, styles.loginButton]}
-                onPress={() => {
-                  console.log("Login Pressed");
-                  navigation.navigate("LoginScreen");
-                }}
-              >
-                <Text style={styles.textStyle4}>Login</Text>
-              </Button>
             </View>
           </View>
         </View>
@@ -97,7 +101,9 @@ const styles = StyleSheet.create({
     height: 500,
     position: "absolute",
     bottom: -100, // Adjust the positioning as needed
-    right: -50,
+  },
+  bodyContainer: {
+    marginTop: -450,
   },
   textContainer: {
     alignItems: "center",
