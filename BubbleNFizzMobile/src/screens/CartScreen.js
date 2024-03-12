@@ -85,7 +85,7 @@ const CartScreen = () => {
             </View>
             <View style={styles.containerCheckout}>
               <Text style={styles.label}>Sub Total:</Text>
-              <Text style={styles.value}>Php {subTotal}.00</Text>
+              <Text style={styles.value}>₱ {subTotal}</Text>
             </View>
             <View style={styles.divider} />
           </View>
@@ -97,6 +97,7 @@ const CartScreen = () => {
               navigation.navigate("CheckoutScreen", {
                 carts: carts,
                 subTotal: subTotal,
+                totalQuantity: totalQuantity,
               })
             } //console.log("Pressed")}
           >

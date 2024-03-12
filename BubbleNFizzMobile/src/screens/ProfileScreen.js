@@ -56,7 +56,7 @@ function ProfileScreen() {
           <Text style={styles.buttonLabel}>My Purchases</Text>
         </View>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity onPress={() => handleNotificationPress()}>
+          <TouchableOpacity onPress={() => console.log("Notifications")}>
             <Image
               source={require("../assets/images/notification.png")}
               style={styles.icon}
@@ -65,7 +65,7 @@ function ProfileScreen() {
           <Text style={styles.buttonLabel}>Notifications</Text>
         </View>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity onPress={() => handleViewedProductsPress()}>
+          <TouchableOpacity onPress={() => console.log("Recently Viewed")}>
             <Image
               source={require("../assets/images/eye.png")}
               style={styles.icon}

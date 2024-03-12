@@ -13,24 +13,32 @@ const CheckoutScreen = ({ route }) => {
   const navigation = useNavigation();
 
   const { carts, subTotal } = route.params;
-
   const { user } = useContext(UserContext);
-
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
   const [address, setAddress] = useState(user.profile.address);
   const [contact, setPhone] = useState(user.profile.contact_no);
 
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-
-  const [selectedShippingOption, setShippingSelectedOption] = useState(null);
   const [selectedPaymentOption, setPaymentSelectedOption] = useState(null);
 
-  const handleShippingOptionSelect = (option) => {
-    setShippingSelectedOption(option);
-  };
+  const [selectedShippingOption, setSelectedShippingOption] = useState("");
+  const [shippingFee, setShippingFee] = useState(0);
 
+  const [totalQuantity, setTotalQuantity] = useState(totalQuantity);
+  const totalPrice = subTotal + shippingFee;
+
+  const handleShippingOptionSelect = (option) => {
+    let shippingCost = "";
+    if (option === "pickUp") {
+      shippingCost = 0;
+    } else if (option === "standardDelivery") {
+      shippingCost = 39.0;
+    } else if (option === "sameDayDelivery") {
+      shippingCost = 150.0;
+    }
+    setSelectedShippingOption(option);
+    setShippingFee(shippingCost);
+  };
   const handlePaymentOptionSelect = (option) => {
     setPaymentSelectedOption(option);
   };
@@ -55,14 +63,11 @@ const CheckoutScreen = ({ route }) => {
           <Text style={styles.title}>Checkout</Text>
           <View style={{ width: 24 }} />
         </View>
-        <View>
+
+        {/* Contact and Address */}
+        <View style={styles.contactAndAddressContainer}>
           <Text style={styles.textStyle}>Contact</Text>
           <TextInput
-            style={{
-              height: 35,
-              width: "100%",
-            }}
-            // outlineStyle={{ borderRadius: 10 }}
             label="Email"
             value={user.email}
             editable={false}
@@ -71,39 +76,29 @@ const CheckoutScreen = ({ route }) => {
           />
           <Text style={styles.textStyle}>Address</Text>
           <TextInput
-            style={{
-              height: 35,
-              width: "100%",
-            }}
-            // outlineStyle={{ borderRadius: 10 }}
             label="Name"
             value={user.name}
             editable={false}
             mode="outlined"
             focused={true}
+            style={{ marginTop: 10 }}
           />
           <TextInput
-            style={{
-              height: 35,
-              width: "100%",
-            }}
-            // outlineStyle={{ borderRadius: 10 }}
             label="Address"
             value={user.profile.address}
             mode="outlined"
             focused={true}
+            style={{ marginTop: 10 }}
           />
           <TextInput
-            style={{
-              height: 35,
-              width: "100%",
-            }}
-            // outlineStyle={{ borderRadius: 10 }}
             label="Phone Number"
             value={contact}
             mode="outlined"
             focused={true}
+            style={{ marginTop: 10 }}
           />
+
+          {/* Shipping Address */}
           <Text style={styles.textStyle}>Shipping Address</Text>
           <TouchableOpacity
             style={{
@@ -136,7 +131,8 @@ const CheckoutScreen = ({ route }) => {
             onPress={() => handleShippingOptionSelect("standardDelivery")}
           >
             <Text>Standard Delivery</Text>
-            <Text>* Estimated Delivery: Mar 09 - Mar 12 P39.00</Text>
+            <Text>* Estimated Delivery: 3-4 Days</Text>
+            <Text>P39.00</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -153,10 +149,11 @@ const CheckoutScreen = ({ route }) => {
             onPress={() => handleShippingOptionSelect("sameDayDelivery")}
           >
             <Text>Same Day Delivery</Text>
-            <Text>
-              * Pick up the purchased product at the store at any time P150.00
-            </Text>
+            <Text>* Get the product delivered now!</Text>
+            <Text>P150.00</Text>
           </TouchableOpacity>
+
+          {/* Payment */}
           <Text style={styles.textStyle}>Payment</Text>
           <TouchableOpacity
             style={{
@@ -237,29 +234,25 @@ const CheckoutScreen = ({ route }) => {
               </Button>
             </View>
           </View>
-          <View
-            style={
-              {
-                // justifyContent: "center",
-                // alignItems: "center",
-                // margin: 10,
-              }
-            }
-          >
+          <View>
             <View style={styles.orderSummary}>
               <Text style={styles.orderSummaryTitle}>Order Summary</Text>
-              <View>
-                <View style={styles.containerCheckout}>
-                  <Text style={styles.label}>Items:</Text>
-                  <Text style={styles.value}></Text>
-                </View>
-                <View style={styles.containerCheckout}>
-                  <Text style={styles.label}>Sub Total:</Text>
-                  <Text style={styles.value}>Php .00</Text>
-                  <Text style={styles.label}>Total:</Text>
-                  <Text style={styles.value}>PHP .00</Text>
-                </View>
-                <View style={styles.divider} />
+              <View style={styles.containerCheckout}>
+                <Text style={styles.label}>Items:</Text>
+                <Text style={styles.value}>{totalQuantity}</Text>
+              </View>
+              <View style={styles.containerCheckout}>
+                <Text style={styles.label}>Sub Total:</Text>
+                <Text style={styles.value}>₱ {subTotal}.00</Text>
+              </View>
+              <View style={styles.containerCheckout}>
+                <Text style={styles.label}>Shipping Fee:</Text>
+                <Text style={styles.value}> {shippingFee}.00</Text>
+              </View>
+              <View style={styles.divider} />
+              <View style={styles.containerCheckout}>
+                <Text style={styles.label}>Total:</Text>
+                <Text style={styles.value}>₱ {totalPrice}.00</Text>
               </View>
 
               <Button
@@ -289,6 +282,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+    backgroundColor: "white",
   },
   header: {
     flexDirection: "row",
@@ -309,6 +303,12 @@ const styles = StyleSheet.create({
     fontFamily: "Rubik-Regular",
     fontSize: 20,
     fontWeight: "bold",
+    marginVertical: 5,
+  },
+  containerCheckout: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
   containerCheckout: {
     flexDirection: "row",
@@ -321,13 +321,21 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: 10,
   },
-  label: {},
-  value: {},
+  row: {},
+  label: {
+    flex: 1,
+    textAlign: "left",
+  },
+  value: {
+    flex: 1,
+    textAlign: "right",
+  },
   scrollView: {
     flexGrow: 1,
   },
   orderSummaryTitle: {
     fontFamily: "LilitaOne-Regular",
+    flexDirection: "column",
   },
   orderSummary: {
     padding: 16,
