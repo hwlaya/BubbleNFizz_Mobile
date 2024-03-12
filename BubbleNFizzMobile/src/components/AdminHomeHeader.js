@@ -22,9 +22,6 @@ const AdminHomeHeader = ({ title, showMenuIcon }) => {
         />
       )}
       <Title
-        onPress={() => {
-          console.log(`${title} title pressed`);
-        }}
         style={{
           flex: 1,
           textAlign: "center",
@@ -34,7 +31,7 @@ const AdminHomeHeader = ({ title, showMenuIcon }) => {
           fontSize: 26,
           marginTop: 20,
           marginBottom: 20,
-          right: 30,
+          right: 22,
         }}
       >
         {title}
