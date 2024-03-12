@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Image, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
-import TemporaryUser from "../providers/TemporaryUser";
+import { UserContext } from "../providers/UserProvider";
+import { useNavigation } from "@react-navigation/native";
 
-const { name, picture } = TemporaryUser();
+function ProfileScreen() {
+  const { user } = useContext(UserContext);
+  const navigation = useNavigation();
 
-const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.profileInfo}>
         <View style={styles.imageContainer}>
-          <Image source={picture} style={styles.image} />
+          <Image
+            style={styles.image}
+            source={require("../assets/images/user.png")}
+          />
         </View>
         <View style={styles.profileDetails}>
-          <Text style={styles.name}>{name}</Text>
-          <TouchableOpacity style={styles.editProfileButton}>
+          <Text style={styles.name}>{user.name}</Text>
+          <TouchableOpacity
+            style={styles.editProfileButton}
+            onPress={navigation.navigate("EditProfile")}
+          >
             <Text
               style={[styles.editProfileText, { color: "gray", fontSize: 12 }]}
             >
@@ -30,7 +38,7 @@ const ProfileScreen = () => {
 
       <View style={styles.buttonContainer}>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity onPress={() => handleAccountPress()}>
+          <TouchableOpacity onPress={console.log("My Account")}>
             <Image
               source={require("../assets/images/user.png")}
               style={styles.icon}
@@ -39,7 +47,7 @@ const ProfileScreen = () => {
           <Text style={styles.buttonLabel}>My Account</Text>
         </View>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity onPress={() => handlePurchasePress()}>
+          <TouchableOpacity onPress={console.log("My Purchases")}>
             <Image
               source={require("../assets/images/cart.png")}
               style={styles.icon}
@@ -48,7 +56,7 @@ const ProfileScreen = () => {
           <Text style={styles.buttonLabel}>My Purchases</Text>
         </View>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity onPress={() => handleNotificationPress()}>
+          <TouchableOpacity onPress={() => console.log("Notifications")}>
             <Image
               source={require("../assets/images/notification.png")}
               style={styles.icon}
@@ -57,7 +65,7 @@ const ProfileScreen = () => {
           <Text style={styles.buttonLabel}>Notifications</Text>
         </View>
         <View style={styles.buttonGroup}>
-          <TouchableOpacity onPress={() => handleViewedProductsPress()}>
+          <TouchableOpacity onPress={() => console.log("Recently Viewed")}>
             <Image
               source={require("../assets/images/eye.png")}
               style={styles.icon}
@@ -68,9 +76,18 @@ const ProfileScreen = () => {
           </Text>
         </View>
       </View>
+
+      <View style={styles.detailsContainer}>
+        <Text style={styles.text}>Email: {user.email}</Text>
+        <Text style={styles.text}>Name: {user.name}</Text>
+        <Text style={styles.text}>Address: {user.profile.address}</Text>
+        <Text style={styles.text}>Birthday: {user.profile.birthday}</Text>
+        <Text style={styles.text}>City: {user.profile.city}</Text>
+        <Text style={styles.text}>Contact No: {user.profile.contact_no}</Text>
+      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -134,6 +151,18 @@ const styles = StyleSheet.create({
   editProfileIcon: {
     width: 20,
     height: 20,
+  },
+  detailsContainer: {
+    borderColor: "gray",
+    borderWidth: 1,
+    flex: 1,
+    width: "100%",
+    padding: 20,
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "left",
   },
 });
 

@@ -15,6 +15,7 @@ const CartCard = ({
   setTotalQuantity,
   subTotal,
   totalQuantity,
+  showQuantityControls,
 }) => {
   const [quantity, setQuantity] = useState(cart.cart_quantity);
   const [totalPrice, setTotalPrice] = useState(cart.cart_price);
@@ -44,6 +45,7 @@ const CartCard = ({
         });
     }
   };
+  3;
 
   const addQuantity = () => {
     api
@@ -93,20 +95,17 @@ const CartCard = ({
         </View>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <TouchableOpacity onPress={subQuantity}>
-            <AntDesign name="minuscircle" size={20} color="black" />
+            {showQuantityControls && (
+              <AntDesign name="minuscircle" size={20} color="black" />
+            )}
           </TouchableOpacity>
 
-          <Text
-            style={{
-              padding: 5,
-              marginHorizontal: 5,
-            }}
-          >
-            {quantity}
-          </Text>
+          <Text style={{ padding: 5, marginHorizontal: 5 }}>{quantity}</Text>
 
           <TouchableOpacity onPress={addQuantity}>
-            <AntDesign name="pluscircle" size={20} color="black" />
+            {showQuantityControls && (
+              <AntDesign name="pluscircle" size={20} color="black" />
+            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -126,18 +125,20 @@ const CartCard = ({
       >
         ₱{totalPrice}
       </Text>
-      <TouchableOpacity>
-        <Text
-          style={{
-            fontSize: 12,
-            fontFamily: "LilitaOne-Regular",
-            textAlign: "right",
-            color: "gray",
-          }}
-        >
-          Remove
-        </Text>
-      </TouchableOpacity>
+      {showQuantityControls && (
+        <TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 12,
+              fontFamily: "LilitaOne-Regular",
+              textAlign: "right",
+              color: "gray",
+            }}
+          >
+            Remove
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

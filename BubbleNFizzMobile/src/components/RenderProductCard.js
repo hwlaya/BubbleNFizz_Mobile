@@ -64,11 +64,11 @@ const RenderProductCard = ({
             source={require("../assets/images/bestseller1.jpg")}
             style={styles.productImage}
           />
-          <Text style={styles.productName}>{item.productName}</Text>
-          <Text style={styles.productCategory}>
-            Category:{item.productCategory}
+          <Text numberOfLines={2} style={styles.productName}>
+            {item.productName}
           </Text>
-          <Text>{item.productScentName}</Text>
+
+          <Text style={styles.productScentName}>{item.productScentName}</Text>
           <Text style={styles.productPrice}>${item.productPrice}</Text>
           <Rating
             type="star"
@@ -120,11 +120,10 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     fontFamily: "Inconsolata-SemiBold",
   },
-  productCategory: {
+  productScentName: {
     fontSize: 10,
     marginBottom: 4,
     fontFamily: "Inconsolata-Light",
-    textAlign: "center",
   },
   productPrice: {
     fontFamily: "Inconsolata-Bold",

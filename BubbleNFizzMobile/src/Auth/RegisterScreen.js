@@ -8,7 +8,6 @@ import {
   Dimensions,
 } from "react-native";
 import Background from "../components/Background";
-import { Input } from "@ui-kitten/components";
 import { Text, TextInput, Button } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
 import api from "../../config/api";
@@ -16,6 +15,9 @@ import api from "../../config/api";
 const RegisterScreen = () => {
   const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
+
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [cPasswordVisible, setCPasswordVisible] = useState(false);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -88,8 +90,14 @@ const RegisterScreen = () => {
               outlineColor="white"
               value={password}
               onChangeText={(text) => setPassword(text)}
-              secureTextEntry
-              right={<TextInput.Icon icon="eye" />}
+              secureTextEntry={!passwordVisible}
+              right={
+                <TextInput.Icon
+                  icon={passwordVisible ? "eye-off" : "eye"}
+                  iconColor={"black"}
+                  onPress={() => setPasswordVisible(!passwordVisible)}
+                />
+              }
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
@@ -103,11 +111,27 @@ const RegisterScreen = () => {
               outlineColor="white"
               value={cPassword}
               onChangeText={(text) => setCPassword(text)}
-              secureTextEntry
-              right={<TextInput.Icon icon="eye" />}
+              secureTextEntry={!cPasswordVisible}
+              right={
+                <TextInput.Icon
+                  icon={cPasswordVisible ? "eye-off" : "eye"}
+                  iconColor={"black"}
+                  onPress={() => setCPasswordVisible(!cPasswordVisible)}
+                />
+              }
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("LoginScreen");
+              }}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.loginText}> Already Have An Account? </Text>
+                <Text style={styles.loginText2}>Login </Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={{ alignSelf: "center" }}>
             <Button
@@ -167,6 +191,13 @@ const styles = StyleSheet.create({
   },
   inputText: {
     fontFamily: "LexendExa-ExtraLight",
+  },
+  loginText: {
+    fontFamily: "Poppins-SemiBold",
+  },
+  loginText2: {
+    fontFamily: "Poppins-SemiBold",
+    color: "red",
   },
 });
 export default RegisterScreen;

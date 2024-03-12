@@ -8,11 +8,13 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import { ActivityIndicator } from "react-native-paper";
 import api from "../../config/api";
 import RenderProductsCard from "../components/RenderProductCard";
 
 const AllProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -23,6 +25,9 @@ const AllProductsPage = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
@@ -31,7 +36,7 @@ const AllProductsPage = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <TouchableOpacity
         onPress={() => navigation.goBack()}
         style={styles.button}
@@ -40,24 +45,28 @@ const AllProductsPage = () => {
       </TouchableOpacity>
       <View style={{ margin: 10, marginTop: 12 }}>
         <Text style={styles.customTitle}>All Products</Text>
-        <FlatList
-          data={products}
-          renderItem={({ item }) => (
-            <RenderProductsCard
-              productId={item.id}
-              productCategory={item.product_category}
-              productName={item.product_name}
-              productDescription={item.product_description}
-              productImage={item.product_image}
-              productPrice={item.product_price}
-              productStock={item.product_stock}
-              productRating={item.product_rating}
-              productScentName={item.product_scent_name}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-        />
+        {loading ? (
+          <ActivityIndicator animating={true} color="#0000ff" />
+        ) : (
+          <FlatList
+            data={products}
+            renderItem={({ item }) => (
+              <RenderProductsCard
+                productId={item.id}
+                productCategory={item.product_category}
+                productName={item.product_name}
+                productDescription={item.product_description}
+                productImage={item.product_image}
+                productPrice={item.product_price}
+                productStock={item.product_stock}
+                productRating={item.product_rating}
+                productScentName={item.product_scent_name}
+              />
+            )}
+            keyExtractor={(item) => item.id}
+            numColumns={2}
+          />
+        )}
       </View>
     </View>
   );
