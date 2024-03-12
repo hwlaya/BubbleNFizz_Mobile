@@ -30,6 +30,7 @@ import AdminDeleteProductScreen from "../admin/AdminDeleteProductScreen";
 import AllProductsPage from "../screens/AllProductsPage";
 import EditProfile from "../profile/EditProfile";
 import HomeHeader from "../components/HomeHeader";
+import ProfileIndex from "../profile/ProfileIndex";
 
 const AuthStack = createNativeStackNavigator();
 const DrawerStackNav = createDrawerNavigator();
@@ -54,7 +55,7 @@ const CustomDrawerContent = (props) => {
           active={active === "Profile"}
           icon={() => <Icon name="account" size={30} color={"#E79E4F"} />}
           onPress={() => {
-            navigation.navigate("EditProfile");
+            navigation.navigate("ProfileIndex");
           }}
         />
         <Drawer.Item
@@ -123,6 +124,11 @@ const Drawerstack = () => {
         component={AllProductsPage}
       />
       <DrawerStackNav.Screen name="EditProfile" component={EditProfile} />
+      <DrawerStackNav.Screen
+        name="ProfileScreen"
+        component={PollProfileScreen}
+      />
+      <DrawerStackNav.Screen name="ProfileIndex" component={ProfileIndex} />
     </DrawerStackNav.Navigator>
   );
 };

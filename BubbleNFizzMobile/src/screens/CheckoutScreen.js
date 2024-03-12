@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
@@ -12,7 +18,7 @@ import CartCard from "../components/CartCard";
 const CheckoutScreen = ({ route }) => {
   const navigation = useNavigation();
 
-  const { carts, subTotal } = route.params;
+  const { carts, subTotal, totalQuantity } = route.params;
   const { user } = useContext(UserContext);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
@@ -24,7 +30,6 @@ const CheckoutScreen = ({ route }) => {
   const [selectedShippingOption, setSelectedShippingOption] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
 
-  const [totalQuantity, setTotalQuantity] = useState(totalQuantity);
   const totalPrice = subTotal + shippingFee;
 
   const handleShippingOptionSelect = (option) => {
@@ -247,7 +252,11 @@ const CheckoutScreen = ({ route }) => {
               </View>
               <View style={styles.containerCheckout}>
                 <Text style={styles.label}>Shipping Fee:</Text>
-                <Text style={styles.value}> {shippingFee}.00</Text>
+                <Text style={styles.value}>
+                  {shippingFee === 0
+                    ? "N/A (For Pick Up)"
+                    : `₱ ${shippingFee}.00`}
+                </Text>
               </View>
               <View style={styles.divider} />
               <View style={styles.containerCheckout}>
@@ -259,11 +268,22 @@ const CheckoutScreen = ({ route }) => {
                 style={{ marginVertical: 16, borderRadius: 6 }}
                 mode="contained"
                 buttonColor="#E79E4F"
+                onPress={() => {
+                  Alert.alert(
+                    "Order Successful",
+                    "Your order has been placed successfully",
+                    [
+                      {
+                        text: "OK",
+                        onPress: () => navigation.goBack(),
+                      },
+                    ]
+                  );
+                }}
               >
                 <Text
                   style={{
                     color: "white",
-
                     alignSelf: "center",
                   }}
                 >
