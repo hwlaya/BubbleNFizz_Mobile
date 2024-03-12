@@ -10,7 +10,7 @@ import { Icon, Text } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../providers/UserProvider";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
-import PollHeader from "../components/PollHeader";
+import HomeHeader from "../components/HomeHeader";
 import Background from "../components/Background";
 const ProfileIndex = () => {
   const navigation = useNavigation();
@@ -25,8 +25,12 @@ const ProfileIndex = () => {
       source={require("../assets/images/login_screen.png")}
       style={styles.background}
     >
+      <HomeHeader
+        title="Bubble N' Fizz"
+        showMenuIcon={true}
+        showShoppingIcon={true}
+      />
       <View style={styles.container}>
-        <PollHeader />
         <View style={styles.profileInfo}>
           <Image
             style={styles.image}
