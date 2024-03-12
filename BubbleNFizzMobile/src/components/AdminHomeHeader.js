@@ -34,6 +34,7 @@ const AdminHomeHeader = ({ title, showMenuIcon }) => {
           fontSize: 26,
           marginTop: 20,
           marginBottom: 20,
+          right: 30,
         }}
       >
         {title}

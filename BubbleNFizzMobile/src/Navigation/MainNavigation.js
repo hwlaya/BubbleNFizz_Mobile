@@ -96,7 +96,7 @@ const CustomAdminDrawerContent = (props) => {
       <Drawer.Section style={{ paddingTop: 20 }}>
         <Divider style={{ marginTop: 20 }} />
         <Drawer.Item
-          label="Home"
+          label="Dashboard"
           active={active === "Dashboard"}
           icon={() => (
             <Icon name="view-dashboard" size={30} color={"#E79E4F"} />
