@@ -126,10 +126,6 @@ const IndexScreen = () => {
           Profile Screen
         </Button>
       </View>
-
-      <View style={[{ padding: 100 }]}>
-        <Text>Footer</Text>
-      </View>
     </ScrollView>
   );
 };

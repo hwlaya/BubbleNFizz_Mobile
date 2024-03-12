@@ -9,8 +9,11 @@ import {
 import Background from "../components/Background";
 import { Text, TextInput, Button } from "react-native-paper";
 import PollHeader from "../components/PollHeader";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const EditProfileScreen = () => {
+  const navigation = useNavigation();
   const { width, height } = Dimensions.get("window");
 
   const [name, setName] = useState("");
@@ -22,6 +25,12 @@ const EditProfileScreen = () => {
   return (
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
+      <TouchableOpacity
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      >
+        <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
+      </TouchableOpacity>
       <View style={styles.container}>
         <View style={[styles.box, { width: width * 1, height: height * 0.5 }]}>
           <Text
@@ -137,6 +146,12 @@ const styles = StyleSheet.create({
   },
   inputText: {
     fontFamily: "LexendExa-ExtraLight",
+  },
+  backButton: {
+    position: "absolute",
+    top: 35,
+    left: 10,
+    zIndex: 1,
   },
 });
 

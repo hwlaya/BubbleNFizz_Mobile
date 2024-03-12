@@ -32,6 +32,7 @@ import AllProductsPage from "../screens/AllProductsPage";
 import EditProfile from "../profile/EditProfile";
 import HomeHeader from "../components/HomeHeader";
 import AdminHomeHeader from "../components/AdminHomeHeader";
+import ProfileIndex from "../profile/ProfileIndex";
 
 const AuthStack = createNativeStackNavigator();
 const AdminStackNav = createDrawerNavigator();
@@ -57,7 +58,7 @@ const CustomDrawerContent = (props) => {
           active={active === "Profile"}
           icon={() => <Icon name="account" size={30} color={"#E79E4F"} />}
           onPress={() => {
-            navigation.navigate("EditProfile");
+            navigation.navigate("ProfileIndex");
           }}
         />
         <Drawer.Item

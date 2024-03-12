@@ -126,7 +126,7 @@ const CartCard = ({
         ₱{totalPrice}
       </Text>
       {showQuantityControls && (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={console.log("Remove")}>
           <Text
             style={{
               fontSize: 12,
