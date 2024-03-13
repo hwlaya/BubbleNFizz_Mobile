@@ -8,6 +8,8 @@ function ProfileScreen() {
   const { user } = useContext(UserContext);
   const navigation = useNavigation();
 
+  // DEPRECIATED PROFILE REFER TO PROFILEINDEX.JS in screens
+
   return (
     <View style={styles.container}>
       <View style={styles.profileInfo}>

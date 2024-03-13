@@ -117,15 +117,6 @@ const IndexScreen = () => {
       </ScrollView>
       {/* Section - Rating Certified */}
       <Section />
-      <View style={[{ padding: 100 }]}>
-        <Button
-          mode="contained"
-          buttonColor="#E79E4F"
-          onPress={() => navigation.navigate("ProfileScreen")}
-        >
-          Profile Screen
-        </Button>
-      </View>
     </ScrollView>
   );
 };
@@ -133,6 +124,7 @@ const IndexScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
   categoryContainer: {
     flex: 1,

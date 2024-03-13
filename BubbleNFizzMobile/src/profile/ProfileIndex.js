@@ -11,7 +11,6 @@ import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../providers/UserProvider";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import HomeHeader from "../components/HomeHeader";
-import Background from "../components/Background";
 const ProfileIndex = () => {
   const navigation = useNavigation();
   const { user } = useContext(UserContext);
@@ -43,7 +42,6 @@ const ProfileIndex = () => {
         </View>
         {/* Icons */}
 
-        <View style={styles.divider} />
         <View style={styles.iconContainer}>
           <View style={styles.icon}>
             <TouchableOpacity>
@@ -91,18 +89,20 @@ const ProfileIndex = () => {
             <Text style={styles.text}>Recently Viewed</Text>
           </View>
         </View>
-        <View style={styles.divider} />
 
         {/* Profile More Details */}
         <View style={styles.profileDetails}>
           <Text style={styles.profileText}>
-            Contact No: {user.profile.contact_no}
+            Contact No:{"  "}
+            <Text style={{ color: "black" }}>{user.profile.contact_no}</Text>
           </Text>
           <Text style={styles.profileText}>
-            Address: {user.profile.address}
+            Address:{"  "}
+            <Text style={{ color: "black" }}>{user.profile.address}</Text>
           </Text>
           <Text style={styles.profileText}>
-            Birthday: {user.profile.birthday}
+            Birthday:{"  "}
+            <Text style={{ color: "black" }}>{user.profile.birthday}</Text>
           </Text>
         </View>
       </View>
@@ -123,33 +123,36 @@ const styles = StyleSheet.create({
   },
   nameDetails: {
     padding: 16,
+    backgroundColor: "#f2f2f2",
+    borderRadius: 10,
+    marginLeft: 10,
+    fontFamily: "LexendExa-ExtraLight",
   },
   profileInfo: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 20,
-    marginLeft: "-25%",
+    marginLeft: "-20%",
   },
   iconContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
+    borderWidth: 1.5,
+    borderColor: "gray",
   },
   icon: {
     alignItems: "center",
     width: "20%", // Adjust the width as needed
-    margin: 12, // Adjust the margin as needed
+    margin: 10, // Adjust the margin as needed
     textAlign: "center",
     justifyContent: "center",
   },
   text: {
     textAlign: "center",
-    marginTop: 5,
+    marginTop: 1,
     flexWrap: "wrap",
     textAlign: "center",
-  },
-  profileText: {
-    textAlign: "left",
-    marginVertical: 5,
+    fontFamily: "Inconsolata-Light",
   },
   image: {
     width: 100,
@@ -157,17 +160,23 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 20,
+    fontFamily: "Poppins-ExtraBold",
   },
   email: {
-    fontStyle: "italic",
+    fontFamily: "Inconsolata-Light",
   },
-  divider: {
-    borderColor: "black",
-    borderWidth: 0.5,
-    width: "100%",
-  },
+
   profileDetails: {
     alignItems: "left",
+    padding: 16,
+    width: "100%",
+  },
+  profileText: {
+    textAlign: "left",
+    marginVertical: 5,
+    fontFamily: "Rubik-Regular",
+    fontSize: 16,
+    color: "#E79E4F",
   },
 });
 

@@ -9,6 +9,8 @@ import {
 import { Button, Text, TextInput } from "react-native-paper";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
+import { MaterialIcons } from "@expo/vector-icons";
+
 import { UserContext } from "../providers/UserProvider";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -25,8 +27,7 @@ const CheckoutScreen = ({ route }) => {
   const [address, setAddress] = useState(user.profile.address);
   const [contact, setPhone] = useState(user.profile.contact_no);
 
-  const [selectedPaymentOption, setPaymentSelectedOption] = useState(null);
-
+  const [selectedPaymentOption, setSelectedPaymentOption] = useState(null);
   const [selectedShippingOption, setSelectedShippingOption] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
 
@@ -44,8 +45,8 @@ const CheckoutScreen = ({ route }) => {
     setSelectedShippingOption(option);
     setShippingFee(shippingCost);
   };
-  const handlePaymentOptionSelect = (option) => {
-    setPaymentSelectedOption(option);
+  const handlePaymentOptionSelect = (paymentOption) => {
+    setSelectedPaymentOption(paymentOption);
   };
 
   // useEffect(() => {
@@ -173,6 +174,7 @@ const CheckoutScreen = ({ route }) => {
           >
             <Text>GCash</Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={{
               borderRadius: 10,
@@ -201,43 +203,41 @@ const CheckoutScreen = ({ route }) => {
 
           <View>
             <Text style={styles.textStyle}>Payment Details</Text>
-
-            <View
-              style={{
-                borderColor: "black",
-                borderWidth: 1,
-                borderRadius: 8,
-                justifyContent: "center",
-                alignItems: "center",
-                padding: 10,
-                width: "100%",
-                height: 100,
-              }}
-            >
-              <Button
+            {selectedPaymentOption === "GCash" && (
+              <View
                 style={{
-                  borderRadius: 10,
-                  borderColor: "#E79E4F",
+                  borderColor: "black",
                   borderWidth: 1,
-                  backgroundColor: "#E79E4F",
-                  width: 125,
-                  height: 50,
-                  flexDirection: "row",
+                  borderRadius: 8,
                   justifyContent: "center",
                   alignItems: "center",
+                  padding: 10,
+                  width: "100%",
+                  height: 150,
                 }}
               >
-                <Icon name="cloud-upload" size={30} color="#FFFF" />
-                <Text
+                <Button
+                  buttonColor="#E79E4F"
+                  mode="contained"
+                  onPress={() => console.log("Upload File Pressed1223")}
+                  icon={() => (
+                    <MaterialIcons
+                      name="cloud-upload"
+                      size={30}
+                      color="white"
+                    />
+                  )}
                   style={{
-                    color: "white",
-                    textAlign: "center",
+                    borderRadius: 12,
+                    padding: 20,
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
                   UPLOAD FILE
-                </Text>
-              </Button>
-            </View>
+                </Button>
+              </View>
+            )}
           </View>
           <View>
             <View style={styles.orderSummary}>
