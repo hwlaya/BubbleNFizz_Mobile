@@ -47,6 +47,7 @@ const ProductScreen = ({ route }) => {
     console.log("userId", user.user.id);
     console.log("cart quantity", quantity);
     console.log("cart price", totalPrice);
+    
     api
       .post("shopping/addtocart", {
         user_id: user.user.id,

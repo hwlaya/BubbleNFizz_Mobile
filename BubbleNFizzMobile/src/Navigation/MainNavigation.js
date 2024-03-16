@@ -33,6 +33,7 @@ import EditProfile from "../profile/EditProfile";
 import HomeHeader from "../components/HomeHeader";
 import AdminHomeHeader from "../components/AdminHomeHeader";
 import ProfileIndex from "../profile/ProfileIndex";
+import PaymentRegister from "../admin/PaymentRegister";
 
 const AuthStack = createNativeStackNavigator();
 const AdminStackNav = createDrawerNavigator();
@@ -117,9 +118,9 @@ const CustomAdminDrawerContent = (props) => {
           label="POS"
           active={active === "POS"}
           icon={() => <Icon name="cash-register" size={30} color={"#E79E4F"} />}
-          // onPress={() => {
-          //   navigation.navigate("OrderScreen");
-          // }}
+          onPress={() => {
+            navigation.navigate("PaymentRegister");
+          }}
         />
       </Drawer.Section>
       <Drawer.Item
@@ -197,6 +198,13 @@ const AdminStack = () => {
       <AdminStackNav.Screen
         name="AdminStoreCatalogScreen"
         component={AdminStoreCatalogScreen}
+        options={{
+          header: () => <AdminHomeHeader />,
+        }}
+      />
+      <AdminStackNav.Screen
+        name="PaymentRegister"
+        component={PaymentRegister}
         options={{
           header: () => <AdminHomeHeader />,
         }}
