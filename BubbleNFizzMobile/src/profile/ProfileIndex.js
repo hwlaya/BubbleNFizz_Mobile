@@ -68,14 +68,15 @@ const ProfileIndex = () => {
           </View>
           <View style={styles.icon}>
             <TouchableOpacity>
-              <Feather
-                name="shopping-cart"
+              <FontAwesome5
+                name="truck-loading"
                 size={38}
                 color="black"
                 style={{ marginVertical: 15 }}
+                onPress={() => navigation.navigate("MyPurchases")}
               />
             </TouchableOpacity>
-            <Text style={styles.text}>Notifications</Text>
+            <Text style={styles.text}>My Orders</Text>
           </View>
           <View style={styles.icon}>
             <TouchableOpacity>

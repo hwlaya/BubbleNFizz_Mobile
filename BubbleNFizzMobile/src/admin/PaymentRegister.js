@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Dimensions, Image } from "react-native";
 import { Text, DataTable, Button } from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import api from "../../config/api";
@@ -13,11 +17,75 @@ const PaymentRegister = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [category, setCategory] = useState("Artisan Facial and Body Soaps");
   const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [subTotal, setSubTotal] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
 
   // form
   const [selectedUser, setSelectedUser] = useState({});
   const [discount, setDiscount] = useState("");
   const [items, setItems] = useState([]);
+  const renderItem = ({ item }) => {
+    if (item.product_details !== null) {
+      let weight = "";
+      if (category == "Bubble Bath") {
+        weight = String(
+          String(item.product_details.product_name).substring(
+            String(item.product_details.product_name).length - 5
+          )
+        ).replace(" ", "");
+      } else {
+        weight = String(
+          String(item.product_details.product_name).substring(
+            String(item.product_details.product_name).length - 4
+          )
+        ).replace(" ", "");
+      }
+      const trim1 = String(item.product_details.product_name).replace(
+        "Bubble N Fizz ",
+        ""
+      );
+      const trim2 = trim1.replace(/[0-9g]/g, "");
+      const firstLetters = String(trim2).match(/\b(\w)/g);
+      const acronym = firstLetters.join("");
+      return (
+        <TouchableOpacity
+          onPress={() => {
+            let temp = [
+              ...items,
+              {
+                product_id: item.product_id,
+                product_name: `${acronym} ${item.product_details.product_scent_name}`,
+                product_weight: `${weight}`,
+                product_quantity: 1,
+                product_price: item.product_details.product_price,
+                fixed_price: item.product_details.product_price,
+              },
+            ];
+            setTotalQuantity(totalQuantity + 1);
+            setTotalPrice(
+              totalPrice + Number(item.product_details.product_price)
+            );
+            setSubTotal(subTotal + Number(item.product_details.product_price));
+            setItems(temp);
+          }}
+          style={{ marginHorizontal: 12 }}
+        >
+          <View style={styles.gridItem}>
+            <View style={styles.gridContent}>
+              <Image
+                source={{ uri: `https://picsum.photos/200/200` }}
+                style={styles.gridImage}
+              />
+              <Text style={styles.gridText}>
+                {`${acronym} ${item.product_details.product_scent_name} ${weight}`}
+              </Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+  };
 
   useEffect(() => {
     api
@@ -76,82 +144,102 @@ const PaymentRegister = () => {
               <DataTable.Title>Qty</DataTable.Title>
               <DataTable.Title>Price</DataTable.Title>
             </DataTable.Header>
-            <DataTable.Row>
-              {items.length > 0 &&
-                items.map((item, index) => {
-                  return (
-                    <DataTable.Row key={index}>
-                      <DataTable.Cell>{item.product_name}</DataTable.Cell>
-                      <DataTable.Cell>{item.product_weight}</DataTable.Cell>
-                      <DataTable.Cell>
-                        <Button
-                          icon="remove"
-                          onPress={() => {
-                            const updatedItems = items
-                              .map((tempItem) => {
-                                if (tempItem.product_id === item.product_id) {
-                                  return {
-                                    ...tempItem,
-                                    product_quantity: Math.max(
-                                      Number(tempItem.product_quantity) - 1,
-                                      0
-                                    ),
-                                    product_price:
-                                      Number(tempItem.product_price) -
-                                      Number(tempItem.fixed_price),
-                                  };
-                                }
-                                return tempItem;
-                              })
-                              .filter(
-                                (tempItem) => tempItem.product_quantity > 0
-                              );
-
-                            setItems(updatedItems);
-                          }}
-                        />
-                        {item.product_quantity}{" "}
-                        <Button
-                          icon="add"
-                          onPress={() => {
-                            const updatedItems = items.map((tempItem) => {
+            {items.length > 0 &&
+              items.map((item, index) => {
+                return (
+                  <DataTable.Row key={index}>
+                    <DataTable.Cell>{item.product_name}</DataTable.Cell>
+                    <DataTable.Cell>{item.product_weight}</DataTable.Cell>
+                    <DataTable.Cell>
+                      <Button
+                        onPress={() => {
+                          const updatedItems = items
+                            .map((tempItem) => {
                               if (tempItem.product_id === item.product_id) {
+                                setSubTotal(
+                                  subTotal - Number(tempItem.fixed_price)
+                                );
+                                setTotalPrice(
+                                  totalPrice - Number(tempItem.fixed_price)
+                                );
+                                setTotalQuantity(totalQuantity - 1);
                                 return {
                                   ...tempItem,
-                                  product_quantity:
-                                    Number(tempItem.product_quantity) + 1,
+                                  product_quantity: Math.max(
+                                    Number(tempItem.product_quantity) - 1,
+                                    0
+                                  ),
                                   product_price:
-                                    Number(tempItem.product_price) +
+                                    Number(tempItem.product_price) -
                                     Number(tempItem.fixed_price),
                                 };
                               }
                               return tempItem;
-                            });
+                            })
+                            .filter(
+                              (tempItem) => tempItem.product_quantity > 0
+                            );
 
-                            setItems(updatedItems);
-                          }}
-                        />
-                      </DataTable.Cell>
-                      <DataTable.Cell>{item.product_price}</DataTable.Cell>
-                    </DataTable.Row>
-                  );
-                })}
-            </DataTable.Row>
+                          setItems(updatedItems);
+                        }}
+                      >
+                        Remove
+                      </Button>
+                      {item.product_quantity}{" "}
+                      <Button
+                        onPress={() => {
+                          const updatedItems = items.map((tempItem) => {
+                            if (tempItem.product_id === item.product_id) {
+                              setSubTotal(
+                                subTotal + Number(tempItem.fixed_price)
+                              );
+                              setTotalPrice(
+                                totalPrice + Number(tempItem.fixed_price)
+                              );
+                              setTotalQuantity(totalQuantity + 1);
+                              return {
+                                ...tempItem,
+                                product_quantity:
+                                  Number(tempItem.product_quantity) + 1,
+                                product_price:
+                                  Number(tempItem.product_price) +
+                                  Number(tempItem.fixed_price),
+                              };
+                            }
+                            return tempItem;
+                          });
+
+                          setItems(updatedItems);
+                        }}
+                      >
+                        Add
+                      </Button>
+                    </DataTable.Cell>
+                    <DataTable.Cell>{item.product_price}</DataTable.Cell>
+                  </DataTable.Row>
+                );
+              })}
           </DataTable>
         </View>
         <View style={styles.divider} />
+
+        {/* TOTAL */}
         <View style={styles.itemContainer}>
-          <Text>SubTotal:</Text>
-          <Text>$100</Text>
+          <Text>Quantity:</Text>
+          <Text>{totalQuantity}</Text>
         </View>
         <View style={styles.itemContainer}>
-          <Text>Discount:</Text>
-          <Text>-$10</Text>
+          <Text>SubTotal:</Text>
+          <Text>{subTotal}</Text>
         </View>
         <View style={styles.itemContainer}>
           <Text>Total:</Text>
-          <Text>$90</Text>
+          <Text>{totalPrice}</Text>
         </View>
+
+        <View style={styles.divider} />
+
+        {/* Category */}
         <ScrollView horizontal>
           <View
             style={{
@@ -182,7 +270,24 @@ const PaymentRegister = () => {
           </View>
         </ScrollView>
 
-        <View style={[styles.grid, { marginTop: 5 }]}>
+        <View
+          style={{
+            flex: 1,
+            marginHorizontal: "auto",
+            width: "100%",
+            borderWidth: 1,
+          }}
+        >
+          <FlatList
+            scrollEnabled={false}
+            data={products}
+            renderItem={renderItem}
+            numColumns={4}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
+
+        {/* <View style={[styles.grid, { marginTop: 5 }]}>
           {products.map((item, index) => {
             if (item.product_details !== null) {
               let weight = "";
@@ -221,7 +326,7 @@ const PaymentRegister = () => {
               );
             }
           })}
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );
@@ -231,6 +336,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 40,
+    backgroundColor: "#fff",
   },
   userContainer: {
     flexDirection: "row",
@@ -270,31 +376,34 @@ const styles = StyleSheet.create({
   },
 
   // Grid
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: 5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   gridItem: {
-    backgroundColor: "#9E9E9E",
-    borderRadius: 10,
+    flex: 1,
+    padding: 10,
+    maxWidth: "100%",
+    borderWidth: 1,
+    backgroundColor: "#B75800",
+    marginVertical: 5,
+    minHeight: 270,
   },
   gridContent: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: 5,
+    width: 200, // Adjust the width as needed
   },
   gridImage: {
     height: 200,
     width: 200,
   },
   gridText: {
-    color: "#fff",
+    color: "#000",
     fontSize: 16,
+    textAlign: "center",
+    marginTop: 1,
+    flexWrap: "wrap",
+    textAlign: "center",
   },
 });
 

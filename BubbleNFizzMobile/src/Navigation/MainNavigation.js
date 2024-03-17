@@ -34,6 +34,7 @@ import HomeHeader from "../components/HomeHeader";
 import AdminHomeHeader from "../components/AdminHomeHeader";
 import ProfileIndex from "../profile/ProfileIndex";
 import PaymentRegister from "../admin/PaymentRegister";
+import MyPurchases from "../screens/MyPurchases";
 
 const AuthStack = createNativeStackNavigator();
 const AdminStackNav = createDrawerNavigator();
@@ -66,9 +67,9 @@ const CustomDrawerContent = (props) => {
           label="My Orders"
           active={active === "My Orders"}
           icon={() => <Icon name="basket" size={30} color={"#E79E4F"} />}
-          // onPress={() => {
-          //   navigation.navigate("OrderScreen");
-          // }}
+          onPress={() => {
+            navigation.navigate("MyPurchases");
+          }}
         />
         <Drawer.Item
           label="Products"
@@ -156,6 +157,7 @@ const Drawerstack = () => {
         component={AllProductsPage}
       />
       <DrawerStackNav.Screen name="ProfileIndex" component={ProfileIndex} />
+      <DrawerStackNav.Screen name="MyPurchases" component={MyPurchases} />
     </DrawerStackNav.Navigator>
   );
 };
