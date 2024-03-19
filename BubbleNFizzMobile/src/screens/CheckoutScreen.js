@@ -15,24 +15,23 @@ import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
 import CartCard from "../components/CartCard";
 
-const Checkout = ({}) => {
+const Checkout = ({ route }) => {
   const navigation = useNavigation();
   const user = useContext(UserContext);
   const [carts, setCarts] = useState([]);
   const [quantity, setQuantity] = useState(0);
   const [subTotalPrice, setSubTotalPrice] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const [name, setName] = useState(user.user.name);
-  const [email, setEmail] = useState(user.user.email);
-
+  const { subTotal } = route.params;
+  // ADDRESS
   const [address, setAddress] = useState(user.user.profile.address);
   const [apartment, setApartment] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user.user.profile.contact_no);
-
   // SHIPPING METHOD
   const [delivery, setDelivery] = useState("pickUp");
-
+  const [shippingCost, setShippingCost] = useState(0);
+  const [selectedShippingOption, setSelectedShippingOption] = useState("");
+  const [shippingFee, setShippingFee] = useState(0);
+  const totalPrice = subTotal + shippingFee;
   // PAYMENT
   const [mop, setMop] = useState("GCash");
   const [gcashFile, setGcashFile] = useState({}); // IF GCASH
@@ -72,20 +71,22 @@ const Checkout = ({}) => {
     console.log(user);
   }, []);
 
-  useEffect(() => {
-    if (delivery == "PickUp") {
-      setTotalPrice(subTotalPrice);
-    } else if (delivery == "Standard") {
-      setTotalPrice(subTotalPrice + 39);
-    } else {
-      setTotalPrice(subTotalPrice + 150);
+  const handleShippingOptionSelect = (option) => {
+    let shippingCost = "";
+    if (option === "pickUp") {
+      shippingCost = 0;
+    } else if (option === "Standard") {
+      shippingCost = 39.0;
+    } else if (option === "sameDayDelivery") {
+      shippingCost = 150.0;
     }
-  }, [subTotalPrice, delivery]);
+    setSelectedShippingOption(option);
+    setShippingFee(shippingCost);
+  };
 
   const onSubmitOrder = () => {
     const formdata = new FormData();
     formdata.append("user_id", user.user.id);
-
     formdata.append("order_address", address);
     formdata.append("order_apartment", apartment);
     formdata.append("order_phone_number", phoneNumber);
@@ -99,7 +100,6 @@ const Checkout = ({}) => {
     formdata.append("total_quantity", quantity);
     formdata.append("total_price", totalPrice);
     formdata.append("carts", JSON.stringify(carts));
-
     api
       .post("shopping/submitorder", formdata)
       .then((response) => {
@@ -172,11 +172,12 @@ const Checkout = ({}) => {
             style={{
               borderRadius: 20,
               borderWidth: 2,
-              borderColor: delivery === "pickUp" ? "#EDBF47" : "black",
+              borderColor:
+                selectedShippingOption === "pickUp" ? "#EDBF47" : "black",
               padding: 10,
               marginBottom: 10,
             }}
-            onPress={() => setDelivery("pickUp")}
+            onPress={() => handleShippingOptionSelect("pickUp")}
           >
             <Text>Pick Up</Text>
             <Text>
@@ -188,16 +189,12 @@ const Checkout = ({}) => {
             style={{
               borderRadius: 20,
               borderWidth: 2,
-              borderColor: delivery === "Standard" ? "#EDBF47" : "black",
+              borderColor:
+                selectedShippingOption === "Standard" ? "#EDBF47" : "black",
               padding: 10,
               marginBottom: 10,
             }}
-            onPress={() => {
-              if (delivery !== "Standard") {
-                setDelivery("Standard");
-                setTotalPrice(Number(totalPrice) + 39);
-              }
-            }}
+            onPress={() => handleShippingOptionSelect("Standard")}
           >
             <Text>Standard Delivery</Text>
             <Text>* Estimated Delivery: 3-4 Days</Text>
@@ -208,16 +205,14 @@ const Checkout = ({}) => {
             style={{
               borderRadius: 20,
               borderWidth: 2,
-              borderColor: delivery === "SameDay" ? "#EDBF47" : "black",
+              borderColor:
+                selectedShippingOption === "sameDayDelivery"
+                  ? "#EDBF47"
+                  : "black",
               padding: 10,
               marginBottom: 10,
             }}
-            onPress={() => {
-              if (delivery !== "SameDay") {
-                setDelivery("SameDay");
-                setTotalPrice(Number(totalPrice) + 150);
-              }
-            }}
+            onPress={() => handleShippingOptionSelect("sameDayDelivery")}
           >
             <Text>Same Day Delivery</Text>
             <Text>* Get the product delivered now!</Text>
@@ -290,43 +285,70 @@ const Checkout = ({}) => {
         </View>
 
         <View>
+          <View style={styles.orderSummary}>
+            <Text style={styles.orderSummaryTitle}>Order Summary</Text>
+            <View style={styles.containerCheckout}>
+              <Text style={styles.label}>Items:</Text>
+              <Text style={styles.value}>{quantity}</Text>
+            </View>
+            <View style={styles.containerCheckout}>
+              <Text style={styles.label}>Sub Total:</Text>
+              <Text style={styles.value}>₱ {subTotal}.00</Text>
+            </View>
+            <View style={styles.containerCheckout}>
+              <Text style={styles.label}>Shipping Fee:</Text>
+              <Text style={styles.value}>
+                {shippingFee === 0
+                  ? "N/A (For Pick Up)"
+                  : `₱ ${shippingFee}.00`}
+              </Text>
+            </View>
+            <View style={styles.divider} />
+            <View style={styles.containerCheckout}>
+              <Text style={styles.label}>Total:</Text>
+              <Text style={styles.value}>₱ {totalPrice}.00</Text>
+            </View>
+
+            <Button
+              style={{ marginVertical: 16, borderRadius: 6 }}
+              mode="contained"
+              buttonColor="#E79E4F"
+              onPress={() => {
+                Alert.alert(
+                  "Order Successful",
+                  "Your order has been placed successfully",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        onSubmitOrder;
+                      },
+                    },
+                  ]
+                );
+              }}
+            >
+              <Text
+                style={{
+                  color: "white",
+                  alignSelf: "center",
+                }}
+              >
+                PAY NOW
+              </Text>
+            </Button>
+          </View>
+        </View>
+        <View>
           {carts.map((item, index) => (
             <CartCard
               cart={item}
               key={index}
+              subTotal={subTotal}
               showQuantityControls={false} //prop for removing button
             />
           ))}
         </View>
-
-        <Button
-          style={{ marginVertical: 16, borderRadius: 6 }}
-          mode="contained"
-          buttonColor="#E79E4F"
-          onPress={() => {
-            Alert.alert(
-              "Order Successful",
-              "Your order has been placed successfully",
-              [
-                {
-                  text: "OK",
-                  onPress: () => {
-                    onSubmitOrder;
-                  },
-                },
-              ]
-            );
-          }}
-        >
-          <Text
-            style={{
-              color: "white",
-              alignSelf: "center",
-            }}
-          >
-            PAY NOW
-          </Text>
-        </Button>
       </ScrollView>
     </View>
   );
