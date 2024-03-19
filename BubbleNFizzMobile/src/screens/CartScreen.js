@@ -12,39 +12,24 @@ const CartScreen = () => {
   const user = useContext(UserContext);
   const [carts, setCarts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
+
   const navigation = useNavigation();
 
-  const updateTotalQuantity = (newQuantity) => {
-    setTotalQuantity(newQuantity);
-  };
-
-  //Update Number of Items
-  useEffect(() => {
-    let tempQuantity = 0;
-    carts.forEach((item) => {
-      tempQuantity += Number(item.cart_quantity);
-    });
-    updateTotalQuantity(tempQuantity);
-  }, [carts]);
-
-  //Update Subtotal
-  useEffect(() => {
-    let tempSubTotal = 0;
-    carts.forEach((item) => {
-      tempSubTotal += Number(item.cart_price) * Number(item.cart_quantity);
-    });
-    setSubTotal(tempSubTotal);
-  }, [carts]);
-
-  //API Call
   useEffect(() => {
     api
       .get(`shopping/getusercart?user_id=${user.user.id}`)
       .then((response) => {
+        const carts = response.data;
+        let tempTotal = 0;
+        let tempQuantity = 0;
+        carts.map((item) => {
+          tempTotal += Number(item.cart_price);
+          tempQuantity += Number(item.cart_quantity);
+        });
+        setSubTotal(tempTotal);
+        setTotalQuantity(tempQuantity);
         setCarts(response.data);
-        // console.log(response.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -62,16 +47,15 @@ const CartScreen = () => {
         </TouchableOpacity>
         <Text style={styles.cartTitle}>My Cart</Text>
         {carts.map((item, index) => {
-          // console.log("ito yung items mo", item);
+          console.log("ito yung items mo", item);
           return (
             <CartCard
               cart={item}
               key={index}
-              subTotal={subTotal}
               setSubTotal={setSubTotal}
               setTotalQuantity={setTotalQuantity}
               totalQuantity={totalQuantity}
-              setTotalPrice={setTotalPrice}
+              subTotal={subTotal}
               showQuantityControls={true} //prop for removing button
             />
           );

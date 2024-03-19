@@ -17,8 +17,8 @@ import api from "../../config/api";
 const LoginScreen = () => {
   const navigation = useNavigation();
   const user = useContext(UserContext);
-  const [email, setEmail] = useState("imrich@gmail.com");
-  const [password, setPassword] = useState("password");
+  const [email, setEmail] = useState("Darthvader@gmail.com");
+  const [password, setPassword] = useState("Password");
 
   const [passwordVisible, setPasswordVisible] = useState(false);
 

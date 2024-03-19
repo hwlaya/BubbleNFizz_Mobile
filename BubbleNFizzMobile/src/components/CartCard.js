@@ -11,6 +11,7 @@ import api from "../../config/api";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 const CartCard = ({
   cart,
+  carts,
   setSubTotal,
   setTotalQuantity,
   subTotal,
@@ -22,9 +23,32 @@ const CartCard = ({
 
   const subQuantity = () => {
     if (Number(quantity) === 1) {
-      Alert.alert("Oops...", "Quantity should not be lower than 1", [
-        { text: "OK" },
-      ]);
+      Alert.alert(
+        "Remove Item?",
+        "Are you sure you want to remove this item?",
+        [
+          { text: "No", onPress: () => console.log("No Pressed") },
+          {
+            text: "Yes",
+            onPress: () => {
+              api
+                .post("shopping/deletecartitem", {
+                  id: cart.id,
+                })
+                .then((response) => {
+                  setCarts(carts.filter((item) => item.id !== cart.id));
+                  setRefresher(refresher + 1);
+                  Alert.alert("Item Removed!", "Item has been removed!", [
+                    {
+                      text: "OK",
+                      onPress: () => console.log("OK Pressed"),
+                    },
+                  ]);
+                });
+            },
+          },
+        ]
+      );
     } else {
       api
         .post("shopping/subquantity", {
@@ -39,13 +63,13 @@ const CartCard = ({
             Number(totalPrice) - Number(cart.product.product_price)
           );
           setSubTotal(Number(subTotal) - Number(cart.product.product_price));
+          setCarts(updatedCarts); // Update the carts state with the updatedCarts array
         })
         .catch((err) => {
           console.log(err.response);
         });
     }
   };
-  3;
 
   const addQuantity = () => {
     api
@@ -125,20 +149,6 @@ const CartCard = ({
       >
         ₱{totalPrice}
       </Text>
-      {showQuantityControls && (
-        <TouchableOpacity onPress={console.log("Remove")}>
-          <Text
-            style={{
-              fontSize: 12,
-              fontFamily: "LilitaOne-Regular",
-              textAlign: "right",
-              color: "gray",
-            }}
-          >
-            Remove
-          </Text>
-        </TouchableOpacity>
-      )}
     </View>
   );
 };

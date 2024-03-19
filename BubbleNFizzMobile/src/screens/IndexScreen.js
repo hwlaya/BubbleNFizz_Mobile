@@ -36,11 +36,11 @@ const IndexScreen = () => {
     api
       .get("shopping/getbestsellers")
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setBestSellers(response.data);
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
       });
   }, []);
   return (
