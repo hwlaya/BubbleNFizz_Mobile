@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import { Button, Text } from "react-native-paper";
 
-const CustomButtonFrequency = ({setDay}) => {
+const CustomButtonFrequency = ({ setDay }) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
@@ -11,7 +11,7 @@ const CustomButtonFrequency = ({setDay}) => {
   const handleSelect = (day) => {
     console.log("Selected Bath Day:", day);
     setDay(day);
-    setSelectedDay(day)
+    setSelectedDay(day);
   };
 
   const renderButton = (label) => {
@@ -42,10 +42,9 @@ const CustomButtonFrequency = ({setDay}) => {
 
   return (
     <View style={[styles.buttonContainer, { width: windowWidth }]}>
-      {renderButton("1 Day")}
-      {renderButton("2 Day")}
-      {renderButton("3 Day")}
-
+      {renderButton("1x Day")}
+      {renderButton("2x Day")}
+      {renderButton("3x Day")}
     </View>
   );
 };
