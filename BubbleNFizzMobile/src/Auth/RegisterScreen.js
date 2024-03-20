@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   View,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  Alert,
 } from "react-native";
 import Background from "../components/Background";
 import { Text, TextInput, Button } from "react-native-paper";
@@ -19,15 +20,78 @@ const RegisterScreen = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [cPasswordVisible, setCPasswordVisible] = useState(false);
 
-  const [name, setName] = useState("");
+  const [fname, setfName] = useState("");
+  const [lname, setlName] = useState("");
+  const [uname, setuName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cPassword, setCPassword] = useState("");
 
   const onSubmitRegister = () => {
+    // Perform field validation
+    if (!fname) {
+      console.log("Error: First name is required.");
+      Alert.alert("Error!", "First name is required.");
+      return;
+    }
+    if (!lname) {
+      console.log("Error: Last name is required.");
+      Alert.alert("Error!", "Last name is required.");
+      return;
+    }
+    if (!uname) {
+      console.log("Error: Username is required.");
+      Alert.alert("Error!", "Username is required.");
+      return;
+    }
+    if (!email) {
+      console.log("Error: Email is required.");
+      Alert.alert("Error!", "Email is required.");
+      return;
+    }
+    if (!password) {
+      console.log("Error: Password is required.");
+      Alert.alert("Error!", "Password is required.");
+      return;
+    }
+    if (!cPassword) {
+      console.log("Error: Confirm password is required.");
+      Alert.alert("Error!", "Confirm password is required.");
+      return;
+    }
+    if (password !== cPassword) {
+      console.log("Error: Passwords do not match.");
+      Alert.alert("Error!", "Passwords do not match.");
+      return;
+    }
+
+    // Check if password meets the required criteria
+    const hasCapitalLetter = /[A-Z]/.test(password);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    const hasNumber = /\d/.test(password);
+
+    if (!hasCapitalLetter) {
+      console.log("Error: Password must contain at least 1 capital letter.");
+      Alert.alert("Error!", "Password must contain at least 1 capital letter.");
+      return;
+    }
+    if (!hasSymbol) {
+      console.log("Error: Password must contain at least 1 symbol.");
+      Alert.alert("Error!", "Password must contain at least 1 symbol.");
+      return;
+    }
+    if (!hasNumber) {
+      console.log("Error: Password must contain at least 1 number.");
+      Alert.alert("Error!", "Password must contain at least 1 number.");
+      return;
+    }
+
+    // Make the API request
     api
       .post("register", {
-        name: name,
+        fname: fname,
+        lName: lname,
+        // uname: uname,
         email: email,
         password: password,
         password_confirmation: cPassword,
@@ -45,7 +109,7 @@ const RegisterScreen = () => {
     <Background source={require("../assets/images/login_screen.png")}>
       <PollHeader />
       <View style={styles.container}>
-        <View style={[styles.box, { width: width * 1, height: height * 0.5 }]}>
+        <View style={[styles.box, { width: width * 1, height: height * 0.7 }]}>
           <Text
             style={{ fontFamily: "Poppins-Light" }}
             variant="headlineMedium"
@@ -56,14 +120,40 @@ const RegisterScreen = () => {
           <View style={styles.bodyContainer}>
             <Text style={styles.inputText} variant="bodySmall">
               {" "}
-              NAME{" "}
+              FIRST NAME{" "}
             </Text>
             <TextInput
               style={styles.input}
               mode="flat"
               outlineColor="white"
-              value={name}
-              onChangeText={(text) => setName(text)}
+              value={fname}
+              onChangeText={(text) => setfName(text)}
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <Text style={styles.inputText} variant="bodySmall">
+              {" "}
+              LAST NAME{" "}
+            </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              value={lname}
+              onChangeText={(text) => setlName(text)}
+              onFocus={() => console.log("Focused")}
+              onBlur={() => console.log("Blurred")}
+            />
+            <Text style={styles.inputText} variant="bodySmall">
+              {" "}
+              USERNAME{" "}
+            </Text>
+            <TextInput
+              style={styles.input}
+              mode="flat"
+              outlineColor="white"
+              // value={uname}
+              onChangeText={(text) => setuName(text)}
               onFocus={() => console.log("Focused")}
               onBlur={() => console.log("Blurred")}
             />
@@ -151,8 +241,7 @@ const RegisterScreen = () => {
 const styles = StyleSheet.create({
   headerContainer: {
     padding: 1,
-    marginTop: 20,
-    margintop: 20,
+    marginTop: 30,
   },
   container: {
     flex: 1,

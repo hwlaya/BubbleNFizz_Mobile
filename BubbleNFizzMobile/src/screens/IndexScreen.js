@@ -27,10 +27,12 @@ const IndexScreen = (props) => {
 
   useEffect(() => {
     api
-      .get("shopping/getthreeproducts")
+      .post("recommenditems", {
+        user_id: user.user.id,
+      })
       .then((response) => {
-        setThreeProduct(response.data);
-        console.log("get three products", response.data);
+        setProducts(response.data);
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -68,7 +70,7 @@ const IndexScreen = (props) => {
       </View>
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
-          {ThreeProduct.map((item, index) => {
+          {products.map((item, index) => {
             return (
               // Reusable component for displaying Products
               <RenderCard
@@ -79,7 +81,7 @@ const IndexScreen = (props) => {
                 rating={item.product_rating}
                 scentName={item.product_scent_name}
                 onPress={() => {
-                  console.log("Productsssssssssssssssssssss", item);
+                  // console.log("Productsssssssssssssssssssss", item);
                   navigation.navigate("ProductScreen", {
                     product: item,
                     productId: item.id,
@@ -112,12 +114,12 @@ const IndexScreen = (props) => {
             <RenderCard
               key={index}
               item={item}
-              title={item.product_name}
-              price={item.product_price}
-              rating={item.product_rating}
-              scentName={item.product_scent_name}
+              title={item.product_details.product_name}
+              price={item.product_details.product_price}
+              rating={item.product_details.product_rating}
+              scentName={item.product_details.product_scent_name}
               onPress={() => {
-                console.log("Product", item);
+                console.log("Best Sellerrr", item);
                 navigation.navigate("ProductScreen", {
                   product: item,
                   productId: item.id,
