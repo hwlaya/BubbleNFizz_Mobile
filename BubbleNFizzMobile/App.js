@@ -11,16 +11,6 @@ import * as SplashScreen from "expo-splash-screen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { UserProvider } from "./src/providers/UserProvider";
 
-// function HomeScreen() {
-//   return (
-//     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-//       <Text>Home Screen</Text>
-//     </View>
-//   );
-// }
-
-const Stack = createNativeStackNavigator();
-
 const fetchFonts = () => {
   return Font.loadAsync({
     "Poppins-ExtraBold": require("./src/assets/fonts/Poppins-ExtraBold.ttf"),
@@ -63,7 +53,7 @@ export default function App() {
     <SafeAreaProvider>
       <ApplicationProvider {...eva} theme={eva.light}>
         <UserProvider>
-        <MainNavigation />
+          <MainNavigation />
         </UserProvider>
       </ApplicationProvider>
     </SafeAreaProvider>
