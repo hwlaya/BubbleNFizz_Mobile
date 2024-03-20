@@ -21,7 +21,7 @@ const Checkout = ({ route }) => {
   const [carts, setCarts] = useState([]);
   const [quantity, setQuantity] = useState(0);
   const [subTotalPrice, setSubTotalPrice] = useState(0);
-  const { subTotal } = route.params;
+  const [totalPrice, setTotalPrice] = useState(0);
   // ADDRESS
   const [address, setAddress] = useState(user.user.profile.address);
   const [apartment, setApartment] = useState("");
@@ -29,9 +29,8 @@ const Checkout = ({ route }) => {
   // SHIPPING METHOD
   const [delivery, setDelivery] = useState("pickUp");
   const [shippingCost, setShippingCost] = useState(0);
-  const [selectedShippingOption, setSelectedShippingOption] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
-  const totalPrice = subTotal + shippingFee;
+
   // PAYMENT
   const [mop, setMop] = useState("GCash");
   const [gcashFile, setGcashFile] = useState({}); // IF GCASH
@@ -40,6 +39,7 @@ const Checkout = ({ route }) => {
   //   console.log(user);
   // }, [user]);
 
+//  API TO GET THE CART of the user
   useEffect(() => {
     api
       .get(`shopping/getusercart?user_id=${user.user.id}`)
@@ -60,6 +60,8 @@ const Checkout = ({ route }) => {
         console.log(err.response);
       });
 
+
+      //get user profile details
     api
       .get(`usermanagement/getprofile/${user.user.id}`)
       .then((response) => {
@@ -71,19 +73,21 @@ const Checkout = ({ route }) => {
     console.log(user);
   }, []);
 
-  const handleShippingOptionSelect = (option) => {
-    let shippingCost = "";
-    if (option === "pickUp") {
-      shippingCost = 0;
-    } else if (option === "Standard") {
-      shippingCost = 39.0;
-    } else if (option === "sameDayDelivery") {
-      shippingCost = 150.0;
+  //handle logic and computation
+  useEffect(() => {
+    if (delivery == "pickUp") {
+      setTotalPrice(subTotalPrice);
+      setShippingFee(0);
+    } else if (delivery == "Standard") {
+      setTotalPrice(subTotalPrice + 39);
+      setShippingFee(39);
+    } else {
+      setTotalPrice(subTotalPrice + 150);
+      setShippingFee(150);
     }
-    setSelectedShippingOption(option);
-    setShippingFee(shippingCost);
-  };
+  }, [subTotalPrice, delivery]);
 
+  // API TO SUBMIT ORDER
   const onSubmitOrder = () => {
     const formdata = new FormData();
     formdata.append("user_id", user.user.id);
@@ -172,12 +176,11 @@ const Checkout = ({ route }) => {
             style={{
               borderRadius: 20,
               borderWidth: 2,
-              borderColor:
-                selectedShippingOption === "pickUp" ? "#EDBF47" : "black",
+              borderColor: delivery === "pickUp" ? "#EDBF47" : "black",
               padding: 10,
               marginBottom: 10,
             }}
-            onPress={() => handleShippingOptionSelect("pickUp")}
+            onPress={() => setDelivery("pickUp")}
           >
             <Text>Pick Up</Text>
             <Text>
@@ -189,12 +192,16 @@ const Checkout = ({ route }) => {
             style={{
               borderRadius: 20,
               borderWidth: 2,
-              borderColor:
-                selectedShippingOption === "Standard" ? "#EDBF47" : "black",
+              borderColor: delivery === "Standard" ? "#EDBF47" : "black",
               padding: 10,
               marginBottom: 10,
             }}
-            onPress={() => handleShippingOptionSelect("Standard")}
+            onPress={() => {
+              if (delivery !== "Standard") {
+                setDelivery("Standard");
+                setTotalPrice(Number(totalPrice) + 39);
+              }
+            }}
           >
             <Text>Standard Delivery</Text>
             <Text>* Estimated Delivery: 3-4 Days</Text>
@@ -205,14 +212,16 @@ const Checkout = ({ route }) => {
             style={{
               borderRadius: 20,
               borderWidth: 2,
-              borderColor:
-                selectedShippingOption === "sameDayDelivery"
-                  ? "#EDBF47"
-                  : "black",
+              borderColor: delivery === "SameDay" ? "#EDBF47" : "black",
               padding: 10,
               marginBottom: 10,
             }}
-            onPress={() => handleShippingOptionSelect("sameDayDelivery")}
+            onPress={() => {
+              if (delivery !== "SameDay") {
+                setDelivery("SameDay");
+                setTotalPrice(Number(totalPrice) + 150);
+              }
+            }}
           >
             <Text>Same Day Delivery</Text>
             <Text>* Get the product delivered now!</Text>
@@ -293,15 +302,11 @@ const Checkout = ({ route }) => {
             </View>
             <View style={styles.containerCheckout}>
               <Text style={styles.label}>Sub Total:</Text>
-              <Text style={styles.value}>₱ {subTotal}.00</Text>
+              <Text style={styles.value}>₱ {subTotalPrice}.00</Text>
             </View>
             <View style={styles.containerCheckout}>
               <Text style={styles.label}>Shipping Fee:</Text>
-              <Text style={styles.value}>
-                {shippingFee === 0
-                  ? "N/A (For Pick Up)"
-                  : `₱ ${shippingFee}.00`}
-              </Text>
+              <Text style={styles.value}>₱ {shippingFee}.00</Text>
             </View>
             <View style={styles.divider} />
             <View style={styles.containerCheckout}>
@@ -322,6 +327,7 @@ const Checkout = ({ route }) => {
                       text: "OK",
                       onPress: () => {
                         onSubmitOrder;
+                        navigation.navigate("IndexScreen");
                       },
                     },
                   ]
@@ -344,7 +350,7 @@ const Checkout = ({ route }) => {
             <CartCard
               cart={item}
               key={index}
-              subTotal={subTotal}
+              // subTotal={subTotal}
               showQuantityControls={false} //prop for removing button
             />
           ))}

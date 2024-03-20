@@ -21,6 +21,8 @@ const CartCard = ({
   const [quantity, setQuantity] = useState(cart.cart_quantity);
   const [totalPrice, setTotalPrice] = useState(cart.cart_price);
 
+  console.log("Cart:", cart.cart_quantity);
+
   const subQuantity = () => {
     if (Number(quantity) === 1) {
       Alert.alert(

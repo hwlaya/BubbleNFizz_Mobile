@@ -26,18 +26,20 @@ const ProductScreen = ({ route }) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [userReviews, setUserReviews] = useState([]);
+
+  // Subtract Logic
   const subQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
       setTotalPrice(Number(product.product_price) * (quantity - 1));
     }
   };
-
+// add Logic
   const addQuantity = () => {
     setQuantity(quantity + 1);
     setTotalPrice(Number(product.product_price) * (quantity + 1));
   };
-
+//submit review api
   const submitReview = () => {
     api
       .post("/shopping/addreview", {
@@ -58,6 +60,7 @@ const ProductScreen = ({ route }) => {
       });
   };
 
+  //add to cart API
   const addToCart = () => {
     console.log("Product ID:", product.id);
     console.log("User ID:", user.user.id);
@@ -110,8 +113,11 @@ const ProductScreen = ({ route }) => {
 
         {/* Product Info */}
         <View style={styles.productInfoContainer}>
+          {/* Product Price */}
           <Text style={styles.productPrice}>₱{product.product_price}</Text>
+          {/* Product Name */}
           <Text style={styles.productName}>{product.product_name}</Text>
+          {/* Product Scent */}
           <Text
             style={[{ fontFamily: "LexendExa-ExtraLight", textAlign: "right" }]}
           >
@@ -119,7 +125,7 @@ const ProductScreen = ({ route }) => {
             {product.product_scent_name}
           </Text>
         </View>
-
+{/* Divider */}
         <View
           style={{
             width: "100%",
@@ -128,7 +134,7 @@ const ProductScreen = ({ route }) => {
             marginVertical: 10,
           }}
         />
-
+{/* Quantity */}
         <View style={styles.productInfo}>
           <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
             Quantity:{" "}

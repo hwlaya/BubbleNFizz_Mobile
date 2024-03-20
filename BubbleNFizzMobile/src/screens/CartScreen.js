@@ -10,21 +10,19 @@ import { useNavigation } from "@react-navigation/native";
 
 const CartScreen = () => {
   const user = useContext(UserContext);
-  const [carts, setCarts] = useState([refresher]);
+  const [carts, setCarts] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [refresher, setRefresher] = useState(0);
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    console.log("User ID is Hereeee", user.user.id);
-  });
-
+// API to get cart of user
   useEffect(() => {
     api
       .get(`shopping/getusercart?user_id=${user.user.id}`)
       .then((response) => {
+        // handles math logic
         const carts = response.data;
         let tempTotal = 0;
         let tempQuantity = 0;
@@ -55,6 +53,7 @@ const CartScreen = () => {
           carts.map((item, index) => {
             console.log("ito yung items mo", item);
             return (
+              // Same with render card just  different design
               <CartCard
                 cart={item}
                 key={index}
@@ -67,6 +66,7 @@ const CartScreen = () => {
             );
           })
         ) : (
+          // if no item in cart this displays
           <Text
             style={{
               textAlign: "center",
@@ -94,13 +94,7 @@ const CartScreen = () => {
             style={{ marginVertical: 16, borderRadius: 6 }}
             mode="contained"
             buttonColor="#E79E4F"
-            onPress={() =>
-              navigation.navigate("CheckoutScreen", {
-                carts: carts,
-                subTotal: subTotal,
-                totalQuantity: totalQuantity,
-              })
-            } //console.log("Pressed")}
+            onPress={() => navigation.navigate("CheckoutScreen")} //console.log("Pressed")}
           >
             Checkout
           </Button>

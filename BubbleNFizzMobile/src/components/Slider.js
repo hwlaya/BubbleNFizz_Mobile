@@ -5,9 +5,6 @@ import { Button } from "react-native-paper";
 
 const Slider = ({ images }) => {
   const navigation = useNavigation();
-  const handleImageClick = (index) => {
-    navigation.navigate("AllProductsPage");
-  };
 
   return (
     <View style={styles.container}>
@@ -16,7 +13,7 @@ const Slider = ({ images }) => {
           <View key={index} style={styles.imageContainer}>
             <Image source={image} style={styles.image} />
             <Button
-              onPress={() => handleImageClick(index)}
+              onPress={() => navigation.navigate("AllProductsPage")}
               style={styles.button}
               mode="contained"
               buttonColor="#E79E4F"

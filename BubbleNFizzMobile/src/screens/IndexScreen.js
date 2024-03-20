@@ -19,7 +19,6 @@ import { UserContext } from "../providers/UserProvider";
 
 const IndexScreen = (props) => {
   const user = useContext(UserContext);
-  // const userObject = props.user == undefined ? null : props.user;
 
   const navigation = useNavigation();
   const [products, setProducts] = useState([]);
@@ -51,6 +50,7 @@ const IndexScreen = (props) => {
   return (
     <ScrollView style={styles.container}>
       <View>
+        {/* Reusable Header */}
         <HomeHeader
           title="Bubble N' Fizz"
           showMenuIcon={true}
@@ -58,8 +58,10 @@ const IndexScreen = (props) => {
         />
       </View>
       <View>
+        {/* Hero Section */}
         <HeroSection />
       </View>
+
       {/* Products- Recommended */}
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>RECOMMENDED—</Text>
@@ -68,6 +70,7 @@ const IndexScreen = (props) => {
         <View style={styles.productContainer}>
           {ThreeProduct.map((item, index) => {
             return (
+              // Reusable component for displaying Products
               <RenderCard
                 key={index}
                 item={item}
@@ -76,7 +79,7 @@ const IndexScreen = (props) => {
                 rating={item.product_rating}
                 scentName={item.product_scent_name}
                 onPress={() => {
-                  console.log("Product", item);
+                  console.log("Productsssssssssssssssssssss", item);
                   navigation.navigate("ProductScreen", {
                     product: item,
                     productId: item.id,
