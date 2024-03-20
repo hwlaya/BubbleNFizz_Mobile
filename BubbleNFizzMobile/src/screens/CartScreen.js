@@ -10,11 +10,16 @@ import { useNavigation } from "@react-navigation/native";
 
 const CartScreen = () => {
   const user = useContext(UserContext);
-  const [carts, setCarts] = useState([]);
+  const [carts, setCarts] = useState([refresher]);
   const [subTotal, setSubTotal] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [refresher, setRefresher] = useState(0);
 
   const navigation = useNavigation();
+
+  useEffect(() => {
+    console.log("User ID is Hereeee", user.user.id);
+  });
 
   useEffect(() => {
     api
@@ -46,20 +51,32 @@ const CartScreen = () => {
           <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
         </TouchableOpacity>
         <Text style={styles.cartTitle}>My Cart</Text>
-        {carts.map((item, index) => {
-          console.log("ito yung items mo", item);
-          return (
-            <CartCard
-              cart={item}
-              key={index}
-              setSubTotal={setSubTotal}
-              setTotalQuantity={setTotalQuantity}
-              totalQuantity={totalQuantity}
-              subTotal={subTotal}
-              showQuantityControls={true} //prop for removing button
-            />
-          );
-        })}
+        {carts.length > 0 ? (
+          carts.map((item, index) => {
+            console.log("ito yung items mo", item);
+            return (
+              <CartCard
+                cart={item}
+                key={index}
+                setSubTotal={setSubTotal}
+                setTotalQuantity={setTotalQuantity}
+                totalQuantity={totalQuantity}
+                subTotal={subTotal}
+                showQuantityControls={true} //prop for removing button
+              />
+            );
+          })
+        ) : (
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 20,
+              fontFamily: "LexendExa-ExtraLight",
+            }}
+          >
+            No items are in your cart right now
+          </Text>
+        )}
         <View style={styles.orderSummary}>
           <Text style={styles.orderSummaryTitle}>Order Summary</Text>
           <View>

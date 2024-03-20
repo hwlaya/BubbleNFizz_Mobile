@@ -4,29 +4,10 @@ import { useNavigation } from "@react-navigation/native";
 import api from "../../config/api";
 import { Rating } from "react-native-ratings";
 
-const RenderCard = ({ item }) => {
+const RenderCard = ({ title, scentName, rating, price, onPress }) => {
   const navigation = useNavigation();
-
-  const handleCardPress = () => {
-    navigation.navigate("ProductScreen", {
-      // productName,
-      // productPrice,
-      // productImage,
-      // productScentName,
-      // productRating,
-      productName: item.product_name,
-      productPrice: item.product_price,
-      productScentName: item.product_scent_name,
-      productRating: item.product_rating,
-      productDescription: item.product_description,
-      productStock: item.product_stock,
-      productId: item.id,
-      productCategory: item.product_category,
-    });
-  };
-
   return (
-    <TouchableOpacity onPress={handleCardPress}>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.card}>
         {/* Product Image */}
         <Image
@@ -40,17 +21,8 @@ const RenderCard = ({ item }) => {
             ellipsizeMode="tail"
             style={styles.productName}
           >
-            {item.product_name}
+            {title}
           </Text>
-
-          {/* Product Category *
-          <Text
-            numberOfLines={1}
-            ellipsizeMode="tail"
-            style={styles.productCategory}
-          >
-            {item.product_category}
-          </Text> */}
 
           {/* Product ScentName */}
           <Text
@@ -58,15 +30,15 @@ const RenderCard = ({ item }) => {
             ellipsizeMode="tail"
             style={styles.productScentName}
           >
-            {item.product_scent_name}
+            {scentName}
           </Text>
 
           {/* Product Price */}
-          <Text style={styles.productPrice}>₱{item.product_price}</Text>
+          <Text style={styles.productPrice}>₱{price}</Text>
           <Rating
             type="star"
-            startingValue={item.product_rating}
-            imageSize={20}
+            value={Number(rating)}
+            imageSize={14}
             readonly
             precision={0.1}
           />

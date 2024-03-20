@@ -1,10 +1,12 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import { Button } from "react-native-paper";
 
 const Slider = ({ images }) => {
+  const navigation = useNavigation();
   const handleImageClick = (index) => {
-    console.log("Clicked on image", index);
+    navigation.navigate("AllProductsPage");
   };
 
   return (

@@ -11,57 +11,78 @@ import {
 } from "react-native";
 import { Button, Divider, IconButton } from "react-native-paper";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Rating } from "react-native-ratings";
 import { UserContext, UserProvider } from "../providers/UserProvider";
 import api from "../../config/api";
 
 const ProductScreen = ({ route }) => {
-  const {
-    productName,
-    productPrice,
-    productImage,
-    productDescription,
-    productCategory,
-    productScentName,
-    productStock,
-    productRating,
-    productId,
-  } = route.params;
+  const { product, productId } = route.params;
   const navigation = useNavigation();
-  const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(productPrice);
-
-  // USER DETAILS
-  // to get user id = user.user.id
-  // to get all user data = user.user
-  // to get user profile = user.user.profile
   const user = useContext(UserContext);
 
-  useEffect(() => {
-    console.log("Product Scentttttt: ", productScentName);
-  });
+  const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(product.product_price);
+  const [rating, setRating] = useState(0);
+  const [review, setReview] = useState("");
+  const [userReviews, setUserReviews] = useState([]);
+  const subQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+      setTotalPrice(Number(product.product_price) * (quantity - 1));
+    }
+  };
+
+  const addQuantity = () => {
+    setQuantity(quantity + 1);
+    setTotalPrice(Number(product.product_price) * (quantity + 1));
+  };
+
+  const submitReview = () => {
+    api
+      .post("/shopping/addreview", {
+        user_id: user.id,
+        product_id: product.id,
+        product_rating: rating,
+        product_description: review,
+      })
+      .then((response) => {
+        console.log(response.data);
+        Alert.alert("Review Added!", "Your review has been added!", [
+          { text: "OK", onPress: () => setReview("") },
+        ]);
+      })
+      .catch((error) => {
+        console.error(error);
+        Alert.alert("Error", "An error occurred while adding the review.");
+      });
+  };
 
   const addToCart = () => {
-    console.log("product_id", productId);
-    console.log("userId", user.user.id);
-    console.log("cart quantity", quantity);
-    console.log("cart price", totalPrice);
-    
+    console.log("Product ID:", product.id);
+    console.log("User ID:", user.user.id);
+    console.log("Cart Quantity:", quantity);
+    console.log("Cart Price:", totalPrice);
+
     api
       .post("shopping/addtocart", {
+        product_id: product.id,
         user_id: user.user.id,
-        product_id: productId,
         cart_quantity: quantity,
         cart_price: totalPrice,
       })
       .then((response) => {
         console.log(response.data);
-        Alert.alert("Added to cart", "Item has been added to cart!");
-        navigation.goBack();
+        Alert.alert("Added to Cart!", "Item has been added to cart!", [
+          { text: "OK" },
+        ]);
       })
-      .catch((err) => {
-        console.log(err.response);
+      .catch((error) => {
+        console.error(error);
+        Alert.alert(
+          "Error",
+          "An error occurred while adding the item to the cart."
+        );
       });
   };
 
@@ -89,14 +110,13 @@ const ProductScreen = ({ route }) => {
 
         {/* Product Info */}
         <View style={styles.productInfoContainer}>
-          <Text style={styles.productPrice}>₱{productPrice}</Text>
-          <Text style={styles.productName}>{productName}</Text>
-          <Text>Category: {productCategory}</Text>
+          <Text style={styles.productPrice}>₱{product.product_price}</Text>
+          <Text style={styles.productName}>{product.product_name}</Text>
           <Text
             style={[{ fontFamily: "LexendExa-ExtraLight", textAlign: "right" }]}
           >
             Scent:
-            {productScentName}
+            {product.product_scent_name}
           </Text>
         </View>
 
@@ -114,14 +134,7 @@ const ProductScreen = ({ route }) => {
             Quantity:{" "}
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <TouchableOpacity
-              onPress={() => {
-                if (quantity > 1) {
-                  setQuantity(quantity - 1);
-                  setTotalPrice(totalPrice - productPrice);
-                }
-              }}
-            >
+            <TouchableOpacity onPress={subQuantity}>
               <AntDesign name="minussquare" size={40} color="black" />
             </TouchableOpacity>
 
@@ -137,12 +150,7 @@ const ProductScreen = ({ route }) => {
                 {quantity}
               </Text>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                setQuantity(quantity + 1);
-                setTotalPrice(Number(totalPrice) + Number(productPrice));
-              }}
-            >
+            <TouchableOpacity onPress={addQuantity}>
               <AntDesign name="plussquare" size={40} color="black" />
             </TouchableOpacity>
           </View>
@@ -150,21 +158,23 @@ const ProductScreen = ({ route }) => {
             Total Price: ₱{totalPrice}
           </Text>
           <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
-            Stock: {productStock}
+            Stock: {product.product_stock}
           </Text>
           <Button style={styles.button} mode="contained" onPress={addToCart}>
             Add to Cart
           </Button>
           <Rating
             type="star"
-            startingValue={productRating}
+            value={rating}
             imageSize={20}
             readonly
             precision={0.1}
           />
 
           <View style={styles.divider} />
-          <Text style={styles.productDescription}>{productDescription}</Text>
+
+          {/* Change to reusable component the reviews */}
+          <Text style={styles.productDescription}>Product Description</Text>
         </View>
       </View>
     </ScrollView>
@@ -225,6 +235,7 @@ const styles = StyleSheet.create({
   },
   productInfo: {
     padding: 12,
+    width: "100%",
   },
   button: {
     marginVertical: 10,

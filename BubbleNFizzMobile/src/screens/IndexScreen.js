@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,34 +15,39 @@ import Section from "../components/Section";
 import HeroSection from "../components/HeroSection";
 import { Button, Divider } from "react-native-paper";
 import api from "../../config/api";
+import { UserContext } from "../providers/UserProvider";
 
-const IndexScreen = () => {
+const IndexScreen = (props) => {
+  const user = useContext(UserContext);
+  // const userObject = props.user == undefined ? null : props.user;
+
   const navigation = useNavigation();
-  const [threeProducts, setThreeProducts] = useState([]);
-  const [bestSellers, setBestSellers] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [bestProducts, setBestProducts] = useState([]);
+  const [ThreeProduct, setThreeProduct] = useState([]);
+
   useEffect(() => {
     api
       .get("shopping/getthreeproducts")
       .then((response) => {
-        //console.log(response.data);
-        setThreeProducts(response.data);
+        setThreeProduct(response.data);
+        console.log("get three products", response.data);
       })
       .catch((err) => {
-        // console.log(err.response);
+        console.log(err.response);
       });
-  }, []);
 
-  useEffect(() => {
     api
       .get("shopping/getbestsellers")
       .then((response) => {
-        // console.log(response.data);
-        setBestSellers(response.data);
+        setBestProducts(response.data);
+        console.log("get best products", response.data);
       })
       .catch((err) => {
-        // console.log(err.response);
+        console.log(err.response);
       });
   }, []);
+
   return (
     <ScrollView style={styles.container}>
       <View>
@@ -61,18 +66,25 @@ const IndexScreen = () => {
       </View>
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
-          {/* <RenderCard
-            productName={item.product_name}
-            // productImage={item.product_image}
-            productPrice={item.product_price}
-            productRating={item.product_rating}
-            productScentName={item.product_scent_name}
-            productImage={require("../assets/images/product1.jpg")}
-          /> */}
-          {threeProducts.map((item, index) => (
-            //console.log("Item at index", index, ":", item),
-            <RenderCard item={item} key={index} />
-          ))}
+          {ThreeProduct.map((item, index) => {
+            return (
+              <RenderCard
+                key={index}
+                item={item}
+                title={item.product_name}
+                price={item.product_price}
+                rating={item.product_rating}
+                scentName={item.product_scent_name}
+                onPress={() => {
+                  console.log("Product", item);
+                  navigation.navigate("ProductScreen", {
+                    product: item,
+                    productId: item.id,
+                  });
+                }}
+              />
+            );
+          })}
         </View>
       </ScrollView>
       <Divider style={styles.divider} />
@@ -87,35 +99,32 @@ const IndexScreen = () => {
         />
       </View>
       <Divider style={styles.divider} />
-      {/* Products- Best Sellers */}
+      {/* Products- Best Sellers  */}
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>BEST SELLERS—</Text>
       </View>
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
-          {bestSellers.map((item, index) => {
-            const {
-              product_name,
-              product_price,
-              product_scent_name,
-              product_rating,
-              product_description,
-            } = item;
-            return (
-              <RenderCard
-                item={item}
-                key={index}
-                productName={product_name}
-                productPrice={product_price}
-                productScentName={product_scent_name}
-                productRating={product_rating}
-                productDescription={product_description}
-              />
-            );
+          {bestProducts.map((item, index) => {
+            <RenderCard
+              key={index}
+              item={item}
+              title={item.product_name}
+              price={item.product_price}
+              rating={item.product_rating}
+              scentName={item.product_scent_name}
+              onPress={() => {
+                console.log("Product", item);
+                navigation.navigate("ProductScreen", {
+                  product: item,
+                  productId: item.id,
+                });
+              }}
+            />;
           })}
         </View>
       </ScrollView>
-      {/* Section - Rating Certified */}
+
       <Section />
     </ScrollView>
   );

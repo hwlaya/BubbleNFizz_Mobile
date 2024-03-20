@@ -105,7 +105,7 @@ const CheckoutScreen = ({ route }) => {
           />
 
           {/* Shipping Address */}
-          <Text style={styles.textStyle}>Shipping Address</Text>
+          <Text style={styles.textStyle}>Shipping Method</Text>
           <TouchableOpacity
             style={{
               borderRadius: 20,

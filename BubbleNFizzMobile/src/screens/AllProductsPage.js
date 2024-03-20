@@ -52,15 +52,17 @@ const AllProductsPage = () => {
             data={products}
             renderItem={({ item }) => (
               <RenderProductsCard
-                productId={item.id}
-                productCategory={item.product_category}
-                productName={item.product_name}
-                productDescription={item.product_description}
-                productImage={item.product_image}
-                productPrice={item.product_price}
-                productStock={item.product_stock}
-                productRating={item.product_rating}
-                productScentName={item.product_scent_name}
+                title={item.product_name}
+                price={item.product_price}
+                rating={item.product_rating}
+                scentName={item.product_scent_name}
+                onPress={() => {
+                  console.log("Product", item);
+                  navigation.navigate("ProductScreen", {
+                    product: item,
+                    productId: item.id,
+                  });
+                }}
               />
             )}
             keyExtractor={(item) => item.id}

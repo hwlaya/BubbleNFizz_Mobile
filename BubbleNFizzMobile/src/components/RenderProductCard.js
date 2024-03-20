@@ -13,51 +13,21 @@ import { Rating } from "react-native-ratings";
 
 const windowWidth = Dimensions.get("window").width;
 
-const RenderProductCard = ({
-  productName,
-  productPrice,
-  productImage,
-  productCategory,
-  productDescription,
-  productRating,
-  productScentName,
-  productStock,
-  productId,
-}) => {
+const RenderProductCard = ({ title, scentName, rating, price, onPress }) => {
   const navigation = useNavigation();
-
-  const handleCardPress = () => {
-    navigation.navigate("ProductScreen", {
-      productName,
-      productPrice,
-      productImage,
-      productCategory,
-      productDescription,
-      productRating,
-      productScentName,
-      productStock,
-      productId,
-    });
-  };
 
   const data = [
     {
-      productName,
-      productPrice,
-      productImage,
-      productCategory,
-      productDescription,
-      productRating,
-      productScentName,
-      productStock,
-      productId,
+      productName: title,
+      productScentName: scentName,
+      productRating: rating,
+      productPrice: price,
     },
-    // Add more data objects if needed
   ];
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity onPress={handleCardPress}>
+      <TouchableOpacity onPress={onPress}>
         <View style={[styles.card, { width: windowWidth / 2 - 20 }]}>
           {/* <Image source={item.productImage} style={styles.productImage} />   */}
           <Image
@@ -69,13 +39,14 @@ const RenderProductCard = ({
           </Text>
 
           <Text style={styles.productScentName}>{item.productScentName}</Text>
-          <Text style={styles.productPrice}>${item.productPrice}</Text>
+          <Text style={styles.productPrice}>₱{item.productPrice}</Text>
           <Rating
             type="star"
             startingValue={item.productRating}
-            imageSize={20}
+            imageSize={12}
             readonly
             precision={0.1}
+            style={{ alignItems: "flex-end" }}
           />
         </View>
       </TouchableOpacity>
