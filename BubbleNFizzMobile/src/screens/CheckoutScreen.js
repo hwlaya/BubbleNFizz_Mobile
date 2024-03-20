@@ -5,12 +5,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  Image,
 } from "react-native";
 import { Button, Text, TextInput } from "react-native-paper";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import * as ImagePicker from "expo-image-picker";
 import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
 import CartCard from "../components/CartCard";
@@ -31,6 +32,11 @@ const Checkout = ({ route }) => {
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
 
+  // FILE UPLOAD
+  const [paymentImageStatus, setPaymentImageStatus] = useState(false);
+  const [paymentImageUri, setPaymentImageUri] = useState("");
+  const [paymentImageName, setPaymentImageName] = useState("");
+
   // PAYMENT
   const [mop, setMop] = useState("GCash");
   const [gcashFile, setGcashFile] = useState({}); // IF GCASH
@@ -39,7 +45,28 @@ const Checkout = ({ route }) => {
   //   console.log(user);
   // }, [user]);
 
-//  API TO GET THE CART of the user
+  // FILE UPLOAD FUNCTION
+  const pickPaymentImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [2, 1],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setPaymentImageUri(result.assets[0].uri);
+      const uriParts = result.assets[0].uri.split("/");
+      const filename = uriParts[uriParts.length - 1];
+      setPaymentImageName(filename);
+      setPaymentImageStatus(true);
+    }
+  };
+
+  //  API TO GET THE CART of the user
   useEffect(() => {
     api
       .get(`shopping/getusercart?user_id=${user.user.id}`)
@@ -60,8 +87,7 @@ const Checkout = ({ route }) => {
         console.log(err.response);
       });
 
-
-      //get user profile details
+    //get user profile details
     api
       .get(`usermanagement/getprofile/${user.user.id}`)
       .then((response) => {
@@ -270,13 +296,13 @@ const Checkout = ({ route }) => {
                 alignItems: "center",
                 padding: 10,
                 width: "100%",
-                height: 150,
+                height: 300,
               }}
             >
               <Button
                 buttonColor="#E79E4F"
                 mode="contained"
-                onPress={() => console.log("Upload File Pressed1223")}
+                onPress={pickPaymentImage}
                 icon={() => (
                   <MaterialIcons name="cloud-upload" size={30} color="white" />
                 )}
@@ -289,6 +315,12 @@ const Checkout = ({ route }) => {
               >
                 UPLOAD FILE
               </Button>
+              {paymentImageUri && (
+                <Image
+                  source={{ uri: paymentImageUri }}
+                  style={{ width: 100, height: 200 }}
+                />
+              )}
             </View>
           )}
         </View>
