@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Dimensions, Image } from "react-native";
-import { Text, DataTable, Button } from "react-native-paper";
+import {
+  Text,
+  DataTable,
+  Button,
+  TextInput,
+  RadioButton,
+} from "react-native-paper";
 import { FontAwesome } from "@expo/vector-icons";
 import {
   FlatList,
@@ -125,14 +131,9 @@ const PaymentRegister = () => {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text>Payment Register</Text>
         <View style={styles.userContainer}>
-          <FontAwesome
-            name="user-circle"
-            size={width < 600 ? 20 : 24}
-            color="black"
-          />
-          <Text>Fucking User na nag-aautofill</Text>
+          <FontAwesome name="user-circle" size={width * 0.2} color="black" />
+          <TextInput label="Customer" style={{ width: "70%" }} />
         </View>
 
         {/* TABLE */}
@@ -183,7 +184,7 @@ const PaymentRegister = () => {
                           setItems(updatedItems);
                         }}
                       >
-                        Remove
+                        -
                       </Button>
                       {item.product_quantity}{" "}
                       <Button
@@ -212,7 +213,7 @@ const PaymentRegister = () => {
                           setItems(updatedItems);
                         }}
                       >
-                        Add
+                        -
                       </Button>
                     </DataTable.Cell>
                     <DataTable.Cell>{item.product_price}</DataTable.Cell>
@@ -235,20 +236,24 @@ const PaymentRegister = () => {
         <View style={styles.itemContainer}>
           <Text>Total:</Text>
           <Text>{totalPrice}</Text>
+
+          <Button onPress={console.log("pay")}>Pay Now </Button>
         </View>
 
         <View style={styles.divider} />
 
         {/* Category */}
-        <ScrollView horizontal>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: 4,
-            }}
-          >
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{
+            // alignItems: "space-between",
+            // justifyContent: "center",
+            // marginVertical: 50,
+            height: 70,
+          }}
+        >
+          <View style={{ flexDirection: "row" }}>
             <Button
               mode="contained"
               onPress={() => setCategory("Artisan Facial and Body Soaps")}
@@ -276,6 +281,8 @@ const PaymentRegister = () => {
             marginHorizontal: "auto",
             width: "100%",
             borderWidth: 1,
+            marginVertical: 10,
+            paddingVertical: 10,
           }}
         >
           <FlatList
@@ -286,47 +293,6 @@ const PaymentRegister = () => {
             keyExtractor={(item) => item.id}
           />
         </View>
-
-        {/* <View style={[styles.grid, { marginTop: 5 }]}>
-          {products.map((item, index) => {
-            if (item.product_details !== null) {
-              let weight = "";
-              if (category == "Bubble Bath") {
-                weight = String(
-                  String(item.product_details.product_name).substring(
-                    String(item.product_details.product_name).length - 5
-                  )
-                ).replace(" ", "");
-              } else {
-                weight = String(
-                  String(item.product_details.product_name).substring(
-                    String(item.product_details.product_name).length - 4
-                  )
-                ).replace(" ", "");
-              }
-              const trim1 = String(item.product_details.product_name).replace(
-                "Bubble N Fizz ",
-                ""
-              );
-              const trim2 = trim1.replace(/[0-9g]/g, "");
-              const firstLetters = String(trim2).match(/\b(\w)/g);
-              const acronym = firstLetters.join("");
-              return (
-                <View style={styles.gridItem} key={index}>
-                  <View style={styles.gridContent}>
-                    <Image
-                      source={{ uri: `https://picsum.photos/200/200` }}
-                      style={styles.gridImage}
-                    />
-                    <Text style={styles.gridText}>
-                      {`${acronym} ${item.product_details.product_scent_name} ${weight}`}
-                    </Text>
-                  </View>
-                </View>
-              );
-            }
-          })}
-        </View> */}
       </View>
     </ScrollView>
   );
@@ -340,16 +306,18 @@ const styles = StyleSheet.create({
   },
   userContainer: {
     flexDirection: "row",
-    alignItems: "space-around",
+    alignItems: "center",
     justifyContent: "space-around",
     borderWidth: 1.5,
     width: "100%",
+    height: "10%",
   },
   bodyContainer: {
     padding: 10,
-    margin: 20,
+    margin: 10,
     justifyContent: "center",
     alignItems: "center",
+    width: "100%",
   },
   title: {
     flexDirection: "row",
@@ -382,7 +350,7 @@ const styles = StyleSheet.create({
     padding: 10,
     maxWidth: "100%",
     borderWidth: 1,
-    backgroundColor: "#B75800",
+    backgroundColor: "#111827",
     marginVertical: 5,
     minHeight: 270,
   },
@@ -394,16 +362,17 @@ const styles = StyleSheet.create({
     width: 200, // Adjust the width as needed
   },
   gridImage: {
-    height: 200,
-    width: 200,
+    height: 180,
+    width: 180,
   },
   gridText: {
-    color: "#000",
+    color: "white",
     fontSize: 16,
     textAlign: "center",
     marginTop: 1,
     flexWrap: "wrap",
     textAlign: "center",
+    fontFamily: "Poppins-SemiBold",
   },
 });
 

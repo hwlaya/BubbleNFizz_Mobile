@@ -90,7 +90,7 @@ const RegisterScreen = () => {
     api
       .post("register", {
         fname: fname,
-        lName: lname,
+        lname: lname,
         // uname: uname,
         email: email,
         password: password,
