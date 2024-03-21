@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { Text, TouchableRipple } from "react-native-paper";
 import api from "../../config/api";
 import CheckOutCard from "../components/CheckoutCard";
+import { UserContext } from "../providers/UserProvider";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const MyPurchases = (user) => {
-  const [activeButton, setActiveButton] = useState(null);
+const MyPurchases = () => {
+  const user = useContext(UserContext);
+  const [activeButton, setActiveButton] = useState("Pending");
   const [page, setPage] = useState("Pending");
   const [data, setData] = useState([]);
-
+  const navigation = useNavigation();
   useEffect(() => {
     console.log("Cart Data:", data);
   }, [data]);
 
   useEffect(() => {
+    console.log("IDDDDD:", user.user.id);
+    console.log("Pagerasdzxc:", page);
     api
-      .get(`ordersmanagement/userorders?user_id=2&page=Pending`)
+
+      .get(`ordersmanagement/userorders?user_id=${user.user.id}&page=${page}`)
       .then((response) => {
         setData(response.data);
       })
@@ -30,6 +37,23 @@ const MyPurchases = (user) => {
   };
   return (
     <View style={style.container}>
+      <View
+        style={{
+          flexDirection: "row",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={style.backButton}
+        >
+          <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
+        </TouchableOpacity>
+        <Text style={style.cartTitle}>My Purchases</Text>
+      </View>
+
       <View style={style.divider} />
       <View style={style.buttonContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -175,7 +199,7 @@ const MyPurchases = (user) => {
       {/* DISPLAY */}
       <View>
         {page === "Pending" ? (
-          <View>
+          <ScrollView>
             {data.length > 0 ? (
               data.map((item, index) => {
                 // console.log(item.order_status);
@@ -206,7 +230,7 @@ const MyPurchases = (user) => {
                 <Text>No items to display</Text>
               </View>
             )}
-          </View>
+          </ScrollView>
         ) : page === "To Ship" ? (
           <View>
             {data.length > 0 ? (
@@ -219,7 +243,7 @@ const MyPurchases = (user) => {
                           Order# {item.id} (₱{item.total_price}){" "}
                         </Text>
                       </View>
-                      <View>To Ship</View>
+                      <Text>To Ship</Text>
                       {item.order_items.map((item, index) => {
                         return (
                           <CheckOutCard
@@ -396,6 +420,17 @@ const style = StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: "Poppins-Light",
+  },
+  backButton: {
+    position: "absolute",
+    top: 0,
+    left: 10,
+    zIndex: 1,
+  },
+  cartTitle: {
+    fontFamily: "LilitaOne-Regular",
+    fontSize: 30,
+    textAlign: "center",
   },
 });
 

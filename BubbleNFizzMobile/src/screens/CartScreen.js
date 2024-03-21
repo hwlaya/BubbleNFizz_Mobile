@@ -17,7 +17,7 @@ const CartScreen = () => {
 
   const navigation = useNavigation();
 
-// API to get cart of user
+  // API to get cart of user
   useEffect(() => {
     api
       .get(`shopping/getusercart?user_id=${user.user.id}`)

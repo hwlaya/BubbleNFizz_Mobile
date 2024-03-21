@@ -81,7 +81,7 @@ const IndexScreen = (props) => {
                 rating={item.product_rating}
                 scentName={item.product_scent_name}
                 onPress={() => {
-                  // console.log("Productsssssssssssssssssssss", item);
+                  console.log("Productsssssssssssssssssssss", item);
                   navigation.navigate("ProductScreen", {
                     product: item,
                     productId: item.id,
@@ -111,21 +111,24 @@ const IndexScreen = (props) => {
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
           {bestProducts.map((item, index) => {
-            <RenderCard
-              key={index}
-              item={item}
-              title={item.product_details.product_name}
-              price={item.product_details.product_price}
-              rating={item.product_details.product_rating}
-              scentName={item.product_details.product_scent_name}
-              onPress={() => {
-                console.log("Best Sellerrr", item);
-                navigation.navigate("ProductScreen", {
-                  product: item,
-                  productId: item.id,
-                });
-              }}
-            />;
+            return (
+              // console.log("CARDDDDDDDD", item.product_details);
+              <RenderCard
+                key={index}
+                item={item}
+                title={item.product_details.product_name}
+                price={item.product_details.product_price}
+                rating={item.product_details.product_rating}
+                scentName={item.product_details.product_scent_name}
+                onPress={() => {
+                  console.log("Best Sellerrr", item);
+                  navigation.navigate("ProductScreen", {
+                    product: item,
+                    productId: item.id,
+                  });
+                }}
+              />
+            );
           })}
         </View>
       </ScrollView>

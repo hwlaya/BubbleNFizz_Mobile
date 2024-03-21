@@ -27,6 +27,13 @@ const ProductScreen = ({ route }) => {
   const [review, setReview] = useState("");
   const [userReviews, setUserReviews] = useState([]);
 
+  // useEffect(() => {
+  //   console.log(
+  //     "From best seller scrennnn",
+  //     product.product_details.product_price
+  //   );
+  // }, []);
+
   // Subtract Logic
   const subQuantity = () => {
     if (quantity > 1) {
@@ -34,12 +41,12 @@ const ProductScreen = ({ route }) => {
       setTotalPrice(Number(product.product_price) * (quantity - 1));
     }
   };
-// add Logic
+  // add Logic
   const addQuantity = () => {
     setQuantity(quantity + 1);
     setTotalPrice(Number(product.product_price) * (quantity + 1));
   };
-//submit review api
+  //submit review api
   const submitReview = () => {
     api
       .post("/shopping/addreview", {
@@ -125,7 +132,7 @@ const ProductScreen = ({ route }) => {
             {product.product_scent_name}
           </Text>
         </View>
-{/* Divider */}
+        {/* Divider */}
         <View
           style={{
             width: "100%",
@@ -134,7 +141,7 @@ const ProductScreen = ({ route }) => {
             marginVertical: 10,
           }}
         />
-{/* Quantity */}
+        {/* Quantity */}
         <View style={styles.productInfo}>
           <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
             Quantity:{" "}

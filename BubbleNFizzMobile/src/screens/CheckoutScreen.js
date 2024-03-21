@@ -25,7 +25,7 @@ const Checkout = ({ route }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   // ADDRESS
   const [address, setAddress] = useState(user.user.profile.address);
-  const [apartment, setApartment] = useState("");
+  const [apartment, setApartment] = useState("House No. 1");
   const [phoneNumber, setPhoneNumber] = useState(user.user.profile.contact_no);
   // SHIPPING METHOD
   const [delivery, setDelivery] = useState("pickUp");
@@ -129,12 +129,24 @@ const Checkout = ({ route }) => {
     }
     formdata.append("total_quantity", quantity);
     formdata.append("total_price", totalPrice);
-    formdata.append("carts", JSON.stringify(carts));
+    // formdata.append("carts", JSON.stringify(carts));
+    console.log("Formdataaaaa", formdata);
     api
-      .post("shopping/submitorder", formdata)
+      .post("shopping/submitorder", {
+        user_id: user.user.id,
+        order_address: address,
+        order_apartment: apartment,
+        order_phone_number: phoneNumber,
+        order_shipping: delivery,
+        payment: mop,
+        // payment_image: gcashFile,
+        total_quantity: quantity,
+        total_price: totalPrice,
+        carts: JSON.stringify(carts),
+      })
       .then((response) => {
         Alert.alert("Order Submitted!", "Your order has been submitted!", [
-          { text: "OK", onPress: () => (location.href = "shopping") },
+          { text: "OK", onPress: () => navigation.navigate("IndexScreen") },
         ]);
       })
       .catch((err) => {
@@ -145,7 +157,7 @@ const Checkout = ({ route }) => {
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate("CartScreen")}>
             <FontAwesome name="arrow-left" size={24} color="black" />
           </TouchableOpacity>
           <Text style={styles.title}>Checkout</Text>
@@ -350,21 +362,7 @@ const Checkout = ({ route }) => {
               style={{ marginVertical: 16, borderRadius: 6 }}
               mode="contained"
               buttonColor="#E79E4F"
-              onPress={() => {
-                Alert.alert(
-                  "Order Successful",
-                  "Your order has been placed successfully",
-                  [
-                    {
-                      text: "OK",
-                      onPress: () => {
-                        onSubmitOrder;
-                        navigation.navigate("IndexScreen");
-                      },
-                    },
-                  ]
-                );
-              }}
+              onPress={onSubmitOrder}
             >
               <Text
                 style={{
