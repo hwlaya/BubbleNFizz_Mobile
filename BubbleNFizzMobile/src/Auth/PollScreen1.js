@@ -11,6 +11,8 @@ import { Text } from "react-native-paper";
 import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import { UserContext } from "../providers/UserProvider";
+import { FontAwesome5, Foundation } from "@expo/vector-icons";
+import { Alert } from "react-native";
 
 const PollScreen1 = () => {
   const navigation = useNavigation();
@@ -21,8 +23,12 @@ const PollScreen1 = () => {
   const [gender, setGender] = useState("");
 
   const handleSelectGender = () => {
+    if (!gender) {
+      // Display an alert if no gender is chosen
+      Alert.alert("Error", "Please select a gender");
+      return;
+    }
     console.log("Selected gender:", gender);
-    setGender(gender);
     navigation.navigate("PollScreen2", { gender: gender });
   };
   return (
@@ -57,17 +63,54 @@ const PollScreen1 = () => {
                 marginTop: 10,
               }}
             >
-              <TouchableOpacity onPress={() => setGender("He")}>
+              <TouchableOpacity
+                onPress={() => setGender("He")}
+                style={[
+                  styles.genderOption,
+                  gender === "He" && styles.activeOption,
+                ]}
+              >
+                <Foundation
+                  name="male-symbol"
+                  size={110}
+                  color={gender === "He" ? "#EDBF47" : "black"}
+                  style={{ marginBottom: 5 }}
+                />
                 <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
                   He
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setGender("She")}>
+
+              <TouchableOpacity
+                onPress={() => setGender("She")}
+                style={[
+                  styles.genderOption,
+                  gender === "She" && styles.activeOption,
+                ]}
+              >
+                <Foundation
+                  name="female-symbol"
+                  size={117}
+                  color={gender === "She" ? "#EDBF47" : "black"}
+                />
                 <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
                   She
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => setGender("They")}>
+
+              <TouchableOpacity
+                onPress={() => setGender("They")}
+                style={[
+                  styles.genderOption,
+                  gender === "They" && styles.activeOption,
+                ]}
+              >
+                <FontAwesome5
+                  name="transgender"
+                  size={100}
+                  color={gender === "They" ? "#EDBF47" : "black"}
+                  style={{ marginBottom: 10 }}
+                />
                 <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
                   They
                 </Text>

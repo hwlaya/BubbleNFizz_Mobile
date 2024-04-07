@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,28 +12,39 @@ const CustomCardFragrance = ({ onSelect }) => {
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
 
-  const [selectedFragrance, setSelectedFragrance] = useState(null);
+  const [selectedFragrance, setSelectedFragrance] = useState([]);
+
+  useEffect(() => {
+    console.log("Selected Fragrances:", selectedFragrance);
+  }, [selectedFragrance]);
 
   const handleSelectFragrance = (fragrance) => {
-    setSelectedFragrance(fragrance);
-    onSelect(fragrance)
+    // Check if the fragrance is already selected
+    const index = selectedFragrance.indexOf(fragrance);
+
+    if (index !== -1) {
+      // If selected, remove it from the selected fragrances
+      setSelectedFragrance((prevSelected) =>
+        prevSelected.filter((item, i) => i !== index)
+      );
+    } else {
+      // If not selected, add it to the selected fragrances
+      setSelectedFragrance((prevSelected) => [...prevSelected, fragrance]);
+    }
   };
 
-  const renderCard = (
-    title,
-    label,
-    backgroundColor,
-    description,
-    selectedFragrance
-  ) => {
-    const isActive = selectedFragrance === label;
+  const renderCard = (title, label, backgroundColor, description) => {
+    const isActive = selectedFragrance.includes(title);
     return (
       <TouchableOpacity onPress={() => handleSelectFragrance(title)}>
         <View>
           <Card
             style={[
               styles.card,
-              { borderWidth: 2, borderColor: isActive ? "#EDBF47" : "white" },
+              {
+                borderWidth: 2,
+                borderColor: isActive ? "#EDBF47" : "white",
+              },
             ]}
           >
             <Text numberOfLines={1} style={styles.cardTitle}>
@@ -110,9 +121,6 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: "center",
     height: 250,
-  },
-  selectedCard: {
-    borderColor: "#EDBF47",
   },
   circleContainer: {
     justifyContent: "center",

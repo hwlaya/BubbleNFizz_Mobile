@@ -15,9 +15,6 @@ import PollScreen4 from "../Auth/PollScreen4";
 import PollScreen5 from "../Auth/PollScreen5";
 import PollScreen6 from "../Auth/PollScreen6";
 import PollScreen7 from "../Auth/PollScreen7";
-import PollScreen10 from "../Auth/PollScreen10";
-import PollScreen9 from "../Auth/PollScreen9";
-import PollScreen8 from "../Auth/PollScreen8";
 import PollProfileScreen from "../Auth/PollProfileScreen";
 import IndexScreen from "../screens/IndexScreen";
 import CartScreen from "../screens/CartScreen";
@@ -232,13 +229,10 @@ function MainNavigation() {
         <AuthStack.Screen name="PollScreen5" component={PollScreen5} />
         <AuthStack.Screen name="PollScreen6" component={PollScreen6} />
         <AuthStack.Screen name="PollScreen7" component={PollScreen7} />
-        <AuthStack.Screen name="PollScreen8" component={PollScreen8} />
-        <AuthStack.Screen name="PollScreen9" component={PollScreen9} />
         <AuthStack.Screen
           name="PollProfileScreen"
           component={PollProfileScreen}
         />
-        <AuthStack.Screen name="PollScreen10" component={PollScreen10} />
         <AuthStack.Screen name="DrawerStack" component={Drawerstack} />
         <AuthStack.Screen name="AdminStack" component={AdminStack} />
       </AuthStack.Navigator>
