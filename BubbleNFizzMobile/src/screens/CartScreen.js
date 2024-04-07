@@ -23,7 +23,9 @@ const CartScreen = () => {
       .get(`shopping/getusercart?user_id=${user.user.id}`)
       .then((response) => {
         // handles math logic
+        console.log("Laman ng Carts", response.data);
         const carts = response.data;
+        console.log("carts", carts);
         let tempTotal = 0;
         let tempQuantity = 0;
         carts.map((item) => {

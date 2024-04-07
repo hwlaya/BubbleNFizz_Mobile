@@ -6,8 +6,10 @@ import { Card, Text } from "react-native-paper";
 import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomInput from "../components/CustomInput";
+import CustomInputBirthday from "../components/CustomInputBirthday";
 import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
+import moment from "moment";
 
 const PollProfileScreen = () => {
   const navigation = useNavigation();
@@ -24,11 +26,32 @@ const PollProfileScreen = () => {
       <View style={styles.container}>
         <Text style={styles.title}> Complete your profile!</Text>
       </View>
-      <CustomInput label={"Birthday"} value={birthday} onChangeText={( text ) => setBirthday(text)} />
-      <CustomInput label={"Address"} value={address} onChangeText={( text ) => setAddress(text)}/>
-      <CustomInput label={"City"} value={city} onChangeText={( text ) => setCity(text)}/>
-      <CustomInput label={"Postal Code"} value={postalCode} onChangeText={( text ) => setPostalCode(text)}/>
-      <CustomInput label={"Contact Number"} value={contactNumber} onChangeText={( text ) => setContactNumber(text)} />
+
+      <CustomInputBirthday
+        label={"Birthday"}
+        value={birthday}
+        onChangeText={(text) => setBirthday(text)}
+      />
+      <CustomInput
+        label={"Address"}
+        value={address}
+        onChangeText={(text) => setAddress(text)}
+      />
+      <CustomInput
+        label={"City"}
+        value={city}
+        onChangeText={(text) => setCity(text)}
+      />
+      <CustomInput
+        label={"Postal Code"}
+        value={postalCode}
+        onChangeText={(text) => setPostalCode(text)}
+      />
+      <CustomInput
+        label={"Contact Number"}
+        value={contactNumber}
+        onChangeText={(text) => setContactNumber(text)}
+      />
       <View style={styles.container}></View>
       <View style={styles.buttonContainer}>
         {/* Previous Button */}
@@ -45,24 +68,25 @@ const PollProfileScreen = () => {
         <NavigationButton
           onPress={() => {
             console.log("Next Pressed");
-            api.post("usermanagement/adduserprofile", {
-              user_id: user.user.id,
-              birthday: birthday,
-              address: address,
-              city: city,
-              postal_code: postalCode,
-              contact_no: contactNumber,
-              
-            }).then((response) => {
-              Alert.alert(
-                "Results are in!",
-                "Thank you!! Your account is all set. You may now get the best deals our shop has to offer."
-              );
-              navigation.navigate("LoginScreen");
-            }).catch((error) => {
-              console.log(error.response);
-            })
-
+            api
+              .post("usermanagement/adduserprofile", {
+                user_id: user.user.id,
+                birthday: birthday,
+                address: address,
+                city: city,
+                postal_code: postalCode,
+                contact_no: contactNumber,
+              })
+              .then((response) => {
+                Alert.alert(
+                  "Results are in!",
+                  "Thank you!! Your account is all set. You may now get the best deals our shop has to offer."
+                );
+                navigation.navigate("LoginScreen");
+              })
+              .catch((error) => {
+                console.log(error.response);
+              });
           }}
           text="Next"
           buttonColor="#EDBF47"
