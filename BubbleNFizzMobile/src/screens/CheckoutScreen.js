@@ -28,7 +28,7 @@ const Checkout = ({ route }) => {
   const [apartment, setApartment] = useState("House No. 1");
   const [phoneNumber, setPhoneNumber] = useState(user.user.profile.contact_no);
   // SHIPPING METHOD
-  const [delivery, setDelivery] = useState("pickUp");
+  const [delivery, setDelivery] = useState("PickUp");
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
 
@@ -40,6 +40,8 @@ const Checkout = ({ route }) => {
   // PAYMENT
   const [mop, setMop] = useState("GCash");
   const [gcashFile, setGcashFile] = useState({}); // IF GCASH
+
+  const [selectedPaymentImage, setSelectedPaymentImage] = useState("");
 
   // useEffect(() => {
   //   console.log(user);
@@ -58,6 +60,14 @@ const Checkout = ({ route }) => {
     console.log(result);
 
     if (!result.canceled) {
+      console.log("result:", result.assets[0]);
+      console.log("uri:", result.uri);
+      const image = {
+        uri: result.uri,
+        type: "image/jpeg",
+        name: "image.jpg",
+      };
+      setSelectedPaymentImage(image);
       setPaymentImageUri(result.assets[0].uri);
       const uriParts = result.assets[0].uri.split("/");
       const filename = uriParts[uriParts.length - 1];
@@ -123,7 +133,7 @@ const Checkout = ({ route }) => {
     formdata.append("order_shipping", delivery);
     formdata.append("payment", mop);
     if (mop == "GCash") {
-      formdata.append("payment_image", gcashFile);
+      formdata.append("payment_image", selectedPaymentImage);
     } else {
       formdata.append("payment_image", "");
     }
