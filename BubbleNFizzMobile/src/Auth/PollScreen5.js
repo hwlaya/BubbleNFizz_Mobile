@@ -7,7 +7,7 @@ import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 
 const PollScreen5 = ({ navigation, route }) => {
-  const { gender, fragrance, location, ingredients, texture, design } =
+  const { gender, fragrance, texture, design } =
     route.params;
   const [selectedBracket, setSelectedBracket] = useState(null);
 
@@ -25,8 +25,6 @@ const PollScreen5 = ({ navigation, route }) => {
       navigation.navigate("PollScreen6", {
         gender,
         fragrance,
-        location,
-        ingredients,
         texture,
         design,
         ageBracket: selectedBracket,
