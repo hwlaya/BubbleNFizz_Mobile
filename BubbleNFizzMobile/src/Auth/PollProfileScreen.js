@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomInput from "../components/CustomInput";
 import { UserContext } from "../providers/UserProvider";
@@ -20,7 +20,7 @@ const PollProfileScreen = () => {
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View style={styles.container}>
         <Text style={styles.title}> Complete your profile!</Text>
       </View>

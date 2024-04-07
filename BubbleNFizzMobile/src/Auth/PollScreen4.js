@@ -2,7 +2,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardIngredients from "../components/CustomCardIngredients";
 import { useState } from "react";
@@ -29,7 +29,7 @@ const PollScreen4 = () => {
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View style={styles.container}>
         <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
           <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>

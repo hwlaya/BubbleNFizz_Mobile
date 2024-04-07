@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Background from "../components/Background";
 import { Text } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import { UserContext } from "../providers/UserProvider";
 
@@ -27,7 +27,7 @@ const PollScreen1 = () => {
   };
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View style={styles.container}>
         <View style={[styles.contentContainer, { width: windowWidth * 0.8 }]}>
           <View style={styles.bodyContainer}>

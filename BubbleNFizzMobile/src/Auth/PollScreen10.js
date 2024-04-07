@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardLocation from "../components/CustomCardLocation";
 
@@ -13,7 +13,7 @@ const PollScreen10 = () => {
   const windowHeight = useWindowDimensions().height;
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View>
         <Text>Page 10</Text>
       </View>

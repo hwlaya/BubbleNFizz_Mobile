@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Text } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardFragrance from "../components/CustomCardFragrance";
 
@@ -25,7 +25,7 @@ const PollScreen2 = () => {
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View style={styles.container}>
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           What is your fragrance type?

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Background from "../components/Background";
 import { Text, Button } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomButtonFrequency from "../components/CustomButtonFrequency";
 
@@ -23,7 +23,7 @@ const PollScreen8 = () => {
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View style={styles.container}>
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           How often do you take a bath?

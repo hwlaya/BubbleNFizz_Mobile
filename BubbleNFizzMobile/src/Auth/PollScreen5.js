@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Image, useWindowDimensions } from "react-native";
 import Background from "../components/Background";
 import { Card, Text } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomCardTexture from "../components/CustomCardTexture";
 
@@ -16,7 +16,7 @@ const PollScreen5 = () => {
   const { gender, fragrance, location, ingredients } = route.params;
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View style={styles.container}>
         <Text style={[styles.title, { fontSize: windowWidth * 0.07 }]}>
           What Texture do you prefer?

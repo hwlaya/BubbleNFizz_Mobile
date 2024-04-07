@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import Background from "../components/Background";
 import { Text, Button } from "react-native-paper";
-import PollHeader from "../components/PollHeader";
+import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 import CustomButtonAgeBracket from "../components/CustomButtonAgeBracket";
 
@@ -22,7 +22,7 @@ const PollScreen7 = () => {
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
-      <PollHeader />
+      <PollsHeader />
       <View style={styles.container}>
         <Text style={[styles.title, { fontSize: windowWidth * 0.08 }]}>
           How old are you?
