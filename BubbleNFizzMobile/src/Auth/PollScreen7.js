@@ -1,13 +1,18 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import Background from "../components/Background";
 import { Text, Button } from "react-native-paper";
 import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
+import api from "../../config/api";
+import { UserContext } from "../providers/UserProvider";
+import { Alert } from "react-native";
 
 const PollScreen7 = ({ navigation, route }) => {
-  const { gender, fragrance, texture, design, age, frequency } = route.params;
+  const user = useContext(UserContext);
+
+  const { gender, fragrances, texture, design, age, frequency } = route.params;
   const [selectedBathType, setSelectedBathType] = useState(null);
 
   const handleBathType = (bathType) => {
@@ -20,21 +25,32 @@ const PollScreen7 = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    if (selectedBathType) {
-      navigation.navigate("PollProfileScreen", {
-        gender,
-        fragrance,
-        texture,
-        design,
-        age,
-        frequency,
-        bathType: selectedBathType,
-      });
-    } else {
+    if (!selectedBathType) {
       Alert.alert(
         "Select Bath Type",
         "Please select the type of bath you prefer before proceeding."
       );
+    } else {
+      api
+        .post("usermanagement/adduserpoll", {
+          user_id: user.user.id,
+          gender: gender,
+          fragrance: fragrances,
+          // location: location,
+          // ingredients: ingredients,
+          texture: texture,
+          design: design,
+          age_bracket: age,
+          frequency: frequency,
+          bath_type: selectedBathType,
+        })
+        .then((response) => {
+          navigation.navigate("PollProfileScreen");
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     }
   };
 

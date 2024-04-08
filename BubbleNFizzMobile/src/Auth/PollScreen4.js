@@ -18,7 +18,7 @@ const PollScreen4 = () => {
   const route = useRoute();
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
-  const { gender, fragrance, location, ingredients, texture } = route.params;
+  const { gender, fragrances, location, ingredients, texture } = route.params;
 
   // Define Design with descriptions
   const designs = [
@@ -64,7 +64,7 @@ const PollScreen4 = () => {
     if (selectedDesign) {
       navigation.navigate("PollScreen5", {
         gender: gender,
-        fragrance: fragrance,
+        fragrance: fragrances,
         location: location,
         ingredients: ingredients,
         texture: texture,

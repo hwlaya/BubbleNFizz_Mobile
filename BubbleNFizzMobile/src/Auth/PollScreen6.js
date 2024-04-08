@@ -7,7 +7,7 @@ import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
 
 const PollScreen6 = ({ navigation, route }) => {
-  const { gender, fragrance, texture, design, age } = route.params;
+  const { gender, fragrances, texture, design, age } = route.params;
   const [selectedFrequency, setSelectedFrequency] = useState(null);
 
   const handleFrequency = (frequency) => {
@@ -23,7 +23,7 @@ const PollScreen6 = ({ navigation, route }) => {
     if (selectedFrequency) {
       navigation.navigate("PollScreen7", {
         gender,
-        fragrance,
+        fragrances,
         texture,
         design,
         age,

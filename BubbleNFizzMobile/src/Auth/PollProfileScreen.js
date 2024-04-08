@@ -9,16 +9,50 @@ import CustomInput from "../components/CustomInput";
 import CustomInputBirthday from "../components/CustomInputBirthday";
 import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
-import moment from "moment";
 
 const PollProfileScreen = () => {
   const navigation = useNavigation();
+
   const user = useContext(UserContext);
   const [birthday, setBirthday] = useState("");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [contactNumber, setContactNumber] = useState("");
+
+  const handlePrevious = () => {
+    navigation.goBack();
+  };
+
+  const handleNext = () => {
+    if (!birthday || !address || !city || !postalCode || !contactNumber) {
+      Alert.alert(
+        "Incomplete Profile",
+        "Please complete your profile before proceeding."
+      );
+    } else {
+      api
+        .post("usermanagement/adduserprofile", {
+          user_id: user.user.id,
+          birthday: birthday,
+          address: address,
+          city: city,
+          postal_code: postalCode,
+          contact_no: contactNumber,
+        })
+        .then((response) => {
+          Alert.alert(
+            "Results are in!",
+            "Thank you!! Your account is all set. You may now get the best deals our shop has to offer."
+          );
+          navigation.navigate("LoginScreen");
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    }
+  };
 
   return (
     <Background source={require("../assets/images/login_screen.png")}>
@@ -56,38 +90,14 @@ const PollProfileScreen = () => {
       <View style={styles.buttonContainer}>
         {/* Previous Button */}
         <NavigationButton
-          onPress={() => {
-            console.log("Previous Pressed");
-            navigation.navigate("PollScreen4");
-          }}
+          onPress={handlePrevious}
           text="Back"
           buttonColor="#EDBF47"
           style={styles.button}
         />
         {/* Next Button */}
         <NavigationButton
-          onPress={() => {
-            console.log("Next Pressed");
-            api
-              .post("usermanagement/adduserprofile", {
-                user_id: user.user.id,
-                birthday: birthday,
-                address: address,
-                city: city,
-                postal_code: postalCode,
-                contact_no: contactNumber,
-              })
-              .then((response) => {
-                Alert.alert(
-                  "Results are in!",
-                  "Thank you!! Your account is all set. You may now get the best deals our shop has to offer."
-                );
-                navigation.navigate("LoginScreen");
-              })
-              .catch((error) => {
-                console.log(error.response);
-              });
-          }}
+          onPress={handleNext}
           text="Next"
           buttonColor="#EDBF47"
           style={styles.button}

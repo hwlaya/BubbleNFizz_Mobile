@@ -25,7 +25,7 @@ const Checkout = ({ route }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   // ADDRESS
   const [address, setAddress] = useState(user.user.profile.address);
-  const [apartment, setApartment] = useState("House No. 1");
+  const [apartment, setApartment] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user.user.profile.contact_no);
   // SHIPPING METHOD
   const [delivery, setDelivery] = useState("PickUp");
@@ -41,7 +41,7 @@ const Checkout = ({ route }) => {
   const [mop, setMop] = useState("GCash");
   const [gcashFile, setGcashFile] = useState({}); // IF GCASH
 
-  const [selectedPaymentImage, setSelectedPaymentImage] = useState("");
+  const [selectedPaymentImage, setSelectedPaymentImage] = useState([]);
 
   // useEffect(() => {
   //   console.log(user);
@@ -149,7 +149,7 @@ const Checkout = ({ route }) => {
         order_phone_number: phoneNumber,
         order_shipping: delivery,
         payment: mop,
-        // payment_image: gcashFile,
+        payment_image: selectedPaymentImage,
         total_quantity: quantity,
         total_price: totalPrice,
         carts: JSON.stringify(carts),
@@ -158,6 +158,7 @@ const Checkout = ({ route }) => {
         Alert.alert("Order Submitted!", "Your order has been submitted!", [
           { text: "OK", onPress: () => navigation.navigate("IndexScreen") },
         ]);
+        console.log(response.data);
       })
       .catch((err) => {
         console.log(err.response);
@@ -207,6 +208,7 @@ const Checkout = ({ route }) => {
             mode="outlined"
             focused={true}
             style={{ marginTop: 10 }}
+            onChangeText={(text) => setApartment(text)}
           />
           <TextInput
             label="Phone Number"

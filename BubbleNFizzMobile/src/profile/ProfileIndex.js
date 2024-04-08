@@ -105,6 +105,10 @@ const ProfileIndex = () => {
             Birthday:{"  "}
             <Text style={{ color: "black" }}>{user.profile.birthday}</Text>
           </Text>
+          <Text style={styles.profileText}>
+            Gender:{"  "}
+            <Text style={{ color: "black" }}>{user.profile.gender}</Text>
+          </Text>
         </View>
       </View>
     </ImageBackground>
