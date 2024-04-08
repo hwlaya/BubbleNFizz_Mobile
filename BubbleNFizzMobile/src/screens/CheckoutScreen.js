@@ -39,7 +39,7 @@ const Checkout = ({ route }) => {
 
   // PAYMENT
   const [mop, setMop] = useState("GCash");
-  const [gcashFile, setGcashFile] = useState({}); // IF GCASH
+  const [gcashFile, setGcashFile] = useState([]); // IF GCASH
 
   const [selectedPaymentImage, setSelectedPaymentImage] = useState([]);
 
@@ -67,7 +67,7 @@ const Checkout = ({ route }) => {
         type: "image/jpeg",
         name: "image.jpg",
       };
-      setSelectedPaymentImage(image);
+      setGcashFile(image);
       setPaymentImageUri(result.assets[0].uri);
       const uriParts = result.assets[0].uri.split("/");
       const filename = uriParts[uriParts.length - 1];
@@ -133,7 +133,7 @@ const Checkout = ({ route }) => {
     formdata.append("order_shipping", delivery);
     formdata.append("payment", mop);
     if (mop == "GCash") {
-      formdata.append("payment_image", selectedPaymentImage);
+      formdata.append("payment_image", gcashFile);
     } else {
       formdata.append("payment_image", "");
     }
@@ -149,7 +149,7 @@ const Checkout = ({ route }) => {
         order_phone_number: phoneNumber,
         order_shipping: delivery,
         payment: mop,
-        payment_image: selectedPaymentImage,
+        payment_image: gcashFile,
         total_quantity: quantity,
         total_price: totalPrice,
         carts: JSON.stringify(carts),
@@ -164,6 +164,21 @@ const Checkout = ({ route }) => {
         console.log(err.response);
       });
   };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setAddress(null);
+      setApartment(null);
+      setPhoneNumber(null);
+      setDelivery(null);
+      setMop(null);
+      setPaymentImageStatus(false);
+      setPaymentImageUri("");
+      setPaymentImageName("");
+      setGcashFile([]);
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -196,10 +211,11 @@ const Checkout = ({ route }) => {
           />
           <TextInput
             label="Address"
-            value={user.user.profile.address}
+            value={address}
             mode="outlined"
             focused={true}
             style={{ marginTop: 10 }}
+            onChangeText={(value) => setAddress(value)}
           />
           <TextInput
             label="Apartment, Suite, etc."
@@ -208,7 +224,7 @@ const Checkout = ({ route }) => {
             mode="outlined"
             focused={true}
             style={{ marginTop: 10 }}
-            onChangeText={(text) => setApartment(text)}
+            onChangeText={(value) => setApartment(value)}
           />
           <TextInput
             label="Phone Number"
@@ -216,6 +232,7 @@ const Checkout = ({ route }) => {
             mode="outlined"
             focused={true}
             style={{ marginTop: 10 }}
+            onChangeText={(value) => setPhoneNumber(value)}
           />
         </View>
 
@@ -226,11 +243,11 @@ const Checkout = ({ route }) => {
             style={{
               borderRadius: 20,
               borderWidth: 2,
-              borderColor: delivery === "pickUp" ? "#EDBF47" : "black",
+              borderColor: delivery === "PickUp" ? "#EDBF47" : "black",
               padding: 10,
               marginBottom: 10,
             }}
-            onPress={() => setDelivery("pickUp")}
+            onPress={() => setDelivery("PickUp")}
           >
             <Text>Pick Up</Text>
             <Text>

@@ -142,7 +142,7 @@ const MyPurchases = () => {
                 },
               ]}
             >
-              Complete
+              Completed
             </Text>
           </TouchableRipple>
           <TouchableRipple
