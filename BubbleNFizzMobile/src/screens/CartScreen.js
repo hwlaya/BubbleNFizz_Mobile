@@ -6,7 +6,7 @@ import api from "../../config/api";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 const CartScreen = () => {
   const user = useContext(UserContext);
@@ -14,7 +14,6 @@ const CartScreen = () => {
   const [subTotal, setSubTotal] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [refresher, setRefresher] = useState(0);
-
   const navigation = useNavigation();
 
   // API to get cart of user
@@ -63,7 +62,7 @@ const CartScreen = () => {
                 setTotalQuantity={setTotalQuantity}
                 totalQuantity={totalQuantity}
                 subTotal={subTotal}
-                showQuantityControls={true} //prop for removing button
+                showQuantityControls={true}
               />
             );
           })

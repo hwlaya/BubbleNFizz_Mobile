@@ -13,7 +13,7 @@ import { Button, Divider, IconButton } from "react-native-paper";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Rating } from "react-native-ratings";
-import { UserContext, UserProvider } from "../providers/UserProvider";
+import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
 
 const ProductScreen = ({ route }) => {

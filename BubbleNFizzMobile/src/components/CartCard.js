@@ -20,7 +20,6 @@ const CartCard = ({
 }) => {
   const [quantity, setQuantity] = useState(cart.cart_quantity);
   const [totalPrice, setTotalPrice] = useState(cart.cart_price);
-
   console.log("Cart:", cart.cart_quantity);
 
   const subQuantity = () => {
@@ -38,14 +37,13 @@ const CartCard = ({
                   id: cart.id,
                 })
                 .then((response) => {
-                  setCarts(carts.filter((item) => item.id !== cart.id));
-                  setRefresher(refresher + 1);
                   Alert.alert("Item Removed!", "Item has been removed!", [
-                    {
-                      text: "OK",
-                      onPress: () => console.log("OK Pressed"),
-                    },
+                    { text: "OK", onPress: () => console.log("OK Pressed") },
                   ]);
+                })
+                .catch((error) => {
+                  setIsLoading(false);
+                  console.log(error);
                 });
             },
           },
@@ -65,7 +63,8 @@ const CartCard = ({
             Number(totalPrice) - Number(cart.product.product_price)
           );
           setSubTotal(Number(subTotal) - Number(cart.product.product_price));
-          setCarts(updatedCarts); // Update the carts state with the updatedCarts array
+          // Update the carts state with the updatedCarts array
+          setCarts((prevCarts) => prevCarts.filter((c) => c.id !== cart.id));
         })
         .catch((err) => {
           console.log(err.response);
@@ -102,7 +101,9 @@ const CartCard = ({
         }}
       >
         <Image
-          source={{ uri: `https://picsum.photos/100/100` }}
+          source={{
+            uri: `https://bubblenfizz-store.com/BubbleNFizz-main/public/image/products/${cart.product.product_images}`,
+          }}
           style={{ height: 100, width: 100 }}
         />
         <View style={{ flex: 1, marginLeft: 10 }}>

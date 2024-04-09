@@ -27,48 +27,48 @@ const IndexScreen = () => {
   const [pollProducts, setPollProducts] = useState([]);
 
   useEffect(() => {
-    // if (user == null) {
-    //   api
-    //     .get("shopping/getthreeproducts")
-    //     .then((response) => {
-    //       setProducts(response.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log("Error fetching three products:", err.response);
-    //     });
-    // } else {
-    //   api
-    //     .post("recommenditems", {
-    //       user_id: user.id,
-    //     })
-    //     .then((response) => {
-    //       setProducts(response.data);
-    //       console.log("Recommend items response:", response.data);
-    //     })
-    //     .catch((err) => {
-    //       console.log("Error recommending items:", err.response);
-    //     });
-    //   api
-    //     .post("usermanagement/getuserpoll", {
-    //       user_id: user.id,
-    //     })
-    //     .then((response) => {
-    //       const fragrance = response.data.fragrance;
-    //       api
-    //         .post("customerpollresult", {
-    //           product_scent: fragrance,
-    //         })
-    //         .then((response) => {
-    //           setPollProducts(response.data);
-    //         })
-    //         .catch((err) => {
-    //           console.log("Error getting user poll result:", err.response);
-    //         });
-    //     })
-    //     .catch((err) => {
-    //       console.log("Error getting user poll:", err.response);
-    //     });
-    // }
+    if (user == null) {
+      api
+        .get("shopping/getthreeproducts")
+        .then((response) => {
+          setProducts(response.data);
+        })
+        .catch((err) => {
+          console.log("Error fetching three products:", err.response);
+        });
+    } else {
+      api
+        .post("recommenditems", {
+          user_id: user.id,
+        })
+        .then((response) => {
+          setProducts(response.data);
+          console.log("Recommend items response:", response.data);
+        })
+        .catch((err) => {
+          console.log("Error recommending items:", err.response);
+        });
+      api
+        .post("usermanagement/getuserpoll", {
+          user_id: user.id,
+        })
+        .then((response) => {
+          const fragrance = response.data.fragrance;
+          api
+            .post("customerpollresult", {
+              product_scent: fragrance,
+            })
+            .then((response) => {
+              setPollProducts(response.data);
+            })
+            .catch((err) => {
+              console.log("Error getting user poll result:", err.response);
+            });
+        })
+        .catch((err) => {
+          console.log("Error getting user poll:", err.response);
+        });
+    }
 
     api
       .get("shopping/getbestsellers")

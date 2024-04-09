@@ -67,13 +67,10 @@ const AllProductsPage = () => {
             data={products}
             renderItem={({ item }) => (
               <RenderProductsCard
-                title={String(item.product_details.product_name).replace(
-                  "Bubble N Fizz",
-                  ""
-                )}
-                price={item.product_details.product_price}
-                rating={item.product_details.product_rating}
-                scentName={item.product_details.product_scent_name}
+                title={String(item.product_name).replace("Bubble N Fizz", "")}
+                price={item.product_price}
+                rating={item.product_rating}
+                scentName={item.product_scent_name}
                 onPress={() => {
                   console.log("Product", item);
                   navigation.navigate("ProductScreen", {
@@ -82,7 +79,7 @@ const AllProductsPage = () => {
                   });
                 }}
                 sales={item.product_sales}
-                image={item.product_details.product_images}
+                image={item.product_images}
               />
             )}
             keyExtractor={(item) => item.id}

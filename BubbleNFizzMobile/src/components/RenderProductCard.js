@@ -13,7 +13,15 @@ import { Rating } from "react-native-ratings";
 
 const windowWidth = Dimensions.get("window").width;
 
-const RenderProductCard = ({ title, scentName, rating, price, onPress }) => {
+const RenderProductCard = ({
+  title,
+  scentName,
+  rating,
+  price,
+  onPress,
+  sales,
+  image,
+}) => {
   const navigation = useNavigation();
 
   const data = [
@@ -29,9 +37,10 @@ const RenderProductCard = ({ title, scentName, rating, price, onPress }) => {
     return (
       <TouchableOpacity onPress={onPress}>
         <View style={[styles.card, { width: windowWidth / 2 - 20 }]}>
-          {/* <Image source={item.productImage} style={styles.productImage} />   */}
           <Image
-            source={require("../assets/images/bestseller1.jpg")}
+            source={{
+              uri: `https://bubblenfizz-store.com/BubbleNFizz-main/public/image/products/${image}`,
+            }}
             style={styles.productImage}
           />
           <Text numberOfLines={2} style={styles.productName}>

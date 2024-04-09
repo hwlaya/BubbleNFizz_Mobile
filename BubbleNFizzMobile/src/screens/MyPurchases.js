@@ -195,7 +195,7 @@ const MyPurchases = () => {
       {/* DISPLAY */}
       <View>
         {page === "Pending" ? (
-          <ScrollView>
+          <ScrollView style={{ marginBottom: 150 }}>
             {data.length > 0 ? (
               data.map((item, index) => {
                 // console.log(item.order_status);
