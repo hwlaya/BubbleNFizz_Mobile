@@ -16,35 +16,65 @@ import { Rating } from "react-native-ratings";
 import { UserContext, UserProvider } from "../providers/UserProvider";
 import api from "../../config/api";
 
-const ProductScreen = ({ route }) => {
-  const { product, productId } = route.params;
+const ProductScreen = ({ id }) => {
   const navigation = useNavigation();
   const user = useContext(UserContext);
-
+  const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(product.product_price);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [userReviews, setUserReviews] = useState([]);
 
-  // useEffect(() => {
-  //   console.log(
-  //     "From best seller scrennnn",
-  //     product.product_details.product_price
-  //   );
-  // }, []);
+  useEffect(() => {
+    api
+      .get(`shopping/getproduct?id=${id}`)
+      .then((response) => {
+        setProduct(response.data);
+        console.log(response.data);
+        setTotalPrice(response.data.product_price);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+    api
+      .get(`shopping/getproductreviews?product_id=${id}`)
+      .then((response) => {
+        setUserReviews(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    if (user) {
+      api.post("shopping/addrecentview", {
+        user_id: user.user.id,
+        product_id: id,
+      });
+    }
+  }, []);
 
   // Subtract Logic
   const subQuantity = () => {
-    if (quantity > 1) {
+    if (quantity == 1) {
+      Alert.alert("Oops...", "Quantity should not be lower than 1", [
+        { text: "OK" },
+      ]);
+    } else {
       setQuantity(quantity - 1);
-      setTotalPrice(Number(product.product_price) * (quantity - 1));
+      setTotalPrice(Number(totalPrice) - Number(product.product_price));
     }
   };
   // add Logic
-  const addQuantity = () => {
-    setQuantity(quantity + 1);
-    setTotalPrice(Number(product.product_price) * (quantity + 1));
+  const addQuantity = (stock) => {
+    if (quantity >= stock) {
+      Alert.alert("Oops...", "Quantity should not exceed the stock amount!", [
+        { text: "OK" },
+      ]);
+    } else {
+      setQuantity(quantity + 1);
+      setTotalPrice(Number(totalPrice) + Number(product.product_price));
+    }
   };
   //submit review api
   const submitReview = () => {
@@ -114,7 +144,11 @@ const ProductScreen = ({ route }) => {
           }}
         />
         <Image
-          source={require("../assets/images/product1.jpg")}
+          source={{
+            uri: decodeURI(
+              `https://bubblenfizz-store.com/BubbleNFizz-main/public/image/products/${product.product_images}`
+            ),
+          }}
           style={styles.productImage}
         />
 
@@ -187,7 +221,11 @@ const ProductScreen = ({ route }) => {
           <View style={styles.divider} />
 
           {/* Change to reusable component the reviews */}
-          <Text style={styles.productDescription}>Product Description</Text>
+          <Text style={styles.productDescription}>Description</Text>
+          <Text style={styles.productDescription}>
+            {" "}
+            {String(product.product_description).replace(/~/g, "\n")}
+          </Text>
         </View>
       </View>
     </ScrollView>

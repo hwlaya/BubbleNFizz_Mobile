@@ -22,16 +22,19 @@ const CheckOutCard = ({ cart, isCart = true }) => {
     //   </View>
     // </View>
 
-    <View>
+    <View style={styles.container}>
       <Image
-        source={{ uri: "https://picsum.photos/500/300" }}
+        source={{
+          uri: decodeURI(
+            `https://bubblenfizz-store.com/BubbleNFizz-main/public/image/products/${cart.product.product_images}`
+          ),
+        }}
         style={styles.image}
       />
-      <Text>
+      <Text numberOfLines={4} style={styles.productName}>
         {cart.product.product_name} ({cart.product.product_scent_name})
       </Text>
-
-      <Text style={[styles.price]}>
+      <Text style={styles.price}>
         ₱{isCart ? cart.cart_price : cart.order_price}
       </Text>
     </View>
@@ -40,22 +43,27 @@ const CheckOutCard = ({ cart, isCart = true }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
-    marginVertical: 6,
-  },
-  imageContainer: {
-    flex: 3,
-    justifyContent: "center",
+    flexDirection: "row",
     alignItems: "center",
-    height: "100%",
+    margin: 8,
+    width: "95%", // Adjust the width as needed
+    borderWidth: 1.5,
+    borderColor: "gray",
+    borderRadius: 10,
+  },
+  productName: {
+    fontFamily: "Inconsolata-SemiBold",
+    textAlign: "left",
+    paddingLeft: 10,
+    marginBottom: "auto", // Add vertical space
+    fontSize: 14,
+    width: 260, // Set a fixed width for the product name
   },
   image: {
     height: 100,
     width: 100,
-  },
-  textContainer: {
-    flex: 6,
-    justifyContent: "space-between",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   text: {
     fontSize: 16,
@@ -67,7 +75,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   price: {
-    fontSize: 16,
+    position: "absolute",
+    bottom: 3,
+    right: 5,
   },
 });
 

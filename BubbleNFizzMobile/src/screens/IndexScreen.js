@@ -17,35 +17,77 @@ import { Button, Divider } from "react-native-paper";
 import api from "../../config/api";
 import { UserContext } from "../providers/UserProvider";
 
-const IndexScreen = (props) => {
+const IndexScreen = () => {
   const user = useContext(UserContext);
 
   const navigation = useNavigation();
   const [products, setProducts] = useState([]);
   const [bestProducts, setBestProducts] = useState([]);
-  const [ThreeProduct, setThreeProduct] = useState([]);
+  const [similarProducts, setSimilarProducts] = useState([]);
+  const [pollProducts, setPollProducts] = useState([]);
 
   useEffect(() => {
-    api
-      .post("recommenditems", {
-        user_id: user.user.id,
-      })
-      .then((response) => {
-        setProducts(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    // if (user == null) {
+    //   api
+    //     .get("shopping/getthreeproducts")
+    //     .then((response) => {
+    //       setProducts(response.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log("Error fetching three products:", err.response);
+    //     });
+    // } else {
+    //   api
+    //     .post("recommenditems", {
+    //       user_id: user.id,
+    //     })
+    //     .then((response) => {
+    //       setProducts(response.data);
+    //       console.log("Recommend items response:", response.data);
+    //     })
+    //     .catch((err) => {
+    //       console.log("Error recommending items:", err.response);
+    //     });
+    //   api
+    //     .post("usermanagement/getuserpoll", {
+    //       user_id: user.id,
+    //     })
+    //     .then((response) => {
+    //       const fragrance = response.data.fragrance;
+    //       api
+    //         .post("customerpollresult", {
+    //           product_scent: fragrance,
+    //         })
+    //         .then((response) => {
+    //           setPollProducts(response.data);
+    //         })
+    //         .catch((err) => {
+    //           console.log("Error getting user poll result:", err.response);
+    //         });
+    //     })
+    //     .catch((err) => {
+    //       console.log("Error getting user poll:", err.response);
+    //     });
+    // }
 
     api
       .get("shopping/getbestsellers")
       .then((response) => {
         setBestProducts(response.data);
-        console.log("get best products", response.data);
+        console.log("Bestsellers response:", response.data);
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log("Error fetching bestsellers:", err.response);
+      });
+
+    api
+      .get("shopping/similarproducts")
+      .then((response) => {
+        setSimilarProducts(response.data);
+        console.log("Similar Products response:", response.data);
+      })
+      .catch((err) => {
+        console.log("Error fetching similar products:", err.response);
       });
   }, []);
 
@@ -67,16 +109,93 @@ const IndexScreen = (props) => {
       {/* Products- Recommended */}
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>RECOMMENDED—</Text>
+        <Text style={[styles.categoryText, { color: "gray", fontSize: 12 }]}>
+          Here are the products that other users are buying!
+        </Text>
       </View>
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
           {products.map((item, index) => {
+            if (index < 6) {
+              return (
+                // Reusable component for displaying Products
+                <RenderCard
+                  key={index}
+                  item={item}
+                  title={String(item.product_name).replace("Bubble N Fizz", "")}
+                  price={item.product_price}
+                  rating={item.product_rating}
+                  scentName={item.product_scent_name}
+                  onPress={() => {
+                    console.log("Productsssssssssssssssssssss", item);
+                    navigation.navigate("ProductScreen", {
+                      product: item,
+                      productId: item.id,
+                    });
+                  }}
+                  sales={item.category.product_sales}
+                  image={item.product_images}
+                />
+              );
+            }
+          })}
+        </View>
+      </ScrollView>
+
+      {/* Products- Poll */}
+      <View style={styles.categoryContainer}>
+        <Text style={styles.categoryText}>POLL RESULTS—</Text>
+        <Text style={[styles.categoryText, { color: "gray", fontSize: 12 }]}>
+          Here are the products that your poll result has generated!
+        </Text>
+      </View>
+
+      <ScrollView horizontal={true} style={styles.cardContainer}>
+        <View style={styles.productContainer}>
+          {pollProducts.map((item, index) => {
+            if (index < 6) {
+              return (
+                // Reusable component for displaying Products
+                <RenderCard
+                  key={index}
+                  item={item}
+                  title={String(item.product_name).replace("Bubble N Fizz", "")}
+                  price={item.product_price}
+                  rating={item.product_rating}
+                  scentName={item.product_scent_name}
+                  onPress={() => {
+                    console.log("Poll Productss", item);
+                    navigation.navigate("ProductScreen", {
+                      product: item,
+                      productId: item.id,
+                    });
+                  }}
+                  sales={item.category.product_sales}
+                  image={item.product_images}
+                />
+              );
+            }
+          })}
+        </View>
+      </ScrollView>
+
+      {/* Products- Similar Products */}
+      <View style={styles.categoryContainer}>
+        <Text style={styles.categoryText}>SIMILAR PRODUCTS YOU LIKE—</Text>
+        <Text style={[styles.categoryText, { color: "gray", fontSize: 12 }]}>
+          Here are the products that other users are checking out!
+        </Text>
+      </View>
+
+      <ScrollView horizontal={true} style={styles.cardContainer}>
+        <View style={styles.productContainer}>
+          {similarProducts.map((item, index) => {
             return (
               // Reusable component for displaying Products
               <RenderCard
                 key={index}
                 item={item}
-                title={item.product_name}
+                title={String(item.product_name).replace("Bubble N Fizz", "")}
                 price={item.product_price}
                 rating={item.product_rating}
                 scentName={item.product_scent_name}
@@ -87,11 +206,14 @@ const IndexScreen = (props) => {
                     productId: item.id,
                   });
                 }}
+                sales={item.category.product_sales}
+                image={item.product_images}
               />
             );
           })}
         </View>
       </ScrollView>
+
       <Divider style={styles.divider} />
       <View style={styles.sliderContainer}>
         <Slider
@@ -107,6 +229,9 @@ const IndexScreen = (props) => {
       {/* Products- Best Sellers  */}
       <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>BEST SELLERS—</Text>
+        <Text style={[styles.categoryText, { color: "gray", fontSize: 12 }]}>
+          Here are the best selling products!
+        </Text>
       </View>
       <ScrollView horizontal={true} style={styles.cardContainer}>
         <View style={styles.productContainer}>
@@ -145,9 +270,9 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "left",
     padding: 12,
   },
   productContainer: {

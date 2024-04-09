@@ -192,10 +192,6 @@ const MyPurchases = () => {
         </ScrollView>
       </View>
       <View style={style.divider} />
-      <View>
-        <Text>My Orders</Text>
-      </View>
-
       {/* DISPLAY */}
       <View>
         {page === "Pending" ? (
@@ -211,7 +207,6 @@ const MyPurchases = () => {
                           Order# {item.id} (₱{item.total_price}){" "}
                         </Text>
                       </View>
-                      <Text>To Pay</Text>
                       {item.order_items.map((item, index) => {
                         return (
                           <CheckOutCard

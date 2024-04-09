@@ -4,14 +4,24 @@ import { useNavigation } from "@react-navigation/native";
 import api from "../../config/api";
 import { Rating } from "react-native-ratings";
 
-const RenderCard = ({ title, scentName, rating, price, onPress }) => {
+const RenderCard = ({
+  title,
+  scentName,
+  rating,
+  price,
+  onPress,
+  sales,
+  image,
+}) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.card}>
         {/* Product Image */}
         <Image
-          source={require("../assets/images/product1.jpg")}
+          source={{
+            uri: `https://bubblenfizz-store.com/BubbleNFizz-main/public/image/products/${image}`,
+          }}
           style={styles.productImage}
         />
         <View style={styles.textContainer}>
@@ -33,8 +43,10 @@ const RenderCard = ({ title, scentName, rating, price, onPress }) => {
             {scentName}
           </Text>
 
-          {/* Product Price */}
-          <Text style={styles.productPrice}>₱{price}</Text>
+          {/* Product Sales */}
+          <Text style={styles.productSales}>Sold: {sales} </Text>
+
+          {/* Product Rating */}
           <Rating
             type="star"
             value={Number(rating)}
@@ -42,6 +54,11 @@ const RenderCard = ({ title, scentName, rating, price, onPress }) => {
             readonly
             precision={0.1}
           />
+
+          {/* Product Price */}
+          <Text style={[styles.productPrice, { paddingTop: 16 }]}>
+            ₱{price}
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -54,17 +71,18 @@ const styles = StyleSheet.create({
     padding: 16,
     margin: 10,
     width: 300,
-    height: 350, // Set a fixed height
+    height: 450, // Set a fixed height
     justifyContent: "center", // Center contents horizontally
     alignItems: "center", // Center contents vertically
+    // borderWidth: 1, // Keep the same border width
   },
   productImage: {
     width: 250,
     height: 250,
-    marginBottom: 10,
-    borderWidth: 12, // Keep the same border width
+    marginBottom: 6,
+    borderWidth: 4, // Keep the same border width
     borderColor: "#D7D1D1",
-    padding: 10, // Add padding to create space between image and border
+    padding: 12, // Add padding to create space between image and border
   },
   textContainer: {
     height: 110, // Set a fixed height for the text container
@@ -75,15 +93,23 @@ const styles = StyleSheet.create({
   productName: {
     fontFamily: "Inconsolata-SemiBold",
     textAlign: "center",
+    marginBottom: 8, // Add vertical space
+    fontSize: 16,
   },
   productScentName: {
-    marginBottom: 8, // Add vertical space
-    fontFamily: "Inconsolata-Light",
+    fontFamily: "Inconsolata-Regular",
+    fontSize: 16,
   },
   productPrice: {
     color: "black",
     textDecorationLine: "underline", // Add underline
     fontFamily: "Inconsolata-Bold",
+    fontSize: 16,
+  },
+  productSales: {
+    color: "black",
+    fontFamily: "Inconsolata-Light",
+    fontSize: 12,
   },
 });
 
