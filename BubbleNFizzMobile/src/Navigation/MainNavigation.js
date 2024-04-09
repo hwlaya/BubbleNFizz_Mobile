@@ -146,9 +146,9 @@ const Drawerstack = () => {
           header: () => <HomeHeader />,
         }}
       />
+      <DrawerStackNav.Screen name="ProductScreen" component={ProductScreen} />
       <DrawerStackNav.Screen name="CartScreen" component={CartScreen} />
       <DrawerStackNav.Screen name="CheckoutScreen" component={CheckoutScreen} />
-      <DrawerStackNav.Screen name="ProductScreen" component={ProductScreen} />
       <DrawerStackNav.Screen
         name="AllProductsPage"
         component={AllProductsPage}

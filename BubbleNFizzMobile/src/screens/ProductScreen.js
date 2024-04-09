@@ -20,84 +20,65 @@ const ProductScreen = ({ route }) => {
   const { id, product } = route.params;
   const navigation = useNavigation();
   const user = useContext(UserContext);
-  // const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const [userReviews, setUserReviews] = useState([]);
 
-  useEffect(() => {
-    console.log(id);
-    api
-      .get(`shopping/getproduct?id=${id}`)
-      .then((response) => {
-        setProduct(response.data);
-        console.log(response.data);
-        setTotalPrice(response.data.product_price);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+  // //submit review api
+  // const submitReview = () => {
+  //   api
+  //     .post("/shopping/addreview", {
+  //       user_id: user.id,
+  //       product_id: product.id,
+  //       product_rating: rating,
+  //       product_description: review,
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       Alert.alert("Review Added!", "Your review has been added!", [
+  //         { text: "OK", onPress: () => setReview("") },
+  //       ]);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //       Alert.alert("Error", "An error occurred while adding the review.");
+  //     });
+  // };
 
-    api
-      .get(`shopping/getproductreviews?product_id=${id}`)
-      .then((response) => {
-        setUserReviews(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-    if (user) {
-      api.post("shopping/addrecentview", {
-        user_id: user.user.id,
-        product_id: id,
-      });
+  const addQuantity = () => {
+    if (quantity < product.product_stock) {
+      setQuantity((prevQuantity) => Number(prevQuantity) + 1);
+      setTotalPrice(
+        (prevTotalPrice) =>
+          Number(prevTotalPrice) + Number(product.product_price)
+      ); // Update Total Price
+    } else {
+      Alert.alert("Error", "Exceeded stock amount");
     }
-  }, []);
+  };
 
-  // Subtract Logic
   const subQuantity = () => {
-    if (quantity == 1) {
-      Alert.alert("Oops...", "Quantity should not be lower than 1", [
-        { text: "OK" },
-      ]);
+    if (quantity > 1) {
+      setQuantity((prevQuantity) => Number(prevQuantity) - 1);
+      setTotalPrice(
+        (prevTotalPrice) =>
+          Number(prevTotalPrice) - Number(product.product_price)
+      ); // Update Total Price
     } else {
-      setQuantity(quantity - 1);
-      setTotalPrice(Number(totalPrice) - Number(product.product_price));
+      Alert.alert("Error", "Quantity cannot be lower than 1");
     }
   };
-  // add Logic
-  const addQuantity = (stock) => {
-    if (quantity >= stock) {
-      Alert.alert("Oops...", "Quantity should not exceed the stock amount!", [
-        { text: "OK" },
-      ]);
-    } else {
-      setQuantity(quantity + 1);
-      setTotalPrice(Number(totalPrice) + Number(product.product_price));
-    }
-  };
-  //submit review api
-  const submitReview = () => {
-    api
-      .post("/shopping/addreview", {
-        user_id: user.id,
-        product_id: product.id,
-        product_rating: rating,
-        product_description: review,
-      })
-      .then((response) => {
-        console.log(response.data);
-        Alert.alert("Review Added!", "Your review has been added!", [
-          { text: "OK", onPress: () => setReview("") },
-        ]);
-      })
-      .catch((error) => {
-        console.error(error);
-        Alert.alert("Error", "An error occurred while adding the review.");
-      });
-  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setQuantity(1); // Reset quantity to 1 when the screen is focused
+      setTotalPrice(Number(product.product_price)); // Reset Total Price based on the product price
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   //add to cart API
   const addToCart = () => {
@@ -166,7 +147,11 @@ const ProductScreen = ({ route }) => {
             {/* Product Scent */}
             <Text
               style={[
-                { fontFamily: "LexendExa-ExtraLight", textAlign: "right" },
+                {
+                  fontFamily: "LexendExa-ExtraLight",
+                  textAlign: "right",
+                  marginTop: 10,
+                },
               ]}
             >
               Scent:
@@ -246,6 +231,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     backgroundColor: "white",
+    marginTop: 30,
   },
   productImage: {
     width: "100%",
@@ -265,16 +251,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginVertical: 10,
     fontFamily: "LexendExa-ExtraLight",
+    textAlign: "justify",
   },
   backButton: {
     position: "absolute",
-    top: 40,
+    top: 10,
     left: 10,
     zIndex: 1,
   },
   cartButton: {
     position: "absolute",
-    top: 35,
+    top: 10,
     right: 10,
     zIndex: 1,
   },
@@ -282,6 +269,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignContent: "space-between",
     padding: 10,
+    width: "100%",
   },
   divider: {
     width: "100%",

@@ -200,7 +200,7 @@ const IndexScreen = () => {
                 rating={item.product_rating}
                 scentName={item.product_scent_name}
                 onPress={() => {
-                  console.log("Productsssssssssssssssssssss", item);
+                  console.log("Productss", item);
                   navigation.navigate("ProductScreen", {
                     product: item,
                     productId: item.id,
