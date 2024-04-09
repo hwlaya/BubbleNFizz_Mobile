@@ -64,7 +64,7 @@ const Checkout = ({ route }) => {
       console.log("uri:", result.uri);
       const image = {
         uri: result.uri,
-        type: "image/jpeg",
+        type: "multipart",
         name: "image.jpg",
       };
       setGcashFile(image);
@@ -123,7 +123,6 @@ const Checkout = ({ route }) => {
     }
   }, [subTotalPrice, delivery]);
 
-  // API TO SUBMIT ORDER
   const onSubmitOrder = () => {
     const formdata = new FormData();
     formdata.append("user_id", user.user.id);
@@ -134,34 +133,30 @@ const Checkout = ({ route }) => {
     formdata.append("payment", mop);
     if (mop == "GCash") {
       formdata.append("payment_image", gcashFile);
-    } else {
-      formdata.append("payment_image", "");
-    }
+    } //  else {
+    //   formdata.append("payment_image", "");
+    // }
     formdata.append("total_quantity", quantity);
     formdata.append("total_price", totalPrice);
     // formdata.append("carts", JSON.stringify(carts));
     console.log("Formdataaaaa", formdata);
+
+    // API TO SUBMIT ORDER
     api
-      .post("shopping/submitorder", {
-        user_id: user.user.id,
-        order_address: address,
-        order_apartment: apartment,
-        order_phone_number: phoneNumber,
-        order_shipping: delivery,
-        payment: mop,
-        payment_image: gcashFile,
-        total_quantity: quantity,
-        total_price: totalPrice,
-        carts: JSON.stringify(carts),
+      .post(`shopping/submitorder`, formdata, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((response) => {
         Alert.alert("Order Submitted!", "Your order has been submitted!", [
           { text: "OK", onPress: () => navigation.navigate("IndexScreen") },
         ]);
-        console.log(response.data);
+        console.log("Formdata", response.data);
       })
-      .catch((err) => {
-        console.log(err.response);
+      .catch((error) => {
+        console.log("Error", error.response);
+        Alert.alert("Error", "An error occurred while adding the review.");
       });
   };
 
