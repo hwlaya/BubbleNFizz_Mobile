@@ -14,8 +14,23 @@ import RenderProductsCard from "../components/RenderProductCard";
 
 const AllProductsPage = () => {
   const [products, setProducts] = useState([]);
+  const [sort, setSort] = useState("");
+  const [active, setActive] = useState("%%");
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+
+  useEffect(() => {
+    api
+      .get(`shopping/getpaymentproduct?category=${active}&sort=${sort}`)
+      .then((response) => {
+        setProducts(response.data);
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    console.log(sort);
+  }, [active]);
 
   useEffect(() => {
     api
@@ -52,10 +67,13 @@ const AllProductsPage = () => {
             data={products}
             renderItem={({ item }) => (
               <RenderProductsCard
-                title={item.product_name}
-                price={item.product_price}
-                rating={item.product_rating}
-                scentName={item.product_scent_name}
+                title={String(item.product_details.product_name).replace(
+                  "Bubble N Fizz",
+                  ""
+                )}
+                price={item.product_details.product_price}
+                rating={item.product_details.product_rating}
+                scentName={item.product_details.product_scent_name}
                 onPress={() => {
                   console.log("Product", item);
                   navigation.navigate("ProductScreen", {
@@ -63,6 +81,8 @@ const AllProductsPage = () => {
                     productId: item.id,
                   });
                 }}
+                sales={item.product_sales}
+                image={item.product_details.product_images}
               />
             )}
             keyExtractor={(item) => item.id}

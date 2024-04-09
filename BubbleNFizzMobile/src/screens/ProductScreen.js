@@ -16,10 +16,11 @@ import { Rating } from "react-native-ratings";
 import { UserContext, UserProvider } from "../providers/UserProvider";
 import api from "../../config/api";
 
-const ProductScreen = ({ id }) => {
+const ProductScreen = ({ route }) => {
+  const { id, product } = route.params;
   const navigation = useNavigation();
   const user = useContext(UserContext);
-  const [product, setProduct] = useState({});
+  // const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [rating, setRating] = useState(0);
@@ -27,6 +28,7 @@ const ProductScreen = ({ id }) => {
   const [userReviews, setUserReviews] = useState([]);
 
   useEffect(() => {
+    console.log(id);
     api
       .get(`shopping/getproduct?id=${id}`)
       .then((response) => {
@@ -128,106 +130,112 @@ const ProductScreen = ({ id }) => {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={styles.backButton}
-        >
-          <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
-        </TouchableOpacity>
-        <IconButton
-          style={styles.cartButton}
-          icon="shopping"
-          onPress={() => {
-            console.log("Shopping icon pressed");
-            navigation.navigate("CartScreen");
-          }}
-        />
-        <Image
-          source={{
-            uri: decodeURI(
-              `https://bubblenfizz-store.com/BubbleNFizz-main/public/image/products/${product.product_images}`
-            ),
-          }}
-          style={styles.productImage}
-        />
-
-        {/* Product Info */}
-        <View style={styles.productInfoContainer}>
-          {/* Product Price */}
-          <Text style={styles.productPrice}>₱{product.product_price}</Text>
-          {/* Product Name */}
-          <Text style={styles.productName}>{product.product_name}</Text>
-          {/* Product Scent */}
-          <Text
-            style={[{ fontFamily: "LexendExa-ExtraLight", textAlign: "right" }]}
+      {Object.keys(product).length === 0 ? (
+        <Text>Loading...</Text>
+      ) : (
+        <View style={styles.container}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={styles.backButton}
           >
-            Scent:
-            {product.product_scent_name}
-          </Text>
-        </View>
-        {/* Divider */}
-        <View
-          style={{
-            width: "100%",
-            height: 1,
-            backgroundColor: "black",
-            marginVertical: 10,
-          }}
-        />
-        {/* Quantity */}
-        <View style={styles.productInfo}>
-          <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
-            Quantity:{" "}
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <TouchableOpacity onPress={subQuantity}>
-              <AntDesign name="minussquare" size={40} color="black" />
-            </TouchableOpacity>
-
-            <View style={styles.quantityText}>
-              <Text
-                style={{
-                  borderWidth: 1,
-                  borderColor: "black",
-                  padding: 6,
-                  paddingHorizontal: 10,
-                }}
-              >
-                {quantity}
-              </Text>
-            </View>
-            <TouchableOpacity onPress={addQuantity}>
-              <AntDesign name="plussquare" size={40} color="black" />
-            </TouchableOpacity>
-          </View>
-          <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
-            Total Price: ₱{totalPrice}
-          </Text>
-          <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
-            Stock: {product.product_stock}
-          </Text>
-          <Button style={styles.button} mode="contained" onPress={addToCart}>
-            Add to Cart
-          </Button>
-          <Rating
-            type="star"
-            value={rating}
-            imageSize={20}
-            readonly
-            precision={0.1}
+            <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
+          </TouchableOpacity>
+          <IconButton
+            style={styles.cartButton}
+            icon="shopping"
+            onPress={() => {
+              console.log("Shopping icon pressed");
+              navigation.navigate("CartScreen");
+            }}
+          />
+          <Image
+            source={{
+              uri: decodeURI(
+                `https://bubblenfizz-store.com/BubbleNFizz-main/public/image/products/${product.product_images}`
+              ),
+            }}
+            style={styles.productImage}
           />
 
-          <View style={styles.divider} />
+          {/* Product Info */}
+          <View style={styles.productInfoContainer}>
+            {/* Product Price */}
+            <Text style={styles.productPrice}>₱{product.product_price}</Text>
+            {/* Product Name */}
+            <Text style={styles.productName}>{product.product_name}</Text>
+            {/* Product Scent */}
+            <Text
+              style={[
+                { fontFamily: "LexendExa-ExtraLight", textAlign: "right" },
+              ]}
+            >
+              Scent:
+              {product.product_scent_name}
+            </Text>
+          </View>
+          {/* Divider */}
+          <View
+            style={{
+              width: "100%",
+              height: 1,
+              backgroundColor: "black",
+              marginVertical: 10,
+            }}
+          />
+          {/* Quantity */}
+          <View style={styles.productInfo}>
+            <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
+              Quantity:{" "}
+            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <TouchableOpacity onPress={subQuantity}>
+                <AntDesign name="minussquare" size={40} color="black" />
+              </TouchableOpacity>
 
-          {/* Change to reusable component the reviews */}
-          <Text style={styles.productDescription}>Description</Text>
-          <Text style={styles.productDescription}>
-            {" "}
-            {String(product.product_description).replace(/~/g, "\n")}
-          </Text>
+              <View style={styles.quantityText}>
+                <Text
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "black",
+                    padding: 6,
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  {quantity}
+                </Text>
+              </View>
+              <TouchableOpacity onPress={addQuantity}>
+                <AntDesign name="plussquare" size={40} color="black" />
+              </TouchableOpacity>
+            </View>
+            <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
+              Total Price: ₱{totalPrice}
+            </Text>
+            <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
+              Stock: {product.product_stock}
+            </Text>
+            <Button style={styles.button} mode="contained" onPress={addToCart}>
+              Add to Cart
+            </Button>
+            <Rating
+              type="star"
+              value={rating}
+              imageSize={20}
+              readonly
+              precision={0.1}
+            />
+
+            <View style={styles.divider} />
+
+            {/* Change to reusable component the reviews */}
+            <Text style={styles.productDescription}>Description</Text>
+            <Text style={styles.productDescription}>
+              {" "}
+              {String(product.product_description).replace(/~/g, "\n")}
+            </Text>
+          </View>
         </View>
-      </View>
+      )}
     </ScrollView>
   );
 };
