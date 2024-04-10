@@ -77,10 +77,9 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response.data);
           setLoading(false);
-          if (response.data.success == "true") {
+          if (response.data.success) {
             console.log(response.data);
             user.user = response.data.user;
-            user.userProfile = response.data.user_profile;
             Alert.alert(
               "Success!",
               "You have successfully edited your profile"
@@ -108,10 +107,9 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response.data);
         setLoading(false);
-        if (response.data.success == "true") {
+        if (response.data.success) {
           console.log(response.data);
           user.user = response.data.user;
-          user.userProfile = response.data.user_profile;
           Alert.alert("Success!", "You have successfully edited your profile");
         }
       })
@@ -129,10 +127,10 @@ const EditProfile = () => {
     } else {
       // Send a request to update the user's password
       const newPasswordData = {
-        user_id: user.user.id,
+        id: user.user.id,
         newPassword: nPassword, // current pass
-        currPassword: cPassword, //new pass
-        // confPassword: cPassword, //confirm
+        currPassword: password, // new pass
+        // confPassword: cPassword, // confirm
       };
 
       console.log(newPasswordData);

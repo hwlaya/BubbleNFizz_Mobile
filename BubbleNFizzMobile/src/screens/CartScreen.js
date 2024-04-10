@@ -38,7 +38,32 @@ const CartScreen = () => {
       .catch((err) => {
         console.log(err.response);
       });
-  }, []);
+
+    const unsubscribe = navigation.addListener("focus", () => {
+      api
+        .get(`shopping/getusercart?user_id=${user.user.id}`)
+        .then((response) => {
+          // handles math logic
+          console.log("Laman ng Carts", response.data);
+          const carts = response.data;
+          console.log("carts", carts);
+          let tempTotal = 0;
+          let tempQuantity = 0;
+          carts.map((item) => {
+            tempTotal += Number(item.cart_price);
+            tempQuantity += Number(item.cart_quantity);
+          });
+          setSubTotal(tempTotal);
+          setTotalQuantity(tempQuantity);
+          setCarts(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    });
+
+    return unsubscribe;
+  }, [refresher, navigation]);
 
   return (
     <View style={styles.container}>
@@ -63,6 +88,8 @@ const CartScreen = () => {
                 totalQuantity={totalQuantity}
                 subTotal={subTotal}
                 showQuantityControls={true}
+                refresher={refresher}
+                setRefresher={setRefresher}
               />
             );
           })

@@ -17,6 +17,8 @@ const CartCard = ({
   subTotal,
   totalQuantity,
   showQuantityControls,
+  refresher,
+  setRefresher,
 }) => {
   const [quantity, setQuantity] = useState(cart.cart_quantity);
   const [totalPrice, setTotalPrice] = useState(cart.cart_price);
@@ -38,8 +40,12 @@ const CartCard = ({
                 })
                 .then((response) => {
                   Alert.alert("Item Removed!", "Item has been removed!", [
-                    { text: "OK", onPress: () => console.log("OK Pressed") },
+                    {
+                      text: "OK",
+                      onPress: () => console.log("OK Pressed", response.data),
+                    },
                   ]);
+                  setRefresher(refresher + 1);
                 })
                 .catch((error) => {
                   setIsLoading(false);
