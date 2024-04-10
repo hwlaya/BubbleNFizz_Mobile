@@ -64,7 +64,7 @@ const PollScreen4 = () => {
     if (selectedDesign) {
       navigation.navigate("PollScreen5", {
         gender: gender,
-        fragrance: fragrances,
+        fragrances: fragrances,
         location: location,
         ingredients: ingredients,
         texture: texture,

@@ -1,18 +1,23 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import Background from "../components/Background";
 import { Text, Button } from "react-native-paper";
 import PollsHeader from "../components/PollsHeader";
 import NavigationButton from "../components/NavigationButton";
+import api from "../../config/api";
+import { UserContext } from "../providers/UserProvider";
+import { Alert } from "react-native";
 
 const PollScreen6 = ({ navigation, route }) => {
-  const { gender, fragrances, texture, design, age } = route.params;
-  const [selectedFrequency, setSelectedFrequency] = useState(null);
+  const user = useContext(UserContext);
 
-  const handleFrequency = (frequency) => {
-    console.log("Selected Frequency:", frequency);
-    setSelectedFrequency(frequency);
+  const { gender, fragrances, texture, design, frequency } = route.params;
+  const [selectedBathType, setSelectedBathType] = useState(null);
+
+  const handleBathType = (bathType) => {
+    console.log("Selected Bath Type:", bathType);
+    setSelectedBathType(bathType);
   };
 
   const handlePrevious = () => {
@@ -20,46 +25,50 @@ const PollScreen6 = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    if (selectedFrequency) {
-      navigation.navigate("PollScreen7", {
-        gender,
-        fragrances,
-        texture,
-        design,
-        age,
-        frequency: selectedFrequency,
-      });
-    } else {
+    if (!selectedBathType) {
       Alert.alert(
-        "Select Frequency",
-        "Please select how often you take a bath before proceeding."
+        "Select Bath Type",
+        "Please select the type of bath you prefer before proceeding."
       );
+    } else {
+      console.log(fragrances);
+      api
+        .post("usermanagement/adduserpoll", {
+          user_id: user.user.id,
+          gender: gender,
+          scent: JSON.stringify(fragrances),
+          texture: texture,
+          design: design,
+          frequency: frequency,
+          bath_type: selectedBathType,
+        })
+        .then((response) => {
+          navigation.navigate("PollProfileScreen");
+          console.log("POLL ANSWERS:", response);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     }
   };
 
   const renderButton = (label) => {
-    const isActive = selectedFrequency === label;
+    const isActive = selectedBathType === label;
     return (
-      <View style={{ padding: 10 }}>
-        <Button
-          mode="contained"
-          buttonColor="#EDBF47"
-          style={[
-            styles.buttonStyle,
-            { backgroundColor: isActive ? "#EDBF47" : "grey" },
-          ]}
-          onPress={() => handleFrequency(label)}
-        >
-          <Text
-            style={[
-              styles.textStyle,
-              { color: isActive ? "white" : "#EDBF47" },
-            ]}
-          >
-            {label}
-          </Text>
-        </Button>
-      </View>
+      <Button
+        mode="contained"
+        onPress={() => handleBathType(label)}
+        style={[
+          styles.buttonStyle,
+          { backgroundColor: isActive ? "#EDBF47" : "grey" },
+        ]}
+        labelStyle={[
+          styles.textStyle,
+          { color: isActive ? "white" : "#EDBF47" },
+        ]}
+      >
+        {label}
+      </Button>
     );
   };
 
@@ -68,11 +77,11 @@ const PollScreen6 = ({ navigation, route }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <PollsHeader />
         <View style={styles.container}>
-          <Text style={styles.title}>How often do you take a bath?</Text>
+          <Text style={styles.title}>What type of bath do you prefer?</Text>
           <View style={styles.buttonContainer1}>
-            {renderButton("1 Day")}
-            {renderButton("2 Days")}
-            {renderButton("3 Days")}
+            {renderButton("Cold Shower")}
+            {renderButton("Hot Shower")}
+            {renderButton("Warm Shower")}
           </View>
         </View>
         <View style={styles.buttonContainer}>
@@ -100,12 +109,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingVertical: 20,
   },
   title: {
     fontFamily: "Poppins-SemiBold",
     fontSize: 34,
     color: "#EDBF47",
     textAlign: "center",
+    marginBottom: 20,
   },
   buttonContainer1: {
     flexWrap: "wrap",
@@ -116,18 +127,17 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     marginBottom: 10,
+    //width: "120%", // Changed width to 100%
   },
   buttonStyle: {
     height: 50,
-    width: 180,
-    margin: 10,
     borderRadius: 16,
+    marginVertical: 5,
+    minWidth: 120,
   },
   textStyle: {
     fontFamily: "Poppins-SemiBold",
-    fontSize: 20,
-    alignSelf: "center",
-    padding: 5,
+    fontSize: 16,
   },
 });
 

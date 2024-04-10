@@ -8,11 +8,11 @@ import NavigationButton from "../components/NavigationButton";
 
 const PollScreen5 = ({ navigation, route }) => {
   const { gender, fragrances, texture, design } = route.params;
-  const [selectedFrequency, setSelectedFrequency] = useState(null);
+  const [selectedBracket, setSelectedBracket] = useState(null);
 
-  const handleFrequency = (frequency) => {
-    console.log("Selected Frequency:", frequency);
-    setSelectedFrequency(frequency);
+  const handleAge = (ageBracket) => {
+    console.log("Selected Age Bracket:", ageBracket);
+    setSelectedBracket(ageBracket);
   };
 
   const handlePrevious = () => {
@@ -20,24 +20,21 @@ const PollScreen5 = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    if (selectedFrequency) {
+    if (selectedBracket) {
       navigation.navigate("PollScreen6", {
         gender,
         fragrances,
         texture,
         design,
-        frequency: selectedFrequency,
+        ageBracket: selectedBracket,
       });
     } else {
-      Alert.alert(
-        "Select Frequency",
-        "Please select how often you take a bath before proceeding."
-      );
+      Alert.alert("Select Age", "Please select your age before proceeding.");
     }
   };
 
   const renderButton = (label) => {
-    const isActive = selectedFrequency === label;
+    const isActive = selectedBracket === label;
     return (
       <View style={{ padding: 10 }}>
         <Button
@@ -47,7 +44,7 @@ const PollScreen5 = ({ navigation, route }) => {
             styles.buttonStyle,
             { backgroundColor: isActive ? "#EDBF47" : "grey" },
           ]}
-          onPress={() => handleFrequency(label)}
+          onPress={() => handleAge(label)}
         >
           <Text
             style={[
@@ -67,11 +64,14 @@ const PollScreen5 = ({ navigation, route }) => {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <PollsHeader />
         <View style={styles.container}>
-          <Text style={styles.title}>How often do you take a bath?</Text>
+          <Text style={styles.title}>How old are you?</Text>
           <View style={styles.buttonContainer1}>
-            {renderButton("1 Day")}
-            {renderButton("2 Days")}
-            {renderButton("3 Days")}
+            {renderButton("Under 18")}
+            {renderButton("18-24")}
+            {renderButton("25-34")}
+            {renderButton("35-44")}
+            {renderButton("45-55")}
+            {renderButton("56+")}
           </View>
         </View>
         <View style={styles.buttonContainer}>
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 10,
     marginBottom: 10,
+    //width: "120%", // Changed width to 100%
   },
   buttonStyle: {
     height: 50,

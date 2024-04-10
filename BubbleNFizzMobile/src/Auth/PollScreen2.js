@@ -21,6 +21,7 @@ const PollScreen2 = () => {
 
   const [selectedFragrances, setSelectedFragrances] = useState([]);
   const [prevSelectedFragrances, setPrevSelectedFragrances] = useState([]);
+
   const [gender, setGender] = useState("");
 
   useEffect(() => {
@@ -77,15 +78,19 @@ const PollScreen2 = () => {
     "#9C640C",
   ];
 
-  const handleSelectFragrance = (fragrance) => {
-    setSelectedFragrances((prevSelected) => {
-      const isSelected = prevSelected.includes(fragrance);
-      const updatedSelected = isSelected
-        ? prevSelected.filter((item) => item !== fragrance)
-        : [...prevSelected, fragrance];
-      console.log("Updated selected fragrances:", updatedSelected);
-      return updatedSelected;
-    });
+  const handleSelectFragrance = (fragrances) => {
+    console.log("Selected fragrances:", fragrances);
+    let selFrag = [...selectedFragrances, fragrances];
+    console.log(selFrag);
+    setSelectedFragrances(selFrag);
+    // setSelectedFragrances((prevSelected) => {
+    //   const isSelected = prevSelected.includes(fragrances);
+    //   const updatedSelected = isSelected
+    //     ? prevSelected.filter((item) => item !== fragrances)
+    //     : [...prevSelected, fragrances];
+    //   console.log("Updated selected fragrances:", updatedSelected);
+    //   return updatedSelected;
+    // });
   };
 
   const handlePrevious = () => {
