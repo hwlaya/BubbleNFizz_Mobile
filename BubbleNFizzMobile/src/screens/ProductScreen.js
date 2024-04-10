@@ -121,14 +121,14 @@ const ProductScreen = ({ route }) => {
           >
             <Ionicons name="arrow-back-circle-sharp" size={40} color="black" />
           </TouchableOpacity>
-          <IconButton
+          {/* <IconButton
             style={styles.cartButton}
             icon="shopping"
             onPress={() => {
               console.log("Shopping icon pressed");
               navigation.navigate("CartScreen");
             }}
-          />
+          /> */}
           <Image
             source={{
               uri: decodeURI(
@@ -194,7 +194,7 @@ const ProductScreen = ({ route }) => {
               </TouchableOpacity>
             </View>
             <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
-              Total Price: ₱{totalPrice}
+              Total Price: ₱{Number(totalPrice)}
             </Text>
             <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
               Stock: {product.product_stock}

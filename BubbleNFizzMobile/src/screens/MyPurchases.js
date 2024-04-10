@@ -270,7 +270,7 @@ const MyPurchases = () => {
                           Order# {item.id} (₱{item.total_price}){" "}
                         </Text>
                       </View>
-                      <View>To Receive</View>
+                      <Text>To Receive</Text>
                       {item.order_items.map((item, index) => {
                         return (
                           <CheckOutCard
@@ -302,7 +302,7 @@ const MyPurchases = () => {
                           Order# {item.id} (₱{item.total_price}){" "}
                         </Text>
                       </View>
-                      <View>Complete</View>
+                      <Text>Complete</Text>
                       {item.order_items.map((item, index) => {
                         return (
                           <CheckOutCard
@@ -334,7 +334,7 @@ const MyPurchases = () => {
                           Order# {item.id} (₱{item.total_price}){" "}
                         </Text>
                       </View>
-                      <View>Cancelled</View>
+                      <Text>Cancelled</Text>
                       {item.order_items.map((item, index) => {
                         return (
                           <CheckOutCard
@@ -366,7 +366,7 @@ const MyPurchases = () => {
                           Order# {item.id} (₱{item.total_price}){" "}
                         </Text>
                       </View>
-                      <View>Refund</View>
+                      <Text>Refund</Text>
                       {item.order_items.map((item, index) => {
                         return (
                           <CheckOutCard

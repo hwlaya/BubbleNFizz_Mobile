@@ -50,16 +50,18 @@ const IndexScreen = () => {
         });
       api
         .post("usermanagement/getuserpoll", {
-          user_id: user.id,
+          user_id: user.user.id,
         })
         .then((response) => {
           const fragrance = response.data.fragrance;
+          console.log("Fragrance:", response.data.fragrance);
           api
             .post("customerpollresult", {
-              product_scent: fragrance,
+              product_scent: JSON.parse(fragrance),
             })
             .then((response) => {
               setPollProducts(response.data);
+              console.log("Poll result response:", response.data);
             })
             .catch((err) => {
               console.log("Error getting user poll result:", err.response);
@@ -240,7 +242,8 @@ const IndexScreen = () => {
               // console.log("CARDDDDDDDD", item.product_details);
               <RenderCard
                 key={index}
-                item={item}
+                item={item.product_details}
+                image={item.product_details.product_images}
                 title={item.product_details.product_name}
                 price={item.product_details.product_price}
                 rating={item.product_details.product_rating}
@@ -248,7 +251,7 @@ const IndexScreen = () => {
                 onPress={() => {
                   console.log("Best Sellerrr", item);
                   navigation.navigate("ProductScreen", {
-                    product: item,
+                    product: item.product_details,
                     productId: item.id,
                   });
                 }}

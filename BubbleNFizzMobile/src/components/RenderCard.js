@@ -49,7 +49,7 @@ const RenderCard = ({
           {/* Product Rating */}
           <Rating
             type="star"
-            value={Number(rating)}
+            startingValue={rating}
             imageSize={14}
             readonly
             precision={0.1}
