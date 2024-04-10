@@ -12,6 +12,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import * as DocumentPicker from "expo-document-picker";
 import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
 import CartCard from "../components/CartCard";
@@ -48,33 +49,45 @@ const Checkout = ({ route }) => {
   // }, [user]);
 
   // FILE UPLOAD FUNCTION
+  // const pickPaymentImage = async () => {
+  //   // No permissions request is necessary for launching the image library
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: false,
+  //     aspect: [2, 1],
+  //     quality: 1,
+  //   });
+
+  //   console.log(result);
+
+  //   if (!result.canceled) {
+  //     console.log("result:", result.assets[0]);
+  //     const image = {
+  //       uri: result.uri,
+  //       type: result.assets[0].mimeType,
+  //       name: result.assets[0].fileName,
+  //     };
+  //     // const newFile = {
+  //     //   uri: file.assets[0].uri,
+  //     //   type: "multipart/form-data",
+  //     //   name: file.assets[0].name,
+  //     // };
+  //     setGcashFile(image);
+  //     setPaymentImageUri(result.assets[0].uri);
+  //     const uriParts = result.assets[0].uri.split("/");
+  //     const filename = uriParts[uriParts.length - 1];
+  //     setPaymentImageName(filename);
+  //     setPaymentImageStatus(true);
+  //   }
+  // };
+
   const pickPaymentImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: false,
-      aspect: [2, 1],
-      quality: 1,
-    });
-
-    console.log(result);
-
-    if (!result.canceled) {
-      console.log("result:", result.assets[0]);
-      console.log("uri:", result.uri);
-      const image = {
-        uri: result.uri,
-        type: "multipart",
-        name: "image.jpg",
-      };
-      setGcashFile(image);
-      setPaymentImageUri(result.assets[0].uri);
-      const uriParts = result.assets[0].uri.split("/");
-      const filename = uriParts[uriParts.length - 1];
-      setPaymentImageName(filename);
-      setPaymentImageStatus(true);
-    }
-  };
+    let result = await DocumentPicker.getDocumentAsync({});
+    console.log(result)
+    setPaymentImageUri(result.assets[0].uri)
+    setPaymentImageStatus(true)
+    setGcashFile(result);
+  }
 
   //  API TO GET THE CART of the user
   useEffect(() => {
@@ -124,6 +137,11 @@ const Checkout = ({ route }) => {
   }, [subTotalPrice, delivery]);
 
   const onSubmitOrder = () => {
+    const newFile = {
+      uri: gcashFile.assets[0].uri,
+      type: "multipart/form-data",
+      name: gcashFile.assets[0].name,
+    }
     const formdata = new FormData();
     formdata.append("user_id", user.user.id);
     formdata.append("order_address", address);
@@ -132,13 +150,13 @@ const Checkout = ({ route }) => {
     formdata.append("order_shipping", delivery);
     formdata.append("payment", mop);
     if (mop == "GCash") {
-      formdata.append("payment_image", gcashFile);
-    } //  else {
-    //   formdata.append("payment_image", "");
-    // }
+      formdata.append("payment_image", newFile);
+    }  else {
+      formdata.append("payment_image", "");
+    }
     formdata.append("total_quantity", quantity);
     formdata.append("total_price", totalPrice);
-    // formdata.append("carts", JSON.stringify(carts));
+    formdata.append("carts", JSON.stringify(carts));
     console.log("Formdataaaaa", formdata);
 
     // API TO SUBMIT ORDER
