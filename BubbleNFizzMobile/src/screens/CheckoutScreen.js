@@ -29,7 +29,7 @@ const Checkout = ({ route }) => {
   const [apartment, setApartment] = useState("");
   const [phoneNumber, setPhoneNumber] = useState(user.user.profile.contact_no);
   // SHIPPING METHOD
-  const [delivery, setDelivery] = useState("PickUp");
+  const [delivery, setDelivery] = useState("");
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
 
@@ -39,7 +39,7 @@ const Checkout = ({ route }) => {
   const [paymentImageName, setPaymentImageName] = useState("");
 
   // PAYMENT
-  const [mop, setMop] = useState("GCash");
+  const [mop, setMop] = useState("");
   const [gcashFile, setGcashFile] = useState([]); // IF GCASH
 
   const [selectedPaymentImage, setSelectedPaymentImage] = useState([]);
@@ -83,11 +83,11 @@ const Checkout = ({ route }) => {
 
   const pickPaymentImage = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
-    console.log(result)
-    setPaymentImageUri(result.assets[0].uri)
-    setPaymentImageStatus(true)
+    console.log(result);
+    setPaymentImageUri(result.assets[0].uri);
+    setPaymentImageStatus(true);
     setGcashFile(result);
-  }
+  };
 
   //  API TO GET THE CART of the user
   useEffect(() => {
@@ -137,11 +137,16 @@ const Checkout = ({ route }) => {
   }, [subTotalPrice, delivery]);
 
   const onSubmitOrder = () => {
-    const newFile = {
-      uri: gcashFile.assets[0].uri,
-      type: "multipart/form-data",
-      name: gcashFile.assets[0].name,
+    // Validate address, apartment, phoneNumber, delivery, and mop
+    if (!address || !apartment || !phoneNumber || !delivery || !mop) {
+      Alert.alert(
+        "You've missed out something",
+        "Please fill in all required fields."
+      );
+      return; // Stop execution if any required field is missing
     }
+
+    // Rest of your code for submitting the order
     const formdata = new FormData();
     formdata.append("user_id", user.user.id);
     formdata.append("order_address", address);
@@ -149,9 +154,14 @@ const Checkout = ({ route }) => {
     formdata.append("order_phone_number", phoneNumber);
     formdata.append("order_shipping", delivery);
     formdata.append("payment", mop);
-    if (mop == "GCash") {
+    if (mop === "GCash" && gcashFile?.length > 0) {
+      const newFile = {
+        uri: gcashFile?.assets[0]?.uri,
+        type: "multipart/form-data",
+        name: gcashFile?.assets[0]?.name,
+      };
       formdata.append("payment_image", newFile);
-    }  else {
+    } else {
       formdata.append("payment_image", "");
     }
     formdata.append("total_quantity", quantity);

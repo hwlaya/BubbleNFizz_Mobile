@@ -17,7 +17,7 @@ const HomeHeader = ({ title, showMenuIcon, showShoppingIcon }) => {
         alignItems: "center",
         justifyContent: "space-between",
         backgroundColor: "white",
-        marginTop: 30,
+        marginTop: 10,
       }}
     >
       {showMenuIcon && (
