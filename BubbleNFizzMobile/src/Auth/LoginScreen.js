@@ -16,13 +16,14 @@ import api from "../../config/api";
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const { width, height } = Dimensions.get("window");
+
+  const [loading, setLoading] = useState(false);
   const user = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [passwordVisible, setPasswordVisible] = useState(false);
-
-  const { width, height } = Dimensions.get("window");
 
   const onSubmitLogin = () => {
     if (email === "" || password === "") {
