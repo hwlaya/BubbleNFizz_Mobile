@@ -16,6 +16,9 @@ import * as DocumentPicker from "expo-document-picker";
 import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
 import CartCard from "../components/CartCard";
+import Geolocation from "@react-native-community/geolocation";
+import axios from "axios";
+import { CONSTANTS, JSHmac } from "react-native-hash";
 
 const Checkout = ({ route }) => {
   const navigation = useNavigation();
@@ -30,6 +33,7 @@ const Checkout = ({ route }) => {
   const [phoneNumber, setPhoneNumber] = useState(user.user.profile.contact_no);
   // SHIPPING METHOD
   const [delivery, setDelivery] = useState("");
+  const [deliveryTotal, setDeliveryTotal] = useState(0)
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
 
@@ -80,6 +84,72 @@ const Checkout = ({ route }) => {
   //     setPaymentImageStatus(true);
   //   }
   // };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+      const SECRET =
+                  'sk_test_EO8bTWNXo86M0byh3gxDcXWFej9Q6Uu1h/idBaQnX+uS35q3LzOr9oVZSu/KvbmL';
+      const time = new Date().getTime().toString()
+      const method = "POST"
+      const path = "/v3/quotations";
+      const body = {
+        data: {
+          serviceType: 'MOTORCYCLE',
+          language: 'en_PH',
+          stops: [
+            {
+              coordinates: {
+                lat: `${pos.coords.latitude}`,
+                lng: `${pos.coords.longitude}`,
+              },
+              address: `${res.data.display_name}`,
+            },
+            {
+              coordinates: {
+                lat: "14.738250",
+                lng: "121.040970",
+            },
+            address:
+            "B13 L39 Neptune St, North Olympus Subdivision, Kaligayahan, Novaliches, Quezon City, 1124",
+            },
+          ],
+          item: {
+            // Recommended
+            quantity: '3',
+            weight: 'LESS_THAN_3KG',
+            categories: ['FOOD_DELIVERY'],
+            handlingInstructions: ['KEEP_UPRIGHT'],
+          },
+          isRouteOptimized: true, // optional
+        },
+      };
+      const rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n${JSON.stringify(
+        body,
+      )}`
+
+      const SIGNATURE = await JSHmac(
+        rawSignature,
+        SECRET,
+        CONSTANTS.HmacAlgorithms.HmacSHA256
+      )
+
+      const API_KEY = 'pk_test_c8dffbde99c92c70f73f2f38ae3835ef';
+                const TOKEN = `${API_KEY}:${time}:${SIGNATURE.toString()}`;
+
+      axios.post('https://rest.sandbox.lalamove.com/v3/quotations', body, {
+        headers: {
+          Authorization: `hmac ${TOKEN}`,
+          Market: 'PH'
+        }
+      }).then((response) => {
+        setDeliveryTotal(response.data.data.priceBreakdown.total)
+      }).catch(err => {
+        console.log(err.response)
+      })
+
+    })
+    return unsubscribe
+  }, [navigation])
 
   const pickPaymentImage = async () => {
     let result = await DocumentPicker.getDocumentAsync({});
