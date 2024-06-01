@@ -149,7 +149,7 @@ const CartCard = ({
           marginVertical: 4,
         }}
       />
-      <Text
+      {/* <Text
         style={{
           fontSize: 12,
           fontFamily: "LilitaOne-Regular",
@@ -157,7 +157,7 @@ const CartCard = ({
         }}
       >
         ₱{totalPrice}
-      </Text>
+      </Text> */}
     </View>
   );
 };

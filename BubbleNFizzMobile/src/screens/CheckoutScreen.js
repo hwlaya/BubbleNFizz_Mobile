@@ -208,17 +208,49 @@ const Checkout = ({ route }) => {
       .catch((err) => {
         console.log(err.response);
       });
-    console.log(user);
-  }, []);
+
+    const unsubscribe = navigation.addListener('focus', async () => {
+      api
+      .get(`shopping/getusercart?user_id=${user.user.id}`)
+      .then((response) => {
+        // console.log(response.data);
+        const cartItems = response.data;
+        let tempSubTotal = 0;
+        let tempQuantity = 0;
+        cartItems.map((item, index) => {
+          tempSubTotal += Number(item.cart_price);
+          tempQuantity += Number(item.cart_quantity);
+        });
+        setQuantity(tempQuantity);
+        setSubTotalPrice(tempSubTotal);
+        setCarts(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+    //get user profile details
+    api
+      .get(`usermanagement/getprofile/${user.user.id}`)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    })
+
+    return unsubscribe
+  }, [navigation]);
 
   //handle logic and computation
   useEffect(() => {
-    if (delivery == "pickUp") {
+    if (delivery == "PickUp") {
       setTotalPrice(subTotalPrice);
       setShippingFee(0);
     } else if (delivery == "Standard") {
-      setTotalPrice(subTotalPrice + 39);
-      setShippingFee(39);
+      setTotalPrice(subTotalPrice + Number(deliveryTotal));
+      setShippingFee(deliveryTotal);
     } else {
       setTotalPrice(subTotalPrice + 150);
       setShippingFee(150);

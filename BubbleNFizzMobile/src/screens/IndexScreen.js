@@ -16,6 +16,7 @@ import HeroSection from "../components/HeroSection";
 import { Button, Divider } from "react-native-paper";
 import api from "../../config/api";
 import { UserContext } from "../providers/UserProvider";
+import * as Location from 'expo-location';
 
 const IndexScreen = () => {
   const user = useContext(UserContext);
@@ -27,6 +28,10 @@ const IndexScreen = () => {
   const [pollProducts, setPollProducts] = useState([]);
 
   useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+    })();
     if (user == null) {
       api
         .get("shopping/getthreeproducts")
@@ -109,7 +114,7 @@ const IndexScreen = () => {
       </View>
 
       {/* Products- Recommended */}
-      <View style={styles.categoryContainer}>
+      {/* <View style={styles.categoryContainer}>
         <Text style={styles.categoryText}>RECOMMENDED—</Text>
         <Text style={[styles.categoryText, { color: "gray", fontSize: 12 }]}>
           Here are the products that other users are buying!
@@ -142,7 +147,7 @@ const IndexScreen = () => {
             }
           })}
         </View>
-      </ScrollView>
+      </ScrollView> */}
 
       {/* Products- Poll */}
       <View style={styles.categoryContainer}>

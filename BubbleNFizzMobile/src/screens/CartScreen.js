@@ -19,37 +19,35 @@ const CartScreen = () => {
   // API to get cart of user
   useEffect(() => {
     api
-      .get(`shopping/getusercart?user_id=${user.user.id}`)
-      .then((response) => {
-        // handles math logic
-        console.log("Laman ng Carts", response.data);
-        const carts = response.data;
-        console.log("carts", carts);
-        let tempTotal = 0;
-        let tempQuantity = 0;
-        carts.map((item) => {
-          tempTotal += Number(item.cart_price);
-          tempQuantity += Number(item.cart_quantity);
+        .get(`shopping/getusercart?user_id=${user.user.id}`)
+        .then((response) => {
+          // handles math logic
+          const carts = response.data;
+          let tempTotal = 0;
+          let tempQuantity = 0;
+          carts.map((item) => {
+            console.log('price', item.cart_price)
+            tempTotal += Number(item.cart_price);
+            tempQuantity += Number(item.cart_quantity);
+          });
+          setSubTotal(tempTotal);
+          setTotalQuantity(tempQuantity);
+          setCarts(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
         });
-        setSubTotal(tempTotal);
-        setTotalQuantity(tempQuantity);
-        setCarts(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
 
     const unsubscribe = navigation.addListener("focus", () => {
       api
         .get(`shopping/getusercart?user_id=${user.user.id}`)
         .then((response) => {
           // handles math logic
-          console.log("Laman ng Carts", response.data);
           const carts = response.data;
-          console.log("carts", carts);
           let tempTotal = 0;
           let tempQuantity = 0;
           carts.map((item) => {
+            console.log('price', item.cart_price)
             tempTotal += Number(item.cart_price);
             tempQuantity += Number(item.cart_quantity);
           });

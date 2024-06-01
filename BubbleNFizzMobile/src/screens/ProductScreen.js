@@ -194,7 +194,7 @@ const ProductScreen = ({ route }) => {
               </TouchableOpacity>
             </View>
             <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
-              Total Price: ₱{Number(totalPrice)}
+              Total Price: ₱{product.product_price}
             </Text>
             <Text style={[{ fontFamily: "Inconsolata-Light", fontSize: 16 }]}>
               Stock: {product.product_stock}
