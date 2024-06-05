@@ -227,7 +227,7 @@ const MyPurchases = () => {
             )}
           </ScrollView>
         ) : page === "To Ship" ? (
-          <View>
+          <ScrollView style={{ marginBottom: 150 }}>
             {data.length > 0 ? (
               data.map((item, index) => {
                 if (item.order_status == "To Ship") {
@@ -257,9 +257,9 @@ const MyPurchases = () => {
                 <Text>No items to display (Ship)</Text>
               </View>
             )}
-          </View>
+          </ScrollView>
         ) : page === "To Receive" ? (
-          <View>
+          <ScrollView style={{ marginBottom: 150 }}>
             {data.length > 0 ? (
               data.map((item, index) => {
                 if (item.order_status == "To Receive") {
@@ -289,9 +289,9 @@ const MyPurchases = () => {
                 <Text>No items to display (Receive)</Text>
               </View>
             )}
-          </View>
+          </ScrollView>
         ) : page === "Complete" ? (
-          <View>
+          <ScrollView style={{ marginBottom: 150 }}>
             {data.length > 0 ? (
               data.map((item, index) => {
                 if (item.order_status == "Complete") {
@@ -321,9 +321,9 @@ const MyPurchases = () => {
                 <Text>No items to display (Complete)</Text>
               </View>
             )}
-          </View>
+          </ScrollView>
         ) : page === "Cancelled" ? (
-          <View>
+          <ScrollView style={{ marginBottom: 150 }}>
             {data.length > 0 ? (
               data.map((item, index) => {
                 if (item.order_status == "Cancelled") {
@@ -353,9 +353,9 @@ const MyPurchases = () => {
                 <Text>No items to display (Cancelled)</Text>
               </View>
             )}
-          </View>
+          </ScrollView>
         ) : page === "Refund" ? (
-          <View>
+          <ScrollView style={{ marginBottom: 150 }}>
             {data.length > 0 ? (
               data.map((item, index) => {
                 if (item.order_status == "Refund") {
@@ -385,7 +385,7 @@ const MyPurchases = () => {
                 <Text>No items to display (Refund)</Text>
               </View>
             )}
-          </View>
+          </ScrollView>
         ) : null}
       </View>
     </View>

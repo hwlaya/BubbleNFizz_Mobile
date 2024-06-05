@@ -102,10 +102,7 @@ const ProductScreen = ({ route }) => {
       })
       .catch((error) => {
         console.error(error);
-        Alert.alert(
-          "Error",
-          "An error occurred while adding the item to the cart."
-        );
+        Alert.alert("Error", "Product may be out of stock or is unavailable.");
       });
   };
 
