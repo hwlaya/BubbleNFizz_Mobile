@@ -12,14 +12,13 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import FontAwesome from "@expo/vector-icons/build/FontAwesome";
 import { MaterialIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import * as DocumentPicker from "expo-document-picker";
+// import * as DocumentPicker from "expo-document-picker";
 import { UserContext } from "../providers/UserProvider";
 import api from "../../config/api";
 import CartCard from "../components/CartCard";
 import axios from "axios";
 import { CONSTANTS, JSHmac } from "react-native-hash";
-import * as Location from 'expo-location';
-
+import * as Location from "expo-location";
 
 const Checkout = ({ route }) => {
   const navigation = useNavigation();
@@ -34,7 +33,7 @@ const Checkout = ({ route }) => {
   const [phoneNumber, setPhoneNumber] = useState(user.user.profile.contact_no);
   // SHIPPING METHOD
   const [delivery, setDelivery] = useState("");
-  const [deliveryTotal, setDeliveryTotal] = useState(0)
+  const [deliveryTotal, setDeliveryTotal] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
   const [shippingFee, setShippingFee] = useState(0);
 
@@ -88,29 +87,28 @@ const Checkout = ({ route }) => {
 
   useEffect(() => {
     (async () => {
-      
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
         return;
       }
 
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
-    const unsubscribe = navigation.addListener('focus', async () => {
+    const unsubscribe = navigation.addListener("focus", async () => {
       const SECRET =
-                  'sk_test_EO8bTWNXo86M0byh3gxDcXWFej9Q6Uu1h/idBaQnX+uS35q3LzOr9oVZSu/KvbmL';
-      const time = new Date().getTime().toString()
-      const method = "POST"
+        "sk_test_EO8bTWNXo86M0byh3gxDcXWFej9Q6Uu1h/idBaQnX+uS35q3LzOr9oVZSu/KvbmL";
+      const time = new Date().getTime().toString();
+      const method = "POST";
       const path = "/v3/quotations";
       try {
         const currentLoc = await Location.getCurrentPositionAsync();
-        console.log('location', currentLoc.coords)
+        console.log("location", currentLoc.coords);
         const body = {
           data: {
-            serviceType: 'MOTORCYCLE',
-            language: 'en_PH',
+            serviceType: "MOTORCYCLE",
+            language: "en_PH",
             stops: [
               {
                 coordinates: {
@@ -123,59 +121,89 @@ const Checkout = ({ route }) => {
                 coordinates: {
                   lat: "14.738250",
                   lng: "121.040970",
-              },
-              address:
-              "B13 L39 Neptune St, North Olympus Subdivision, Kaligayahan, Novaliches, Quezon City, 1124",
+                },
+                address:
+                  "B13 L39 Neptune St, North Olympus Subdivision, Kaligayahan, Novaliches, Quezon City, 1124",
               },
             ],
             item: {
               // Recommended
-              quantity: '3',
-              weight: 'LESS_THAN_3KG',
-              categories: ['FOOD_DELIVERY'],
-              handlingInstructions: ['KEEP_UPRIGHT'],
+              quantity: "3",
+              weight: "LESS_THAN_3KG",
+              categories: ["FOOD_DELIVERY"],
+              handlingInstructions: ["KEEP_UPRIGHT"],
             },
             isRouteOptimized: true, // optional
           },
         };
         const rawSignature = `${time}\r\n${method}\r\n${path}\r\n\r\n${JSON.stringify(
-          body,
-        )}`
-  
+          body
+        )}`;
+
         const SIGNATURE = await JSHmac(
           rawSignature,
           SECRET,
           CONSTANTS.HmacAlgorithms.HmacSHA256
-        )
-  
-        const API_KEY = 'pk_test_c8dffbde99c92c70f73f2f38ae3835ef';
-                  const TOKEN = `${API_KEY}:${time}:${SIGNATURE.toString()}`;
-  
-        axios.post('https://rest.sandbox.lalamove.com/v3/quotations', body, {
-          headers: {
-            Authorization: `hmac ${TOKEN}`,
-            Market: 'PH'
-          }
-        }).then((response) => {
-          console.log(response)
-          setDeliveryTotal(response.data.data.priceBreakdown.total)
-        }).catch(err => {
-          console.log(err.response)
-        })
-      } catch (err) {
-        console.log(err)
-      }
+        );
 
-    })
-    return unsubscribe
-  }, [navigation])
+        const API_KEY = "pk_test_c8dffbde99c92c70f73f2f38ae3835ef";
+        const TOKEN = `${API_KEY}:${time}:${SIGNATURE.toString()}`;
+
+        axios
+          .post("https://rest.sandbox.lalamove.com/v3/quotations", body, {
+            headers: {
+              Authorization: `hmac ${TOKEN}`,
+              Market: "PH",
+            },
+          })
+          .then((response) => {
+            console.log(response);
+            setDeliveryTotal(response.data.data.priceBreakdown.total);
+          })
+          .catch((err) => {
+            console.log(err.response);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  // const pickPaymentImage = async () => {
+  //   let result = await DocumentPicker.getDocumentAsync({});
+  //   console.log(result);
+  //   setPaymentImageUri(result.assets[0].uri);
+  //   setPaymentImageStatus(true);
+  //   setGcashFile(result);
+  // };
 
   const pickPaymentImage = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [2, 1],
+      quality: 1,
+    });
+
     console.log(result);
-    setPaymentImageUri(result.assets[0].uri);
-    setPaymentImageStatus(true);
-    setGcashFile(result);
+
+    if (!result.canceled) {
+      console.log("result:", result.assets[0]);
+      console.log("uri:", result.uri);
+      const image = {
+        uri: result.uri,
+        type: "image/jpeg",
+        name: "image.jpg",
+      };
+      setSelectedPaymentImage(image);
+      setPaymentImageUri(result.assets[0].uri);
+      const uriParts = result.assets[0].uri.split("/");
+      const filename = uriParts[uriParts.length - 1];
+      setPaymentImageName(filename);
+      setPaymentImageStatus(true);
+    }
   };
 
   //  API TO GET THE CART of the user
@@ -209,38 +237,38 @@ const Checkout = ({ route }) => {
         console.log(err.response);
       });
 
-    const unsubscribe = navigation.addListener('focus', async () => {
+    const unsubscribe = navigation.addListener("focus", async () => {
       api
-      .get(`shopping/getusercart?user_id=${user.user.id}`)
-      .then((response) => {
-        // console.log(response.data);
-        const cartItems = response.data;
-        let tempSubTotal = 0;
-        let tempQuantity = 0;
-        cartItems.map((item, index) => {
-          tempSubTotal += Number(item.cart_price);
-          tempQuantity += Number(item.cart_quantity);
+        .get(`shopping/getusercart?user_id=${user.user.id}`)
+        .then((response) => {
+          // console.log(response.data);
+          const cartItems = response.data;
+          let tempSubTotal = 0;
+          let tempQuantity = 0;
+          cartItems.map((item, index) => {
+            tempSubTotal += Number(item.cart_price);
+            tempQuantity += Number(item.cart_quantity);
+          });
+          setQuantity(tempQuantity);
+          setSubTotalPrice(tempSubTotal);
+          setCarts(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
         });
-        setQuantity(tempQuantity);
-        setSubTotalPrice(tempSubTotal);
-        setCarts(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
 
-    //get user profile details
-    api
-      .get(`usermanagement/getprofile/${user.user.id}`)
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-    })
+      //get user profile details
+      api
+        .get(`usermanagement/getprofile/${user.user.id}`)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    });
 
-    return unsubscribe
+    return unsubscribe;
   }, [navigation]);
 
   //handle logic and computation
@@ -275,11 +303,11 @@ const Checkout = ({ route }) => {
     formdata.append("order_phone_number", phoneNumber);
     formdata.append("order_shipping", delivery);
     formdata.append("payment", mop);
-    if (mop === "GCash" && gcashFile?.length > 0) {
+    if (mop === "GCash" && selectedPaymentImage?.length > 0) {
       const newFile = {
-        uri: gcashFile?.assets[0]?.uri,
+        uri: selectedPaymentImage?.assets[0]?.uri,
         type: "multipart/form-data",
-        name: gcashFile?.assets[0]?.name,
+        name: selectedPaymentImage?.assets[0]?.name,
       };
       formdata.append("payment_image", newFile);
     } else {
@@ -319,7 +347,7 @@ const Checkout = ({ route }) => {
       setPaymentImageStatus(false);
       setPaymentImageUri("");
       setPaymentImageName("");
-      setGcashFile([]);
+      setSelectedPaymentImage(false);
     });
     return unsubscribe;
   }, [navigation]);

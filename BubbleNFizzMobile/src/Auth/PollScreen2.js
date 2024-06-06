@@ -41,7 +41,7 @@ const PollScreen2 = () => {
         "Fragrances in this category often feature warm, earthy, or woody notes such as sandalwood, cedarwood, or patchouli. They evoke images of forests, trees, and the great outdoors.",
     },
     {
-      title: "Gourmand Sweet",
+      title: "Gourm and Sweet",
       description:
         "These fragrances feature edible or dessert-like scents such as vanilla, caramel, chocolate, or pastry notes. They evoke feelings of comfort, indulgence, and sweetness.",
     },
@@ -78,19 +78,17 @@ const PollScreen2 = () => {
     "#9C640C",
   ];
 
-  const handleSelectFragrance = (fragrances) => {
-    console.log("Selected fragrances:", fragrances);
-    let selFrag = [...selectedFragrances, fragrances];
-    console.log(selFrag);
-    setSelectedFragrances(selFrag);
-    // setSelectedFragrances((prevSelected) => {
-    //   const isSelected = prevSelected.includes(fragrances);
-    //   const updatedSelected = isSelected
-    //     ? prevSelected.filter((item) => item !== fragrances)
-    //     : [...prevSelected, fragrances];
-    //   console.log("Updated selected fragrances:", updatedSelected);
-    //   return updatedSelected;
-    // });
+  const handleSelectFragrance = (fragrance) => {
+    setSelectedFragrances((prevSelected) => {
+      const isSelected = prevSelected.includes(fragrance);
+      if (isSelected) {
+        // If the fragrance is already selected, remove it
+        return prevSelected.filter((item) => item !== fragrance);
+      } else {
+        // If the fragrance is not selected, add it
+        return [...prevSelected, fragrance];
+      }
+    });
   };
 
   const handlePrevious = () => {
@@ -130,7 +128,7 @@ const PollScreen2 = () => {
               >
                 <Card.Content>
                   <Text
-                    numberOfLines={4}
+                    numberOfLines={2}
                     style={[
                       styles.cardTitle,
                       {
@@ -140,7 +138,7 @@ const PollScreen2 = () => {
                   >
                     {fragrance.title}
                   </Text>
-                  <Text numberOfLines={4} style={styles.cardDescription}>
+                  <Text numberOfLines={8} style={styles.cardDescription}>
                     {fragrance.description}
                   </Text>
                 </Card.Content>
@@ -188,7 +186,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   card: {
-    width: 150,
+    width: 160,
+    height: 160,
     margin: 10,
   },
   selectedCard: {
@@ -197,11 +196,12 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontFamily: "Poppins-SemiBold",
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
   },
   cardDescription: {
     textAlign: "center",
+    fontSize: 12,
   },
   buttonContainer: {
     flexDirection: "row",
