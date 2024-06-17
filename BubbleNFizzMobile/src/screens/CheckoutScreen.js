@@ -23,6 +23,8 @@ import * as Location from "expo-location";
 const Checkout = ({ route }) => {
   const navigation = useNavigation();
   const user = useContext(UserContext);
+
+  console.log(user);
   const [carts, setCarts] = useState([]);
   const [quantity, setQuantity] = useState(0);
   const [subTotalPrice, setSubTotalPrice] = useState(0);

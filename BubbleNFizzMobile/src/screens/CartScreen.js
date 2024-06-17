@@ -120,6 +120,7 @@ const CartScreen = () => {
             style={{ marginVertical: 16, borderRadius: 6 }}
             mode="contained"
             buttonColor="#E79E4F"
+            disabled={carts.length > 0 ? false : true}
             onPress={() => navigation.navigate("CheckoutScreen")} //console.log("Pressed")}
           >
             Checkout

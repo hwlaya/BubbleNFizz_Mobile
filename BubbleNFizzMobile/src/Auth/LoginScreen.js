@@ -46,7 +46,7 @@ const LoginScreen = () => {
             navigation.navigate("AdminStack");
           } else {
             if (response.data.user.profile === null) {
-              navigation.navigate("PollScreen1");
+              navigation.navigate("NewPollScreen");
             } else {
               navigation.navigate("DrawerStack");
             }

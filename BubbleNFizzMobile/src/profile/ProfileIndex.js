@@ -62,6 +62,7 @@ const ProfileIndex = () => {
                 size={38}
                 color="black"
                 style={{ marginVertical: 15 }}
+                onPress={() => navigation.navigate("MyPurchases")}
               />
             </TouchableOpacity>
             <Text style={styles.text}>My Purchases</Text>
@@ -73,10 +74,10 @@ const ProfileIndex = () => {
                 size={38}
                 color="black"
                 style={{ marginVertical: 15 }}
-                onPress={() => navigation.navigate("MyPurchases")}
+                onPress={() => navigation.navigate("MyDelivery")}
               />
             </TouchableOpacity>
-            <Text style={styles.text}>My Orders</Text>
+            <Text style={styles.text}>My Delivery</Text>
           </View>
           <View style={styles.icon}>
             <TouchableOpacity>

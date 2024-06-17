@@ -8,6 +8,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import InitialLoginScreen from "../Auth/InitialLoginScreen";
 import LoginScreen from "../Auth/LoginScreen";
 import RegisterScreen from "../Auth/RegisterScreen";
+import NewPollScreen from "../Auth/NewPollScreen";
 import PollScreen1 from "../Auth/PollScreen1";
 import PollScreen2 from "../Auth/PollScreen2";
 import PollScreen3 from "../Auth/PollScreen3";
@@ -31,6 +32,7 @@ import AdminHomeHeader from "../components/AdminHomeHeader";
 import ProfileIndex from "../profile/ProfileIndex";
 import PaymentRegister from "../admin/PaymentRegister";
 import MyPurchases from "../screens/MyPurchases";
+import MyDelivery from "../screens/MyDelivery";
 
 const AuthStack = createNativeStackNavigator();
 const AdminStackNav = createDrawerNavigator();
@@ -154,6 +156,7 @@ const Drawerstack = () => {
       />
       <DrawerStackNav.Screen name="ProfileIndex" component={ProfileIndex} />
       <DrawerStackNav.Screen name="MyPurchases" component={MyPurchases} />
+      <DrawerStackNav.Screen name="MyDelivery" component={MyDelivery} />
       <DrawerStackNav.Screen name="EditProfile" component={EditProfile} />
     </DrawerStackNav.Navigator>
   );
@@ -222,6 +225,7 @@ function MainNavigation() {
         />
         <AuthStack.Screen name="LoginScreen" component={LoginScreen} />
         <AuthStack.Screen name="RegisterScreen" component={RegisterScreen} />
+        <AuthStack.Screen name="NewPollScreen" component={NewPollScreen} />
         <AuthStack.Screen name="PollScreen1" component={PollScreen1} />
         <AuthStack.Screen name="PollScreen2" component={PollScreen2} />
         <AuthStack.Screen name="PollScreen3" component={PollScreen3} />
